@@ -1,0 +1,17 @@
+ {
+  "name"         : "BarBot",
+  "version"      : "0.0.0",
+  "description"  : "Webapplication to controll a drink mixing robot.",
+  "main"         : "server.js",
+  "private"      : true,
+  "author"       : "Tony",
+  "dependencies" : {
+	"express": "~4.6.1",
+	"mongoose": "~3.8.13",
+	"body-parser" : "~1.4.2",
+	"method-override" : "~2.0.2",
+	"johnny-five": "~0.7.56",
+    "socket.io": "~0.9.16"
+    
+    }
+  }
