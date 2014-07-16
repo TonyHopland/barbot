@@ -1,2 +1,30 @@
+<div id="edit_ingredients" ng-controller="IngredientController">
+    <div id="edit_pumps" ng-controller="PumpController">
+        <td><a class="btn" ng-click="addPump()">+</a></td>
+        <td><a class="btn" ng-click="deletePump()">-</a></td>
+        <table id="pump-list">
+            <tr ng-repeat="pump in pumps">
+                <td>Pump {{pump.id+1}}</td>
+                <td>{{pump.tubeLength}}</td>
+                <td>
+                    <select ng-model="pump.ingredient" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
+                        <option value="">-- choose ingredient --</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-<div ng-include src="'./views/partial/ingredients_edit.html'"></div>
+    <table id="ingredient-list">
+        <tr ng-repeat="ingredient in ingredients">
+            <td>{{ingredient.name}}</td>
+            <td>{{ingredient.color}}</td>
+            <td><a class="btn" ng-click="deleteIngredient($index)">Delete</a></td>
+        </tr>
+    </table>
+    <form id="ingredient-form" ng-submit="addIngredient()">
+        <input placeholder="Name" ng-model="newIngredient.name" autofocus="">
+        <input placeholder="Color" ng-model="newIngredient.color" autofocus="">
+        <button>Add</button>
+    </form>
+</div>

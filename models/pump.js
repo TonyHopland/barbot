@@ -3,7 +3,8 @@ var Schema   = mongoose.Schema;
 
 PumpSchema = new mongoose.Schema({
 	id: Number,
-	ingredient : [{ type : mongoose.Schema.ObjectId, ref : 'ingredient' }]
+	tubeLength: Number,
+	ingredient : { type : mongoose.Schema.ObjectId, ref : 'Ingredient' }
 });
 
 module.exports = mongoose.model('Pump', PumpSchema);

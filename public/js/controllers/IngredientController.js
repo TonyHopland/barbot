@@ -19,11 +19,19 @@ angular.module('barbot').controller('IngredientController', function($scope, Ing
 			color: $scope.newIngredient.color
 		});
 		
-		tmpIngredient.$save();
-		$scope.ingredients.push(tmpIngredient);
-		
+		var savedIngredient = tmpIngredient.$save();
+		if(undefined != savedIngredient){
+		    $scope.ingredients.push(tmpIngredient);
+		}
+		$scope.newIngredient = [];
 	};
-	
+
+	$scope.deleteIngredient = function(index) {
+	    var ingredient_to_delete = $scope.ingredients[index];
+	    ingredient_to_delete.$delete();
+	    $scope.ingredients.splice(index, 1);
+	}
+
 	$scope.getIngredients(); //Run this at startup to fill the table
 });
 
