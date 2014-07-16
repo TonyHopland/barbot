@@ -1,0 +1,13 @@
+<div id="edit_ingredients" ng-controller="IngredientController">
+    <table id="ingredient-list">
+      <tr ng-repeat="ingredient in ingredients">
+		<td>{{ingredient.name}}</td>	
+		<td>{{ingredient.color}}</td>
+      </tr>
+    </table>
+	<form id="ingredient-form" ng-submit="addIngredient()">
+      <input id="new-ingredient" placeholder="Name" ng-model="newIngredient.name" autofocus="">
+	  <input id="new-ingredient" placeholder="Color" ng-model="newIngredient.color" autofocus="">
+	  <button>Add</button>
+    </form>
+</div>

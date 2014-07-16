@@ -1,2 +1,2 @@
 // public/js/app.js
-angular.module('barbot', ['ngRoute', 'appRoutes', 'MainCtrl']);
+var barbot = angular.module('barbot', ['ngRoute', 'ngResource', 'appRoutes']);
