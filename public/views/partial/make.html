@@ -1,0 +1,11 @@
+<div id="selectSize">
+    <h1 class="section">Velg en størrelse</h1>
+    <div class="drinkSize" ng-click="selectSize('s')">Shot</div>
+	<div class="drinkSize" ng-click="selectSize('m')">Liten</div>
+	<div class="drinkSize" ng-click="selectSize('l')">Stor</div>
+
+    <div>#make(class="{{selectedDrink.name ? '' : 'noselection'}}")
+		<div>#makeText.title MAKE</div>
+		<div>#makeProgress</div>
+	</div>
+</div>
