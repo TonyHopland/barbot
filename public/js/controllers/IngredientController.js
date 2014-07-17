@@ -10,8 +10,7 @@ angular.module('barbot').controller('IngredientController', function($scope, Ing
         $scope.ingredients = response;
       });
 	};
-	
-	
+
 	$scope.addIngredient = function () {
 
 		var tmpIngredient = new Ingredient({
@@ -25,6 +24,11 @@ angular.module('barbot').controller('IngredientController', function($scope, Ing
 		}
 		$scope.newIngredient = [];
 	};
+
+    $scope.updateIngredient = function(ingredient) {
+        var ingredientToUpdate = new Ingredient(ingredient);
+        ingredientToUpdate.$update();
+    }
 
 	$scope.deleteIngredient = function(index) {
 	    var ingredient_to_delete = $scope.ingredients[index];

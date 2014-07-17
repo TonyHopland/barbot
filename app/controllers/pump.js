@@ -8,19 +8,19 @@ var mongoose = require('mongoose'),
  * Find pump by id and store it in the request
  */
 exports.pump = function(req, res, next, id) {
-  Pump.findById(id, function(err, pump) {
+  Pump.findById(id).populate('ingredient').exec(function(err, pump) {
     if (err) return next(err);
     if (!pump) return next(new Error('Failed to load pump ' + id));
     req.pump = pump;
     next();
   });
-}; 
+};
 
 /**
  * List of pumps
  */
 exports.query = function(req, res) {
-  Pump.find(function(err, pumps) {
+  Pump.find().populate('ingredient').exec(function(err, pumps) {
     if (err) return res.json(500, err);
     res.json(pumps);
   });
@@ -43,8 +43,11 @@ exports.create = function(req, res) {
  * Update a pump
  */
 exports.update = function(req, res) {
+var ingredient = req.body.ingredient;
+req.body.ingredient = ingredient._id; //We send full object but can only save id back to db
   Pump.update({ _id: req.pump._id }, req.body, { }, function(err, updatedPump) {
     if (err) return res.json(500, err);
+	updatedPump.ingredient = ingredient;
     res.json(updatedPump);
   });
 };

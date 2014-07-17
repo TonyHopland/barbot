@@ -1,3 +1,60 @@
 <p>Controls to create a wonderfull drink here...</p>
-<div ng-include src="'./views/partial/ingredients_edit.html'"></div>
+<div id="Create" ng-controller="RecipeController"  >
+    <h2>Recipes</h2>
+    <div id="recipes">
+        <table id="recipe-list">
+            <tr ng-repeat="recipe in recipes">
+                <td>{{recipe.name}}</td>
+                <td>{{recipe.maxsize}}</td>
+                <td><a class="btn" ng-click="editRecipe(recipe)">Edit recipe</a></td>
+            </tr>
+        </table>
+        <a class="btn" ng-click="cancel()">New recipe</a>
+        <a class="btn" ng-click="cancel()">Cancel</a>
+    </div>
+    <h2>Edit recipe</h2>
+    <div id="recipe-editor" ng-controller="IngredientController">
+        <form id="ingredient-form" ng-submit="saveRecipe()">
+            <button>Save</button>
+            <input ng-model="recipe.name"/>
+            <input type="number" ng-model="recipe.maxsize"/>
+            <input ng-model="recipe.image"/>
+            <a class="btn" ng-click="AddIngredient()">Add ingredient</a>
+        <table id="recipe">
+            <tr ng-repeat="part in recipe.recipe">
+                <td><input type="number" ng-model="part.amount"/></td>
+                <td>
+                    <select ng-model="part.ingredient._id" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
+                        <option value="">-- choose ingredient --</option>
+                    </select>
+                </td>
+                <td><input type="number" ng-model="part.order"/></td>
+                <td><input type="number" ng-model="part.startdelay"/></td>
+            <tr>
+        </table>
+        </form>
+    </div>
+    <!--<td>
+        <select ng-model="pump.ingredient._id" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
+            <option value="">-- choose ingredient --</option>
+        </select>
+    </td>-->
+    <!--<h2>Ingredients</h2>
+    <div ng-controller="IngredientController">
+        <table id="ingredient-list">
+            <tr ng-repeat="ingredient in ingredients">
+                <td><input type="color" ng-model="ingredient.color" ng-change="updateIngredient(ingredient)"/></td>
+                <td><input ng-model="ingredient.name" ng-change="updateIngredient(ingredient)"/></td>
+            </tr>
+        </table>
+        <form id="ingredient-form" ng-submit="addIngredient()">
+            <input type="color" placeholder="Color" ng-model="newIngredient.color" autofocus="">
+            <input placeholder="Name" ng-model="newIngredient.name" autofocus="">
+            <button>Add</button>
+        </form>
+    </div>-->
+</div>
+
+<!--
 <div ng-include src="'./views/partial/make.html'"></div>
+-->

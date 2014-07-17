@@ -1,6 +1,7 @@
 // public/js/controllers/pumpController.js
 angular.module('barbot').controller('PumpController', function($scope, Pump) {
 
+
 	$scope.pumps = [];
 
 	$scope.getPumps = function () {
@@ -8,7 +9,6 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
         $scope.pumps = response;
       });
 	};
-
 
     $scope.addPump = function () {
         var index = 0;
@@ -25,8 +25,8 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
     };
 
     $scope.updatePump = function(pump) {
-        pump.$update();
-        $scope.getPumps(); //TODO: Check for better solution, but without this the object get's wierd
+        var pumpToUpdate = new Pump(pump);
+        pumpToUpdate.$update();
     }
 
 	$scope.deletePump = function() {
@@ -37,6 +37,17 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
 	        $scope.pumps.splice(lastIndex-1, 1);
 	    }
 	}
+
+    $scope.fillPump = function (pump) {
+        startPumpTimed(pump.id, pump.tubeLength);
+    }
+
+    $scope.fillAllPumps = function () {
+        for(var i = 0; i < $scope.pumps.length; i++) {
+            var currentPump = $scope.pumps[i];
+            startPumpTimed(currentPump.id, currentPump.tubeLength, pumpStartDelay * i);
+        }
+    }
 
 	$scope.getPumps(); //Run this at startup to fill the table
 });
