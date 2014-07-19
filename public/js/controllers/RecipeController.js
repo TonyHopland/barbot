@@ -5,28 +5,68 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
 	$scope.recipes = [];
 	$scope.recipe = new Recipe();
 
+	var recipeModel = {"name":"New Recipe","maxsize":3,"image":"","recipe":[]};
+	var recipepartModel = {"amount":0,"order":0,"startdelay":0};
+
 	$scope.getRecipes = function () {
 		Recipe.query(function(response) {
         $scope.recipes = response;
       });
 	};
 
-	$scope.AddIngredient = function () {
-	    if($scope.recipe.recipe == undefined)
-	        $scope.recipe.recipe = [];
-	    $scope.recipe.recipe.push(new Recipepart());
+	$scope.AddRecipepart = function () {
+	    if($scope.recipe._related == undefined)
+    	    $scope.recipe._related = [];
+	    if($scope.recipe._related.recipe == undefined)
+	        $scope.recipe._related.recipe = [];
+	    recipepart = new Recipepart(recipepartModel);
+	    recipepart.$save(function(rp, putResponseHeaders) {
+        	    $scope.recipe._related.recipe.push(rp);
+        	    $scope.recipe.recipe.push(rp._id);
+        	    $scope.saveRecipe();
+        });
+
 	}
 
-    $scope.saveRecipe = function() {
-        //var recipeToUpdate = new Recipe($scope.recipe);
-        if($scope.recipe._id == undefined){ //Save new recipe
-            $scope.recipe.$save();
-        }else {
-            $scope.recipe.$update();
-        }
+    $scope.saveRecipepart = function (recipepart) {
+        var recipepartToUpdate = new Recipepart(recipepart);
+        recipepartToUpdate.$update();
     }
+
+    $scope.saveRecipe = function() {
+        var recipeToUpdate = new Recipe($scope.recipe);
+        recipeToUpdate.$update();
+    }
+
     $scope.newRecipe = function () {
-        $scope.recipe = new Recipe();
+        $scope.recipe = new Recipe(recipeModel);
+        $scope.recipe.$save(function(rp, putResponseHeaders) {
+                $scope.recipes.push(rp);
+        });
+    }
+
+	$scope.deleteRecipepart = function(recipepart) {
+	    var index = $scope.recipe.recipe.indexOf(recipepart._id);
+	    var indexrel = $scope.recipe._related.recipe.indexOf(recipepart);
+        recipepart = new Recipepart(recipepart);
+        recipepart.$delete();
+        if(indexrel >= 0){
+            $scope.recipe._related.recipe.splice(indexrel, 1);
+	    }
+	    if(index >= 0){
+             $scope.recipe.recipe.splice(index, 1);
+        }
+        $scope.saveRecipe();
+	}
+    $scope.deleteRecipe = function(recipe) {
+        var index = $scope.recipes.indexOf(recipe);
+        if($scope.recipe == recipe){
+        $scope.recipe =  new Recipe();
+        }
+        recipe.$delete();
+        if(index >= 0){
+            $scope.recipes.splice(index, 1);
+        }
     }
 
     $scope.editRecipe = function(recipe) {

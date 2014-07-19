@@ -1,4 +1,3 @@
-<p>Controls to create a wonderfull drink here...</p>
 <div id="Create" ng-controller="RecipeController"  >
     <h2>Recipes</h2>
     <div id="recipes">
@@ -7,29 +6,29 @@
                 <td>{{recipe.name}}</td>
                 <td>{{recipe.maxsize}}</td>
                 <td><a class="btn" ng-click="editRecipe(recipe)">Edit recipe</a></td>
+                <td><a class="btn" ng-click="deleteRecipe(recipe)">Delete recipe</a></td>
             </tr>
         </table>
-        <a class="btn" ng-click="cancel()">New recipe</a>
-        <a class="btn" ng-click="cancel()">Cancel</a>
+        <a class="btn" ng-click="newRecipe()">New recipe</a>
     </div>
     <h2>Edit recipe</h2>
     <div id="recipe-editor" ng-controller="IngredientController">
         <form id="ingredient-form" ng-submit="saveRecipe()">
-            <button>Save</button>
-            <input ng-model="recipe.name"/>
-            <input type="number" ng-model="recipe.maxsize"/>
-            <input ng-model="recipe.image"/>
-            <a class="btn" ng-click="AddIngredient()">Add ingredient</a>
+            <input ng-model="recipe.name" ng-change="saveRecipe()"/>
+            <input type="number" ng-model="recipe.maxsize" ng-change="saveRecipe()"/>
+            <input ng-model="recipe.image" ng-change="saveRecipe()"/>
+            <a class="btn" ng-click="AddRecipepart()">Add ingredient</a>
         <table id="recipe">
-            <tr ng-repeat="part in recipe.recipe">
-                <td><input type="number" ng-model="part.amount"/></td>
+            <tr ng-repeat="part in recipe._related.recipe">
                 <td>
-                    <select ng-model="part.ingredient._id" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
+                    <select ng-model="part.ingredient" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="saveRecipepart(part)" >
                         <option value="">-- choose ingredient --</option>
                     </select>
                 </td>
-                <td><input type="number" ng-model="part.order"/></td>
-                <td><input type="number" ng-model="part.startdelay"/></td>
+                <td><input type="number" ng-model="part.amount" ng-change="saveRecipepart(part)"/></td>
+                <td><input type="number" ng-model="part.order" ng-change="saveRecipepart(part)" /></td>
+                <td><input type="number" ng-model="part.startdelay" ng-change="saveRecipepart(part)" /></td>
+                <td><a class="btn" ng-click="deleteRecipepart(part)">Delete ingredient</a></td>
             <tr>
         </table>
         </form>

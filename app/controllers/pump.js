@@ -2,6 +2,7 @@
  
 var mongoose = require('mongoose'),
   Pump = mongoose.model('Pump');
+  Ingredient = mongoose.model('Ingredient');
  
  
 /**
@@ -43,12 +44,15 @@ exports.create = function(req, res) {
  * Update a pump
  */
 exports.update = function(req, res) {
-var ingredient = req.body.ingredient;
-req.body.ingredient = ingredient._id; //We send full object but can only save id back to db
   Pump.update({ _id: req.pump._id }, req.body, { }, function(err, updatedPump) {
     if (err) return res.json(500, err);
-	updatedPump.ingredient = ingredient;
-    res.json(updatedPump);
+	Ingredient.update({pump: req.pump._id}, { $set : { pump: null }}, function(err, updateding) {
+		if (err) return res.json(500, err);
+		Ingredient.update({_id: req.body.ingredient}, { $set : { pump: req.pump._id }}, function(err, updateding) {
+			if (err) return res.json(500, err);
+		});
+	});
+	res.json(updatedPump);
   });
 };
  

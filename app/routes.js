@@ -38,6 +38,10 @@
 		app.put('/api/recipeparts/:recipepartId', recipeparts.update);
 		app.delete('/api/recipeparts/:recipepartId', recipeparts.remove);
 		
+		var drink = require('./controllers/drink');
+		app.param('drinkId', drink.drink);
+		app.get('/api/drinks', drink.query);
+		
 		// frontend routes =========================================================
 		// route to handle all angular requests
 		app.get('*', function(req, res) {

@@ -18,15 +18,22 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
             id: index,
             tubeLength: 1000,
         });
-        var newPump = tmpPump.$save();
-        if(undefined != newPump){
-            $scope.pumps.push(tmpPump);
-        }
+        tmpPump.$save(function(pmp, putResponseHeaders) {
+             $scope.pumps.push(pmp);
+        });
+
     };
 
     $scope.updatePump = function(pump) {
         var pumpToUpdate = new Pump(pump);
         pumpToUpdate.$update();
+        for(p in $scope.pumps){
+            if($scope.pumps[p] != pump && $scope.pumps[p].ingredient == pump.ingredient){
+                $scope.pumps[p].ingredient = null;
+                var pumpToUpdate = new Pump($scope.pumps[p]);
+                pumpToUpdate.$update();
+            }
+        }
     }
 
 	$scope.deletePump = function() {

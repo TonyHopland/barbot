@@ -1,1 +1,34 @@
-<p>No place like home!</p>
+<div id="Barbot" ng-controller="DrinkController"  >
+    <h2>Drinks</h2>
+    <div id="recipes">
+
+        <div ng-repeat="drink in drinks">
+            <a ng-click="selectDrink(drink)"><h2>{{drink.name}}</h2></a>
+            <div class="ingredients">
+                <p ng-repeat="part in drink.recipe">
+                    {{part.ingredient.name}}
+                </p>
+            </div>
+        </div>
+        <p>Drinks with one or more ingredient missing from machine</p>
+        <div ng-repeat="drink in missingDrinks">
+            <a ng-click="selectDrink(drink)"><h2>{{drink.name}}</h2></a>
+            <div class="ingredients">
+                <p ng-repeat="part in drink.recipe">
+                    {{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="recipe_details">
+        <h2>{{selectedDrink.name}}</h2>
+        <div class="ingredients">
+
+            <div ng-repeat="part in selectedDrink.recipe">
+                <div ng-style="{width:'30px', height:'30px', float:'left', background_color: part.ingredient.color}"></div>
+                <p>{{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}} {{part.ingredient.color}}</p>
+            </div>
+        </div>
+    </div>
+    <a ng-click="createDrink(20000)"><h2>Make!</h2></a>
+</div>

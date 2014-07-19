@@ -9,7 +9,7 @@
                 <td>Pump {{pump.id+1}}</td>
                 <td><input type="number" ng-model="pump.tubeLength" ng-change="updatePump(pump)"></td>
                 <td>
-                    <select ng-model="pump.ingredient._id" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
+                    <select ng-model="pump.ingredient" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
                         <option value="">-- choose ingredient --</option>
                     </select>
                 </td>

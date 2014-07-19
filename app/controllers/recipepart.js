@@ -43,11 +43,8 @@ exports.create = function(req, res) {
  * Update a recipepart
  */
 exports.update = function(req, res) {
-var ingredient = req.body.ingredient;
-req.body.ingredient = ingredient._id; //We send full object but can only save id back to db
   Recipepart.update({ _id: req.recipepart._id }, req.body, { }, function(err, updatedRecipepart) {
     if (err) return res.json(500, err);
-	updatedrecipepart.ingredient = ingredient;
     res.json(updatedRecipepart);
   });
 };

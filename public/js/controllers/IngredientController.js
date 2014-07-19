@@ -18,10 +18,9 @@ angular.module('barbot').controller('IngredientController', function($scope, Ing
 			color: $scope.newIngredient.color
 		});
 		
-		var savedIngredient = tmpIngredient.$save();
-		if(undefined != savedIngredient){
-		    $scope.ingredients.push(tmpIngredient);
-		}
+		tmpIngredient.$save(function(newingredient, putResponseHeaders) {
+              $scope.ingredients.push(newingredient);
+        });
 		$scope.newIngredient = [];
 	};
 
