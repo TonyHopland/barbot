@@ -9,7 +9,7 @@ angular.module('barbot').controller('DrinkController', function($scope, Drink) {
 
 	$scope.getDrinks = function () {
 		Drink.query(function(response) {
-		for(var d in response){
+		for(var d = 0; d < response.length; d++) {
 		    var missingIngredients = false;
 		    for(var r in response[d].recipe){
 		        if (response[d].recipe[r].ingredient.pump == null){
@@ -40,8 +40,45 @@ angular.module('barbot').controller('DrinkController', function($scope, Drink) {
 	    return amount * $scope.normalFactor;
 	}
 
+    $scope.getGlassPart = function (part) {
+        return {
+            height: $scope.getAmountInPercent(part.amount) + "%",
+            background_color: part.ingredient.color
+        }
+    }
+
+    $scope.getCurrentDrinkNotes = function () {
+        if($scope.selectedDrink != undefined) {
+            var note = "";
+            var missingIngredients = [];
+            for(var i in $scope.selectedDrink.recipe){
+                if(!$scope.selectedDrink.recipe[i].ingredient.pump) {
+                    missingIngredients.push($scope.selectedDrink.recipe[i].ingredient.name);
+                }
+            }
+            if(missingIngredients.length > 0){
+                note = "The following ingredients are missing from the machine and have to be added to the drink manually:";
+                for (var i in missingIngredients){
+                    note = note + "\n" + missingIngredients[i];
+                }
+                if($scope.selectedDrink.notes != undefined || $scope.selectedDrink.notes)
+                    note = note + "\n\n Aditional notes: \n";
+            }
+            if($scope.selectedDrink.notes != undefined || $scope.selectedDrink.notes)
+                note = note + $scope.selectedDrink.notes;
+            return note;
+        } else {
+            return "";
+        }
+    }
+
+    var makingDrink = false;
     $scope.createDrink = function(size) {
-        if($scope.selectedDrink == undefined || isNaN($scope.normalFactor) ){
+        if(makingDrink){
+            alert("Please wait for current drink to finish");
+            return;
+        }
+        if($scope.selectedDrink == undefined || isNaN($scope.normalFactor)){
             //Print error?
             return;
         }
@@ -60,17 +97,24 @@ angular.module('barbot').controller('DrinkController', function($scope, Drink) {
             }
             );
         }
+        makingDrink = true;
+        dispenseDrink($scope.selectedDrink.name,drinkInstructions);
+        var timeToMake = calculateDrinkTime(drinkInstructions);
+        console.log(timeToMake);
+        setTimeout(function () {
+            makingDrink = false;
+        }, timeToMake);
 
-        //console.log(drinkInstructions);
-        dispenseDrink(drinkInstructions);
+        //dispenseDrink(drinkInstructions);
     }
 
-    dispenseDrink = function (instructions) {
+    calculateDrinkTime = function(instructions){
         instructions = instructions.sort(function(a, b) {
-                return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
+            return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
         });
         currentStep = -10000;
         var orderSteps = []
+        var totalTime = 0;
         for(var inst in instructions){
             if(currentStep < instructions[inst].order){
                 currentStep = instructions[inst].order
@@ -82,33 +126,12 @@ angular.module('barbot').controller('DrinkController', function($scope, Drink) {
             if(instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
             && instructions[inst].pump >= 0)
                 orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay;
-            orderSteps[currentStep].steps.push(instructions[inst]);
+        }
+        for(var step in orderSteps) {
+            totalTime += orderSteps[step].maxLength;
         }
 
-        var totalDelay = 0;
-        var prevDelay = -5;
-        for (var step in orderSteps) {
-            var noPumpsStarted = true;
-            for (var ing in orderSteps[step].steps) {
-                var startDelay = (orderSteps[step].maxLength - orderSteps[step].steps[ing].time) + totalDelay;
-                if(prevDelay == startDelay){ //Preventing pumps from starting at exact same time (Being nice to the power supply).
-                    startDelay += (pumpStartDelay * ing);
-                }else{
-                    prevDelay = startDelay;
-                }
-                if(orderSteps[step].steps[ing].pump >= 0){
-                    startPumpTimed(orderSteps[step].steps[ing].pump, orderSteps[step].steps[ing].time, startDelay);
-                    noPumpsStarted = false;
-                }
-            }
-            if(!noPumpsStarted){
-                totalDelay += orderSteps[step].maxLength;
-            }
-        }
-
-        console.log(orderSteps);
-
-        //startPumpTimed(currentPump.id, currentPump.tubeLength, pumpStartDelay * i);
+        return totalTime;
     }
 
 	$scope.getDrinks(); //Run this at startup to fill the table

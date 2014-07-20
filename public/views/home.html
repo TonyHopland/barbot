@@ -1,34 +1,47 @@
-<div id="Barbot" ng-controller="DrinkController"  >
-    <h2>Drinks</h2>
-    <div id="recipes">
-
-        <div ng-repeat="drink in drinks">
-            <a ng-click="selectDrink(drink)"><h2>{{drink.name}}</h2></a>
+<div ng-controller="DrinkController"  >
+    <div class="flexcontainer" >
+        <div class="drinks">
+            <h2 class="header">Drinks</h2>
+            <div class="list">
+            <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in drinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)">
+                <h2><span>{{drink.name}}</span></h2>
+                <div class="ingredients">
+                    <p ng-repeat="part in drink.recipe">
+                        {{part.ingredient.name}}
+                    </p>
+                </div>
+            </div>
+            <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in missingDrinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)">
+                <h2><span>{{drink.name}}</span></h2>
+                <div class="ingredients">
+                    <p ng-repeat="part in drink.recipe">
+                        {{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}
+                    </p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="drinkdetails">
+            <h2 class="header"> {{selectedDrink != undefined ? selectedDrink.name : "Drink details"}} </h2>
             <div class="ingredients">
-                <p ng-repeat="part in drink.recipe">
-                    {{part.ingredient.name}}
-                </p>
-            </div>
-        </div>
-        <p>Drinks with one or more ingredient missing from machine</p>
-        <div ng-repeat="drink in missingDrinks">
-            <a ng-click="selectDrink(drink)"><h2>{{drink.name}}</h2></a>
-            <div class="ingredients">
-                <p ng-repeat="part in drink.recipe">
-                    {{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}
-                </p>
-            </div>
-        </div>
-    </div>
-    <div id="recipe_details">
-        <h2>{{selectedDrink.name}}</h2>
-        <div class="ingredients">
 
-            <div ng-repeat="part in selectedDrink.recipe">
-                <div ng-style="{width:'30px', height:'30px', float:'left', background_color: part.ingredient.color}"></div>
-                <p>{{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}} {{part.ingredient.color}}</p>
+                <div class="ingredientglass" >
+                    <h3>Ratio</h3>
+                    <div ng-repeat="part in selectedDrink.recipe" class="ingredientpart" ng-style="getGlassPart(part)"></div>
+                </div>
+                <div class="ingredientstatus">
+                    <h3>Ingredients</h3>
+                    <p ng-style="{color: part.ingredient.color}" ng-repeat="part in selectedDrink.recipe">{{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}</p>
+                </div>
+            </div>
+            <div class="drinknotes">
+                <h3>Notes</h3>
+                <p><pre>{{getCurrentDrinkNotes()}}</pre></p>
             </div>
         </div>
+        <div ng-click="createDrink(20000)" class="make {{selectedDrink ? '' : 'noselection'}}">
+            <h2>Make!</h2>
+        </div>
+
     </div>
-    <a ng-click="createDrink(20000)"><h2>Make!</h2></a>
 </div>

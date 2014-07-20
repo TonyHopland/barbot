@@ -1,0 +1,74 @@
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flex-direction($values) {
+  -webkit-box-flex-direction: $values;
+  -moz-box-flex-direction:  $values;
+  -webkit-flex-direction:  $values;
+  -ms-flex-direction:  $values;
+  flex-direction:  $values;
+}
+
+@mixin flex-wrap($values) {
+  -webkit-box-flex-wrap: $values;
+  -moz-box-flex-wrap:  $values;
+  -webkit-flex-wrap:  $values;
+  -ms-flex-wrap:  $values;
+  flex-wrap:  $values;
+}
+
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+  -moz-box-flex:  $values;
+  -webkit-flex:  $values;
+  -ms-flex:  $values;
+  flex:  $values;
+}
+
+@mixin order($val) {
+  -webkit-box-ordinal-group: $val;
+  -moz-box-ordinal-group: $val;
+  -ms-flex-order: $val;
+  -webkit-order: $val;
+  order: $val;
+}
+
+@mixin filter($filter-type,$filter-amount) {
+  -webkit-filter: $filter-type+unquote('(#{$filter-amount})');
+  -moz-filter: $filter-type+unquote('(#{$filter-amount})');
+  -ms-filter: $filter-type+unquote('(#{$filter-amount})');
+  -o-filter: $filter-type+unquote('(#{$filter-amount})');
+  filter: $filter-type+unquote('(#{$filter-amount})');
+}
+
+@mixin scrollbar() {
+
+    background-color          : rgba(0, 0, 0, 0.2);
+    scrollbar-face-color      : rgba(0, 0, 0, 0.2);
+    scrollbar-arrow-color     : rgba(0, 0, 0, 0.1);
+    scrollbar-track-color     : rgba(0, 0, 0, 0.1);
+    scrollbar-shadow-color    : rgba(0, 0, 0, 0.2);
+    scrollbar-highlight-color : rgba(0, 0, 0, 0.2);
+    scrollbar-3dlight-color   : rgba(0, 0, 0, 0.2);
+    scrollbar-darkshadow-Color: rgba(0, 0, 0, 0.2);
+
+}
+::-webkit-scrollbar
+{
+  width: 5px;  /* for vertical scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.2);
+}

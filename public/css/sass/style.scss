@@ -1,0 +1,146 @@
+@import 'mixins';
+@import 'reset';
+@import 'variables';
+
+html {
+    background: url(/img/bouvet.jpg) no-repeat center center fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    @include scrollbar();
+}
+
+header {
+    @include flexbox();
+    @include flex-direction(column);
+    align-items: center;
+    margin: 25px;
+    h1 {
+        color: red;
+        font-size: 5em;
+    }
+    p {
+        font-size: 2em;
+    }
+}
+
+.flexcontainer {
+    @include flexbox();
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+    justify-content: space-around;
+    margin:0px;
+}
+
+.header{
+        text-align: center;
+        width: 100%;
+        background-color: $transparent-black;
+        color: white;
+        font-size: 3em;
+        margin: 0px;
+}
+
+.drinks {
+    background-color: $transparent-black;
+
+
+    width: 100%;
+
+    @media (min-width : 480px) {
+        width:40%;
+    }
+    @media (min-width : 1024px) {
+        width:50%;
+    }
+    .list {
+         @include flexbox();
+         @include flex-direction(row);
+         @include flex-wrap(wrap);
+         justify-content: space-around;
+         align-items: flex-start;
+         width: 100%;
+         max-height: 600px;
+         overflow-y: auto;
+
+        .drinkview{
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 150px;
+            height: 150px;
+            margin: 25px 0px 25px 0px;
+
+            &.selected {
+                h2 {
+                    background-color: $transparent-orange;
+                }
+            }
+
+            h2 {
+                background-color: $transparent-black;
+                color: white;
+            }
+
+            .ingredients {
+                display: none;
+            }
+
+            @media (min-width : 480px) {
+                width: 180px;
+                height: 180px;
+            }
+            @media (min-width : 1024px) {
+                width: 230px;
+                height: 230px;
+            }
+        }
+    }
+}
+.drinkdetails {
+    width: 100%;
+    background-color: $transparent-black;
+
+    h3 {
+        text-decoration: underline;
+        margin-bottom: 5px;
+    }
+
+    .ingredients{
+        @include flexbox();
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+        justify-content: space-around;
+        align-items: flex-start;
+        margin: 25px 25px 25px 25px;
+
+        .ingredientglass {
+            width: 20%;
+            height: 250px;
+            .ingredientpart {
+                width: 80%;
+            }
+        }
+        .ingredientstatus {
+            width: 80%;
+            p {
+                font-size: 1.5em;
+            }
+        }
+    }
+    .drinknotes {
+        margin: 50px 25px 25px 25px;
+    }
+    @media (min-width : 480px) {
+        width:60%;
+    }
+
+    @media (min-width : 1024px) {
+      width:50%;
+    }
+}
+
+.make {
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+}

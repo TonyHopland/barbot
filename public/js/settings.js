@@ -1,1 +1,1 @@
-var pumpStartDelay = 25;
+var drinkSizes = { shot: 15000, medium: 65000, large: 120000 };

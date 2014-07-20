@@ -6,6 +6,7 @@ RecipeSchema = new mongoose.Schema({
 	name: 		String,
 	maxsize: 	Number,
 	image:		String,
+	notes:		String,
 	recipe: 	[{ 
 					type : mongoose.Schema.ObjectId, 
 					ref : 'Recipepart',

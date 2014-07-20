@@ -52,7 +52,7 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
     $scope.fillAllPumps = function () {
         for(var i = 0; i < $scope.pumps.length; i++) {
             var currentPump = $scope.pumps[i];
-            startPumpTimed(currentPump.id, currentPump.tubeLength, pumpStartDelay * i);
+            startPumpTimed(currentPump.id, currentPump.tubeLength);
         }
     }
 

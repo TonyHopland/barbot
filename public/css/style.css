@@ -1,0 +1,262 @@
+/* line 62, sass/_mixins.scss */
+::-webkit-scrollbar {
+  width: 5px;
+  /* for vertical scrollbars */
+}
+
+/* line 67, sass/_mixins.scss */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* line 72, sass/_mixins.scss */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* line 2, sass/_reset.scss */
+h1, h2, h3, h4, h5, p, body {
+  margin: 0px;
+  color: white;
+}
+
+/* line 8, sass/_reset.scss */
+::-webkit-scrollbar {
+  width: 5px;
+  /* for vertical scrollbars */
+}
+
+/* line 13, sass/_reset.scss */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* line 18, sass/_reset.scss */
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* line 22, sass/_reset.scss */
+pre {
+  white-space: pre-wrap;
+}
+
+/* line 5, sass/style.scss */
+html {
+  background: url(/img/bouvet.jpg) no-repeat center center fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.2);
+  scrollbar-face-color: rgba(0, 0, 0, 0.2);
+  scrollbar-arrow-color: rgba(0, 0, 0, 0.1);
+  scrollbar-track-color: rgba(0, 0, 0, 0.1);
+  scrollbar-shadow-color: rgba(0, 0, 0, 0.2);
+  scrollbar-highlight-color: rgba(0, 0, 0, 0.2);
+  scrollbar-3dlight-color: rgba(0, 0, 0, 0.2);
+  scrollbar-darkshadow-Color: rgba(0, 0, 0, 0.2);
+}
+
+/* line 12, sass/style.scss */
+header {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex-direction: column;
+  -moz-box-flex-direction: column;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px;
+}
+/* line 17, sass/style.scss */
+header h1 {
+  color: red;
+  font-size: 5em;
+}
+/* line 21, sass/style.scss */
+header p {
+  font-size: 2em;
+}
+
+/* line 26, sass/style.scss */
+.flexcontainer {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex-direction: row;
+  -moz-box-flex-direction: row;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex-wrap: wrap;
+  -moz-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 0px;
+}
+
+/* line 34, sass/style.scss */
+.header {
+  text-align: center;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-size: 3em;
+  margin: 0px;
+}
+
+/* line 43, sass/style.scss */
+.drinks {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+}
+@media (min-width: 480px) {
+  /* line 43, sass/style.scss */
+  .drinks {
+    width: 40%;
+  }
+}
+@media (min-width: 1024px) {
+  /* line 43, sass/style.scss */
+  .drinks {
+    width: 50%;
+  }
+}
+/* line 55, sass/style.scss */
+.drinks .list {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex-direction: row;
+  -moz-box-flex-direction: row;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex-wrap: wrap;
+  -moz-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
+  max-height: 600px;
+  overflow-y: auto;
+}
+/* line 65, sass/style.scss */
+.drinks .list .drinkview {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 150px;
+  height: 150px;
+  margin: 25px 0px 25px 0px;
+}
+/* line 74, sass/style.scss */
+.drinks .list .drinkview.selected h2 {
+  background-color: rgba(231, 76, 60, 0.6);
+}
+/* line 79, sass/style.scss */
+.drinks .list .drinkview h2 {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+/* line 84, sass/style.scss */
+.drinks .list .drinkview .ingredients {
+  display: none;
+}
+@media (min-width: 480px) {
+  /* line 65, sass/style.scss */
+  .drinks .list .drinkview {
+    width: 180px;
+    height: 180px;
+  }
+}
+@media (min-width: 1024px) {
+  /* line 65, sass/style.scss */
+  .drinks .list .drinkview {
+    width: 230px;
+    height: 230px;
+  }
+}
+
+/* line 99, sass/style.scss */
+.drinkdetails {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+/* line 103, sass/style.scss */
+.drinkdetails h3 {
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+/* line 108, sass/style.scss */
+.drinkdetails .ingredients {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex-direction: row;
+  -moz-box-flex-direction: row;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex-wrap: wrap;
+  -moz-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 25px 25px 25px 25px;
+}
+/* line 116, sass/style.scss */
+.drinkdetails .ingredients .ingredientglass {
+  width: 20%;
+  height: 250px;
+}
+/* line 119, sass/style.scss */
+.drinkdetails .ingredients .ingredientglass .ingredientpart {
+  width: 80%;
+}
+/* line 123, sass/style.scss */
+.drinkdetails .ingredients .ingredientstatus {
+  width: 80%;
+}
+/* line 125, sass/style.scss */
+.drinkdetails .ingredients .ingredientstatus p {
+  font-size: 1.5em;
+}
+/* line 130, sass/style.scss */
+.drinkdetails .drinknotes {
+  margin: 50px 25px 25px 25px;
+}
+@media (min-width: 480px) {
+  /* line 99, sass/style.scss */
+  .drinkdetails {
+    width: 60%;
+  }
+}
+@media (min-width: 1024px) {
+  /* line 99, sass/style.scss */
+  .drinkdetails {
+    width: 50%;
+  }
+}
+
+/* line 142, sass/style.scss */
+.make {
+  width: 100%;
+  text-align: center;
+  font-size: 2em;
+}

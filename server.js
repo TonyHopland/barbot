@@ -54,4 +54,8 @@ io.sockets.on('connection', function (socket) {
   socket.on("Pump Ms", function (pump, ms) {
     hardware.pumpMilliseconds(pump, ms);
   });
+  
+  socket.on("Dispense drink", function (name, instructions) {
+    hardware.dispenseDrink(name, instructions);
+  });
 });

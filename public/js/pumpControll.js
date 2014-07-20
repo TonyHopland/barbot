@@ -1,9 +1,7 @@
 	var socket = io.connect();
 		
-	startPumpTimed = function (index, ms, delay) {
-		setTimeout(function () {
-			socket.emit('Pump Ms', {pump:index, time:ms});
-		},delay);
+	startPumpTimed = function (index, ms) {
+	    socket.emit('Pump Ms', index, ms);
     }
 
 	startPump = function (index) {
@@ -12,4 +10,8 @@
 
     stopPump = function (index) {
       socket.emit('Stop Pump', index);
+    }
+
+    dispenseDrink = function (name, instructions) {
+        socket.emit('Dispense drink', name, instructions);
     }

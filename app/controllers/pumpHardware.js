@@ -3,6 +3,8 @@
 var board, pump0, pump1, pump2, pump3, pump4, pump5;
 
 var barReady = false;
+
+var minPumpDelay = 30;
 /*
 var five = require('johnny-five');
 board = new five.Board('COM5');
@@ -29,23 +31,51 @@ board.on('ready', function () {
 });
 */
 
+var lastStart = new Date();
 
-exports.pumpMilliseconds = function (pumptime) {
-  console.log("[PUMP] Scheduling pump " + pumptime.pump + " duration: " + pumptime.time + "ms");
-  exports.startPump(pumptime.pump);
-  setTimeout(function () {
-    exports.stopPump(pumptime.pump);
-  }, pumptime.time);
+canStartNewPump = function(resetTimer){
+	var timeDiff = new Date() - lastStart;
+	
+	if(timeDiff >= 30) {
+		if(resetTimer){
+			lastStart = new Date();
+		}
+		return true;
+	} else {
+		return false;
+	}
+
+}
+
+
+exports.pumpMilliseconds = function (pump, ms) {
+	if(canStartNewPump(false)){
+		console.log("[PUMP] Scheduling pump " + pump + " duration: " + ms + "ms");
+		exports.startPump(pump);
+		setTimeout(function () {
+			exports.stopPump(pump);
+		}, ms);
+	}else {
+		setTimeout(function () {
+			exports.pumpMilliseconds(pump, ms);
+		}, 10);
+	}
 }
 
 exports.startPump = function (pump) {
-  var p = exports.usePump(pump);
-  if (p != undefined && barReady) {
-	p.on();
-	console.log("[PUMP] Starting pump " + pump);
-  } else {
-	console.log("[PUMP] Unable to start pump " + pump);
-  }
+	var p = exports.usePump(pump);
+	if (p != undefined && barReady) {
+		if(canStartNewPump(true)){
+			p.on();
+			console.log("[PUMP] Starting pump " + pump);
+		}else {
+			setTimeout(function () {
+				startPump(pump);
+			}, 10);
+		}
+	} else {
+		console.log("[PUMP] Unable to start pump " + pump);
+	}
 }
 
 exports.stopPump = function (pump) {
@@ -84,4 +114,48 @@ exports.usePump = function (pump) {
       break;
   }
   return using;
+}
+
+delayedPumpMilliseconds = function (pump, ms, delay) {
+	setTimeout(function () {
+		exports.pumpMilliseconds(pump, ms);
+	}, delay);
+}
+
+exports.dispenseDrink = function (name, instructions) {
+  console.log("[PUMP] Dispensing drink: " + name);
+  instructions = instructions.sort(function(a, b) {
+                return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
+        });
+        currentStep = -10000;
+        var orderSteps = []
+        for(var inst in instructions){
+            if(currentStep < instructions[inst].order){
+                currentStep = instructions[inst].order
+                //orderSteps.push(currentStep);
+                orderSteps[currentStep] = {};
+                orderSteps[currentStep].maxLength = 0;
+                orderSteps[currentStep].steps = []
+            }
+            if(instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
+            && instructions[inst].pump >= 0)
+                orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay;
+            orderSteps[currentStep].steps.push(instructions[inst]);
+        }
+
+        var totalDelay = 0;
+        var prevDelay = -5;
+        for (var step in orderSteps) {
+            var noPumpsStarted = true;
+            for (var ing in orderSteps[step].steps) {
+                var startDelay = (orderSteps[step].maxLength - orderSteps[step].steps[ing].time) + totalDelay;
+                if(orderSteps[step].steps[ing].pump >= 0){
+					delayedPumpMilliseconds(orderSteps[step].steps[ing].pump, orderSteps[step].steps[ing].time, startDelay);
+                    noPumpsStarted = false;
+                }
+            }
+            if(!noPumpsStarted){
+                totalDelay += orderSteps[step].maxLength;
+            }
+        }
 }
