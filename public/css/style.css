@@ -41,7 +41,31 @@ pre {
   white-space: pre-wrap;
 }
 
-/* line 5, sass/style.scss */
+@keyframes expand {
+  /* line 2, sass/_animations.scss */
+  from {
+    width: 0%;
+  }
+
+  /* line 3, sass/_animations.scss */
+  to {
+    width: 100%;
+  }
+}
+
+@-webkit-keyframes expand {
+  /* line 6, sass/_animations.scss */
+  from {
+    width: 0%;
+  }
+
+  /* line 7, sass/_animations.scss */
+  to {
+    width: 100%;
+  }
+}
+
+/* line 6, sass/style.scss */
 html {
   background: url(/img/bouvet.jpg) no-repeat center center fixed;
   background-size: cover;
@@ -56,7 +80,7 @@ html {
   scrollbar-darkshadow-Color: rgba(0, 0, 0, 0.2);
 }
 
-/* line 12, sass/style.scss */
+/* line 13, sass/style.scss */
 header {
   display: -webkit-box;
   display: -moz-box;
@@ -71,17 +95,17 @@ header {
   align-items: center;
   margin: 25px;
 }
-/* line 17, sass/style.scss */
+/* line 18, sass/style.scss */
 header h1 {
   color: red;
   font-size: 5em;
 }
-/* line 21, sass/style.scss */
+/* line 22, sass/style.scss */
 header p {
   font-size: 2em;
 }
 
-/* line 26, sass/style.scss */
+/* line 27, sass/style.scss */
 .flexcontainer {
   display: -webkit-box;
   display: -moz-box;
@@ -102,7 +126,7 @@ header p {
   margin: 0px;
 }
 
-/* line 34, sass/style.scss */
+/* line 35, sass/style.scss */
 .header {
   text-align: center;
   width: 100%;
@@ -112,24 +136,24 @@ header p {
   margin: 0px;
 }
 
-/* line 43, sass/style.scss */
+/* line 44, sass/style.scss */
 .drinks {
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
 }
 @media (min-width: 480px) {
-  /* line 43, sass/style.scss */
+  /* line 44, sass/style.scss */
   .drinks {
     width: 40%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 43, sass/style.scss */
+  /* line 44, sass/style.scss */
   .drinks {
     width: 50%;
   }
 }
-/* line 55, sass/style.scss */
+/* line 56, sass/style.scss */
 .drinks .list {
   display: -webkit-box;
   display: -moz-box;
@@ -152,54 +176,56 @@ header p {
   max-height: 600px;
   overflow-y: auto;
 }
-/* line 65, sass/style.scss */
+/* line 66, sass/style.scss */
 .drinks .list .drinkview {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: 5px;
   width: 150px;
   height: 150px;
   margin: 25px 0px 25px 0px;
 }
-/* line 74, sass/style.scss */
+/* line 76, sass/style.scss */
 .drinks .list .drinkview.selected h2 {
-  background-color: rgba(231, 76, 60, 0.6);
+  background-color: rgba(255, 0, 0, 0.7);
 }
-/* line 79, sass/style.scss */
+/* line 81, sass/style.scss */
 .drinks .list .drinkview h2 {
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
+  border-radius: 5px 5px 0 0;
 }
-/* line 84, sass/style.scss */
+/* line 87, sass/style.scss */
 .drinks .list .drinkview .ingredients {
   display: none;
 }
 @media (min-width: 480px) {
-  /* line 65, sass/style.scss */
+  /* line 66, sass/style.scss */
   .drinks .list .drinkview {
     width: 180px;
     height: 180px;
   }
 }
 @media (min-width: 1024px) {
-  /* line 65, sass/style.scss */
+  /* line 66, sass/style.scss */
   .drinks .list .drinkview {
     width: 230px;
     height: 230px;
   }
 }
 
-/* line 99, sass/style.scss */
+/* line 102, sass/style.scss */
 .drinkdetails {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 }
-/* line 103, sass/style.scss */
+/* line 106, sass/style.scss */
 .drinkdetails h3 {
   text-decoration: underline;
   margin-bottom: 5px;
 }
-/* line 108, sass/style.scss */
+/* line 111, sass/style.scss */
 .drinkdetails .ingredients {
   display: -webkit-box;
   display: -moz-box;
@@ -220,43 +246,106 @@ header p {
   align-items: flex-start;
   margin: 25px 25px 25px 25px;
 }
-/* line 116, sass/style.scss */
+/* line 119, sass/style.scss */
 .drinkdetails .ingredients .ingredientglass {
   width: 20%;
   height: 250px;
 }
-/* line 119, sass/style.scss */
+/* line 122, sass/style.scss */
 .drinkdetails .ingredients .ingredientglass .ingredientpart {
   width: 80%;
 }
-/* line 123, sass/style.scss */
+/* line 126, sass/style.scss */
 .drinkdetails .ingredients .ingredientstatus {
   width: 80%;
 }
-/* line 125, sass/style.scss */
+/* line 128, sass/style.scss */
 .drinkdetails .ingredients .ingredientstatus p {
   font-size: 1.5em;
 }
-/* line 130, sass/style.scss */
+/* line 136, sass/style.scss */
 .drinkdetails .drinknotes {
   margin: 50px 25px 25px 25px;
 }
 @media (min-width: 480px) {
-  /* line 99, sass/style.scss */
+  /* line 102, sass/style.scss */
   .drinkdetails {
     width: 60%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 99, sass/style.scss */
+  /* line 102, sass/style.scss */
   .drinkdetails {
     width: 50%;
   }
 }
 
-/* line 142, sass/style.scss */
-.make {
+/* line 148, sass/style.scss */
+.sizeselect {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex-direction: row;
+  -moz-box-flex-direction: row;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-flex-wrap: wrap;
+  -moz-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
   width: 100%;
-  text-align: center;
+}
+/* line 156, sass/style.scss */
+.sizeselect .sizebtn {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  margin: 10px;
   font-size: 2em;
+  border-radius: 12px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+/* line 167, sass/style.scss */
+.sizeselect .sizebtn.selected {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+/* line 170, sass/style.scss */
+.sizeselect .sizebtn.disabled {
+  background-color: gray;
+}
+
+/* line 176, sass/style.scss */
+.make {
+  position: relative;
+  width: 50%;
+  height: 100px;
+  line-height: 100px;
+  margin: 10px;
+  font-size: 3em;
+  border-radius: 12px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+/* line 189, sass/style.scss */
+.make h3 {
+  position: relative;
+}
+/* line 193, sass/style.scss */
+.make .progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 0, 0, 0.7);
+  height: 100%;
+  width: 0%;
 }

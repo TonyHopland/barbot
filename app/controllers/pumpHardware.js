@@ -49,6 +49,9 @@ canStartNewPump = function(resetTimer){
 
 
 exports.pumpMilliseconds = function (pump, ms) {
+	if(ms <= 0){
+		return;
+	}
 	if(canStartNewPump(false)){
 		console.log("[PUMP] Scheduling pump " + pump + " duration: " + ms + "ms");
 		exports.startPump(pump);

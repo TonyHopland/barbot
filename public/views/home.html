@@ -27,11 +27,11 @@
 
                 <div class="ingredientglass" >
                     <h3>Ratio</h3>
-                    <div ng-repeat="part in selectedDrink.recipe" class="ingredientpart" ng-style="getGlassPart(part)"></div>
+                    <div ng-repeat="part in selectedDrink.recipe" class="ingredientpart" ng-style="getGlassCss(part)"></div>
                 </div>
                 <div class="ingredientstatus">
                     <h3>Ingredients</h3>
-                    <p ng-style="{color: part.ingredient.color}" ng-repeat="part in selectedDrink.recipe">{{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}</p>
+                    <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipe"><span>{{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}</span></p>
                 </div>
             </div>
             <div class="drinknotes">
@@ -39,8 +39,12 @@
                 <p><pre>{{getCurrentDrinkNotes()}}</pre></p>
             </div>
         </div>
-        <div ng-click="createDrink(20000)" class="make {{selectedDrink ? '' : 'noselection'}}">
-            <h2>Make!</h2>
+        <div class="sizeselect">
+            <div ng-repeat="size in drinkSizes" ng-click="selectSize(size)" class="sizebtn {{selectedSize==size ? 'selected' : ''}} {{selectedDrink.maxsize<size.id ? 'disabled' : ''}}">{{size.name}}</div>
+        </div>
+        <div ng-click="createDrink()" class="make {{selectedDrink ? '' : 'noselection'}}">
+            <div class="progress" ng-style="getProgressCss()"></div>
+            <h3>Make</h3>
         </div>
 
     </div>

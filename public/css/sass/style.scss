@@ -1,6 +1,7 @@
 @import 'mixins';
 @import 'reset';
 @import 'variables';
+@import 'animations';
 
 html {
     background: url(/img/bouvet.jpg) no-repeat center center fixed;
@@ -66,6 +67,7 @@ header {
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            border-radius: 5px;
             width: 150px;
             height: 150px;
             margin: 25px 0px 25px 0px;
@@ -79,6 +81,7 @@ header {
             h2 {
                 background-color: $transparent-black;
                 color: white;
+                border-radius: 5px 5px 0 0;
             }
 
             .ingredients {
@@ -124,6 +127,9 @@ header {
             width: 80%;
             p {
                 font-size: 1.5em;
+                span {
+
+                }
             }
         }
     }
@@ -139,8 +145,58 @@ header {
     }
 }
 
+.sizeselect {
+     @include flexbox();
+     @include flex-direction(row);
+     @include flex-wrap(wrap);
+     justify-content: space-around;
+     align-items: flex-start;
+     width: 100%;
+
+     .sizebtn {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        margin: 10px;
+        font-size: 2em;
+        border-radius: 12px;
+        vertical-align: middle;
+        text-align: center;
+        background-color: $transparent-black;
+
+        &.selected {
+            background-color: $transparent-orange;
+        }
+        &.disabled {
+            background-color: gray;
+        }
+     }
+}
+
 .make {
-    width: 100%;
+    position: relative;
+    width: 50%;
+    height: 100px;
+    line-height: 100px;
+    margin: 10px;
+    font-size: 3em;
+    border-radius: 12px;
+    vertical-align: middle;
     text-align: center;
-    font-size: 2em;
+    background-color: $transparent-black;
+    overflow: hidden;
+
+    h3 {
+        position: relative;
+    }
+
+    .progress {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $transparent-orange;
+        height: 100%;
+        width: 0%;
+
+    }
 }
