@@ -20,7 +20,7 @@ exports.ingredient = function(req, res, next, id) {
  * List of ingredients
  */
 exports.query = function(req, res) {
-  Ingredient.find(function(err, ingredients) {
+  Ingredient.find().sort('name').exec(function(err, ingredients) {
     if (err) return res.json(500, err);
     res.json(ingredients);
   });
@@ -43,6 +43,7 @@ exports.create = function(req, res) {
  * Update a ingredient
  */
 exports.update = function(req, res) {
+  delete req.body._id;
   Ingredient.update({ _id: req.ingredient._id }, req.body, { }, function(err, updatedIngredient) {
     if (err) return res.json(500, err);
     res.json(updatedIngredient);

@@ -43,6 +43,7 @@ exports.create = function(req, res) {
  * Update a recipepart
  */
 exports.update = function(req, res) {
+  delete req.body._id;
   Recipepart.update({ _id: req.recipepart._id }, req.body, { }, function(err, updatedRecipepart) {
     if (err) return res.json(500, err);
     res.json(updatedRecipepart);

@@ -21,7 +21,7 @@ exports.pump = function(req, res, next, id) {
  * List of pumps
  */
 exports.query = function(req, res) {
-  Pump.find().populate('ingredient').exec(function(err, pumps) {
+  Pump.find().populate('ingredient').sort('id').exec(function(err, pumps) {
     if (err) return res.json(500, err);
     res.json(pumps);
   });
@@ -44,7 +44,8 @@ exports.create = function(req, res) {
  * Update a pump
  */
 exports.update = function(req, res) {
-  Pump.update({ _id: req.pump._id }, req.body, { }, function(err, updatedPump) {
+  delete req.body._id;
+  Pump.update({ _id: req.pump._id }, req.body, { upsert: true}, function(err, updatedPump) {
     if (err) return res.json(500, err);
 	Ingredient.update({pump: req.pump._id}, { $set : { pump: null }}, function(err, updateding) {
 		if (err) return res.json(500, err);

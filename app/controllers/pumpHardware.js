@@ -5,7 +5,7 @@ var board, pump0, pump1, pump2, pump3, pump4, pump5;
 var barReady = false;
 
 var minPumpDelay = 30;
-/*
+
 var five = require('johnny-five');
 board = new five.Board('COM5');
 
@@ -29,7 +29,7 @@ board.on('ready', function () {
 	console.log("[BARBOT] Barbot ready!");
 	barReady = true;
 });
-*/
+
 
 var lastStart = new Date();
 
