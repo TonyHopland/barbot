@@ -32,6 +32,13 @@ header {
     margin:0px;
 }
 
+.left {
+    float: left;
+}
+.right {
+    float: right;
+}
+
 .header{
         text-align: center;
         width: 100%;
@@ -40,7 +47,9 @@ header {
         font-size: 3em;
         margin: 0px;
 }
-
+.icon {
+    margin-top: 3px;
+}
 .drinks {
     background-color: $transparent-black;
 
@@ -82,6 +91,7 @@ header {
                 background-color: $transparent-black;
                 color: white;
                 border-radius: 5px 5px 0 0;
+                padding: 0 8px 0 8px;
             }
 
             .ingredients {
@@ -198,5 +208,18 @@ header {
         height: 100%;
         width: 0%;
 
+    }
+}
+
+.table {
+    border-top:1px solid #e5eff8;
+    border-right:1px solid #e5eff8;
+    margin:25px;
+    border-collapse:collapse;
+    td {
+        border-bottom:1px solid #e5eff8;
+        border-left:1px solid #e5eff8;
+        padding:.3em 1em;
+        text-align:center;
     }
 }

@@ -4,7 +4,7 @@
             <h2 class="header">Drinks</h2>
             <div class="list">
             <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in drinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)">
-                <h2><span>{{drink.name}}</span></h2>
+                <h2><span>{{drink.name}}</span><i class="icon fa fa-check-square-o right"></i></h2>
                 <div class="ingredients">
                     <p ng-repeat="part in drink.recipe">
                         {{part.ingredient.name}}
@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in missingDrinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)">
-                <h2><span>{{drink.name}}</span></h2>
+                <h2><span>{{drink.name}}</span><i class="icon fa fa-square-o right"></i></h2>
                 <div class="ingredients">
                     <p ng-repeat="part in drink.recipe">
                         {{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}
@@ -31,7 +31,9 @@
                 </div>
                 <div class="ingredientstatus">
                     <h3>Ingredients</h3>
-                    <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipe"><span>{{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}</span></p>
+                    <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipe"><span>
+                        <i ng-if="part.ingredient.pump != null" class=" fa fa-check-square-o "></i>
+                        <i ng-if="part.ingredient.pump == null" class=" fa fa-square-o "></i> {{part.ingredient.name}}</span></p>
                 </div>
             </div>
             <div class="drinknotes">

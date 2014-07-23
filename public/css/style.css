@@ -127,6 +127,16 @@ header p {
 }
 
 /* line 35, sass/style.scss */
+.left {
+  float: left;
+}
+
+/* line 38, sass/style.scss */
+.right {
+  float: right;
+}
+
+/* line 42, sass/style.scss */
 .header {
   text-align: center;
   width: 100%;
@@ -136,24 +146,29 @@ header p {
   margin: 0px;
 }
 
-/* line 44, sass/style.scss */
+/* line 50, sass/style.scss */
+.icon {
+  margin-top: 3px;
+}
+
+/* line 53, sass/style.scss */
 .drinks {
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
 }
 @media (min-width: 480px) {
-  /* line 44, sass/style.scss */
+  /* line 53, sass/style.scss */
   .drinks {
     width: 40%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 44, sass/style.scss */
+  /* line 53, sass/style.scss */
   .drinks {
     width: 50%;
   }
 }
-/* line 56, sass/style.scss */
+/* line 65, sass/style.scss */
 .drinks .list {
   display: -webkit-box;
   display: -moz-box;
@@ -176,7 +191,7 @@ header p {
   max-height: 600px;
   overflow-y: auto;
 }
-/* line 66, sass/style.scss */
+/* line 75, sass/style.scss */
 .drinks .list .drinkview {
   background-size: cover;
   background-position: center;
@@ -186,46 +201,47 @@ header p {
   height: 150px;
   margin: 25px 0px 25px 0px;
 }
-/* line 76, sass/style.scss */
+/* line 85, sass/style.scss */
 .drinks .list .drinkview.selected h2 {
   background-color: rgba(255, 0, 0, 0.7);
 }
-/* line 81, sass/style.scss */
+/* line 90, sass/style.scss */
 .drinks .list .drinkview h2 {
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
   border-radius: 5px 5px 0 0;
+  padding: 0 8px 0 8px;
 }
-/* line 87, sass/style.scss */
+/* line 97, sass/style.scss */
 .drinks .list .drinkview .ingredients {
   display: none;
 }
 @media (min-width: 480px) {
-  /* line 66, sass/style.scss */
+  /* line 75, sass/style.scss */
   .drinks .list .drinkview {
     width: 180px;
     height: 180px;
   }
 }
 @media (min-width: 1024px) {
-  /* line 66, sass/style.scss */
+  /* line 75, sass/style.scss */
   .drinks .list .drinkview {
     width: 230px;
     height: 230px;
   }
 }
 
-/* line 102, sass/style.scss */
+/* line 112, sass/style.scss */
 .drinkdetails {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
 }
-/* line 106, sass/style.scss */
+/* line 116, sass/style.scss */
 .drinkdetails h3 {
   text-decoration: underline;
   margin-bottom: 5px;
 }
-/* line 111, sass/style.scss */
+/* line 121, sass/style.scss */
 .drinkdetails .ingredients {
   display: -webkit-box;
   display: -moz-box;
@@ -246,41 +262,41 @@ header p {
   align-items: flex-start;
   margin: 25px 25px 25px 25px;
 }
-/* line 119, sass/style.scss */
+/* line 129, sass/style.scss */
 .drinkdetails .ingredients .ingredientglass {
   width: 20%;
   height: 250px;
 }
-/* line 122, sass/style.scss */
+/* line 132, sass/style.scss */
 .drinkdetails .ingredients .ingredientglass .ingredientpart {
   width: 80%;
 }
-/* line 126, sass/style.scss */
+/* line 136, sass/style.scss */
 .drinkdetails .ingredients .ingredientstatus {
   width: 80%;
 }
-/* line 128, sass/style.scss */
+/* line 138, sass/style.scss */
 .drinkdetails .ingredients .ingredientstatus p {
   font-size: 1.5em;
 }
-/* line 136, sass/style.scss */
+/* line 146, sass/style.scss */
 .drinkdetails .drinknotes {
   margin: 50px 25px 25px 25px;
 }
 @media (min-width: 480px) {
-  /* line 102, sass/style.scss */
+  /* line 112, sass/style.scss */
   .drinkdetails {
     width: 60%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 102, sass/style.scss */
+  /* line 112, sass/style.scss */
   .drinkdetails {
     width: 50%;
   }
 }
 
-/* line 148, sass/style.scss */
+/* line 158, sass/style.scss */
 .sizeselect {
   display: -webkit-box;
   display: -moz-box;
@@ -301,7 +317,7 @@ header p {
   align-items: flex-start;
   width: 100%;
 }
-/* line 156, sass/style.scss */
+/* line 166, sass/style.scss */
 .sizeselect .sizebtn {
   width: 100px;
   height: 100px;
@@ -313,16 +329,16 @@ header p {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.4);
 }
-/* line 167, sass/style.scss */
+/* line 177, sass/style.scss */
 .sizeselect .sizebtn.selected {
   background-color: rgba(255, 0, 0, 0.7);
 }
-/* line 170, sass/style.scss */
+/* line 180, sass/style.scss */
 .sizeselect .sizebtn.disabled {
   background-color: gray;
 }
 
-/* line 176, sass/style.scss */
+/* line 186, sass/style.scss */
 .make {
   position: relative;
   width: 50%;
@@ -336,11 +352,11 @@ header p {
   background-color: rgba(0, 0, 0, 0.4);
   overflow: hidden;
 }
-/* line 189, sass/style.scss */
+/* line 199, sass/style.scss */
 .make h3 {
   position: relative;
 }
-/* line 193, sass/style.scss */
+/* line 203, sass/style.scss */
 .make .progress {
   position: absolute;
   top: 0;
@@ -348,4 +364,19 @@ header p {
   background-color: rgba(255, 0, 0, 0.7);
   height: 100%;
   width: 0%;
+}
+
+/* line 214, sass/style.scss */
+.table {
+  border-top: 1px solid #e5eff8;
+  border-right: 1px solid #e5eff8;
+  margin: 25px;
+  border-collapse: collapse;
+}
+/* line 219, sass/style.scss */
+.table td {
+  border-bottom: 1px solid #e5eff8;
+  border-left: 1px solid #e5eff8;
+  padding: .3em 1em;
+  text-align: center;
 }
