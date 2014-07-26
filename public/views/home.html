@@ -1,5 +1,5 @@
 <div ng-controller="DrinkController"  >
-    <div class="horizontalFlexcontainer" >
+    <div class="horizontalFlexcontainer fullHeight" >
         <div class="drinks">
             <h2 class="title">Drinks</h2>
             <div class="list horizontalFlexcontainer">
@@ -21,32 +21,38 @@
                 </div>
             </div>
         </div>
-        <div id="drinkdetails" class="drinkdetails">
-            <h2 class="title"> {{selectedDrink != undefined ? selectedDrink.name : "Drink details"}} </h2>
-            <div class="horizontalFlexcontainer ingredients">
+        <div class="verticalFlexcontainer rightCol">
+            <div id="drinkdetails" class="drinkdetails">
+                <h2 class="title"> {{selectedDrink != undefined ? selectedDrink.name : "Drink details"}} </h2>
+                <div class="horizontalFlexcontainer ingredients">
 
-                <div class="ingredientglass" >
-                    <h3>Ratio</h3>
-                    <div ng-repeat="part in selectedDrink.recipe" class="ingredientpart" ng-style="getGlassCss(part)"></div>
-                </div>
-                <div class="ingredientstatus">
-                    <h3>Ingredients</h3>
-                    <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipe"><span>
-                        <i ng-if="part.ingredient.pump != null" class=" fa fa-check-square-o "></i>
-                        <i ng-if="part.ingredient.pump == null" class=" fa fa-square-o "></i> {{part.ingredient.name}}</span></p>
+                    <div class="ingredientglass" >
+                        <h3>Ratio</h3>
+                        <div ng-repeat="part in selectedDrink.recipe" class="ingredientpart" ng-style="getGlassCss(part)"></div>
+                    </div>
+                    <div class="ingredientdetails">
+                        <div class="ingredientstatus">
+                            <h3>Ingredients</h3>
+                            <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipe"><span>
+                                <i ng-if="part.ingredient.pump != null" class=" fa fa-check-square-o "></i>
+                                <i ng-if="part.ingredient.pump == null" class=" fa fa-square-o "></i> {{part.ingredient.name}}</span></p>
+                        </div>
+                        <div class="drinknotes">
+                            <h3>Notes</h3>
+                            <p>{{getCurrentDrinkNotes()}}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="drinknotes">
-                <h3>Notes</h3>
-                <p><pre>{{getCurrentDrinkNotes()}}</pre></p>
+            <div>
+                <div class="sizeselect">
+                    <div ng-repeat="size in drinkSizes" ng-click="selectSize(size)" class="sizebtn {{selectedSize==size ? 'selected' : ''}} {{selectedDrink.maxsize<size.id ? 'disabled' : ''}}">{{size.name}}</div>
+                </div>
+                <div ng-click="createDrink()" class="make {{selectedDrink ? '' : 'noselection'}}">
+                    <div class="progress" ng-style="getProgressCss()"></div>
+                    <h3>Make</h3>
+                </div>
             </div>
-        </div>
-        <div class="sizeselect">
-            <div ng-repeat="size in drinkSizes" ng-click="selectSize(size)" class="sizebtn {{selectedSize==size ? 'selected' : ''}} {{selectedDrink.maxsize<size.id ? 'disabled' : ''}}">{{size.name}}</div>
-        </div>
-        <div ng-click="createDrink()" class="make {{selectedDrink ? '' : 'noselection'}}">
-            <div class="progress" ng-style="getProgressCss()"></div>
-            <h3>Make</h3>
         </div>
 
     </div>
