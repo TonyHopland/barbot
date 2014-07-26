@@ -1,29 +1,29 @@
 <div ng-controller="DrinkController"  >
-    <div class="flexcontainer" >
+    <div class="horizontalFlexcontainer" >
         <div class="drinks">
-            <h2 class="header">Drinks</h2>
-            <div class="list">
-            <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in drinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)">
-                <h2><span>{{drink.name}}</span><i class="icon fa fa-check-square-o right"></i></h2>
-                <div class="ingredients">
-                    <p ng-repeat="part in drink.recipe">
-                        {{part.ingredient.name}}
-                    </p>
+            <h2 class="title">Drinks</h2>
+            <div class="list horizontalFlexcontainer">
+                <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in drinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)" scroll-to="drinkdetails">
+                    <h2><i class="icon fa fa-check-square-o right"></i><span>{{drink.name}}</span></h2>
+                    <div class="ingredients">
+                        <p ng-repeat="part in drink.recipe">
+                            {{part.ingredient.name}}
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in missingDrinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)">
-                <h2><span>{{drink.name}}</span><i class="icon fa fa-square-o right"></i></h2>
-                <div class="ingredients">
-                    <p ng-repeat="part in drink.recipe">
-                        {{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}
-                    </p>
+                <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in missingDrinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)" scroll-to="drinkdetails">
+                    <h2><i class="icon fa fa-square-o right"></i><span>{{drink.name}}</span></h2>
+                    <div class="ingredients">
+                        <p ng-repeat="part in drink.recipe">
+                            {{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}
+                        </p>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
-        <div class="drinkdetails">
-            <h2 class="header"> {{selectedDrink != undefined ? selectedDrink.name : "Drink details"}} </h2>
-            <div class="ingredients">
+        <div id="drinkdetails" class="drinkdetails">
+            <h2 class="title"> {{selectedDrink != undefined ? selectedDrink.name : "Drink details"}} </h2>
+            <div class="horizontalFlexcontainer ingredients">
 
                 <div class="ingredientglass" >
                     <h3>Ratio</h3>

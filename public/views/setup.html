@@ -1,26 +1,27 @@
 <div id="Setup" ng-controller="IngredientController" class="flexcontainer">
 
     <div id="edit_pumps" ng-controller="PumpController">
-    <h2>Pumps</h2>
+        <h2>Pumps</h2>
+        <a class="btn" ng-click="addPump()">+</a>
+        <a class="btn" ng-click="deletePump()">-</a>
         <table id="pump-list" class="table">
             <thead>
             <td>Pump
-                <a class="btn" ng-click="addPump()">+</a>
-                <a class="btn" ng-click="deletePump()">-</a>
+
             </td>
             <td>Ingredient</td>
-            <td>Filltime</td>
+            <!--<td>Filltime</td>-->
             <td><a class="btn" ng-click="fillAllPumps()">Fill all pipes</a></td>
             <td><a class="btn" ng-click="toggleAllPumps()">{{majorityOff()?'Start all pumps':'Stop all pumps'}}</a></td>
             </thead>
             <tr ng-repeat="pump in pumps">
-                <td>Pump {{pump.id+1}}</td>
+                <td>{{pump.id+1}}</td>
                 <td>
                     <select ng-model="pump.ingredient" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
                         <option value="">-- choose ingredient --</option>
                     </select>
                 </td>
-                <td><input type="number" ng-model="pump.tubeLength" ng-change="updatePump(pump)"></td>
+                <!--<td><input type="number" ng-model="pump.tubeLength" ng-change="updatePump(pump)"></td>-->
                 <td><a class="btn" ng-click="fillPump(pump)">Fill tube</a></td>
                 <td><a class="btn" ng-click="togglePump(pump)">{{pumpstate[pump.id]?'Stop pump':'Start pump'}}</a></td>
             </tr>

@@ -31,13 +31,35 @@
     <!--CUSTOM-->
     <script src="js/pumpControll.js"></script>
     <script src="js/settings.js"></script>
-    <!--<script src="js/cssrefresh.js"></script> <!--temporary to make css creation more visual -->
+    <script src="js/cssrefresh.js"></script> <!--temporary to make css creation more visual -->
 
+    <meta name="viewport" content="width=device-width">
+
+    <script type="text/javascript">
+
+        function toggle_visibility(id) {
+           var e = document.getElementById(id);
+           if(e.style.display == 'block')
+              e.style.display = 'none';
+           else
+              e.style.display = 'block';
+        }
+
+    </script>
 </head>
 <body ng-app="barbot">
 <header>
+    <div id="navigationMenu" onclick="toggle_visibility('navigationChoices');"><i class="fa fa-bars fa-2x"></i>
+        <ul id="navigationChoices">
+
+                <li><a href="/">Home</a>
+                <li><a href="/create">Create</a></li>
+                <li><a href="/setup">Setup</a></li>
+
+        </ul>
+    </div>
     <h1>BarBot</h1>
-    <p>Drink mixing machine</p>
+    <!--<p>Drink mixing machine</p>-->
 </header>
 
 	<div ng-view></div>

@@ -38,6 +38,22 @@
   order: $val;
 }
 
+@mixin btn($width, $height) {
+        width: $width;
+        height: $height;
+        line-height: $height;
+        border-radius: 12px;
+        text-align: center;
+        background-color: $transparent-black;
+
+        &.selected {
+            background-color: $transparent-orange;
+        }
+        &.disabled {
+            background-color: gray;
+        }
+     }
+
 @mixin filter($filter-type,$filter-amount) {
   -webkit-filter: $filter-type+unquote('(#{$filter-amount})');
   -moz-filter: $filter-type+unquote('(#{$filter-amount})');

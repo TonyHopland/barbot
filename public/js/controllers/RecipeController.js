@@ -3,15 +3,26 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
 
 
 	$scope.recipes = [];
-	$scope.recipe = new Recipe();
+	$scope.recipe = null;
 
 	var recipeModel = {"name":"New Recipe","maxsize":3,"image":"","recipe":[]};
 	var recipepartModel = {"amount":0,"order":0,"startdelay":0};
 
-	$scope.getRecipes = function () {
-		Recipe.query(function(response) {
-        $scope.recipes = response;
-      });
+    $scope.drinkSizes = [
+        {
+            id: 1,
+            name: 'shot',
+            size: 15000
+        }
+    ]; //One size is set in case settings are not filled out
+
+	$scope.init = function () {
+        Recipe.query(function(response) {
+            $scope.recipes = response;
+        });
+        if(drinkSizes != undefined){
+          $scope.drinkSizes = drinkSizes;
+        }
 	};
 
 	$scope.AddRecipepart = function () {
@@ -27,6 +38,15 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
         });
 
 	}
+
+    $scope.showRecipe = function () {
+        if($scope.recipe != null) {
+            return {'display': 'block'};
+        } else {
+            return {'display': 'none'};
+        }
+
+    }
 
     $scope.saveRecipepart = function (recipepart) {
         var recipepartToUpdate = new Recipepart(recipepart);
@@ -61,7 +81,7 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
     $scope.deleteRecipe = function(recipe) {
         var index = $scope.recipes.indexOf(recipe);
         if($scope.recipe == recipe){
-        $scope.recipe =  new Recipe();
+        $scope.recipe =  null;
         }
         recipe.$delete();
         if(index >= 0){
@@ -73,10 +93,6 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
         $scope.recipe = recipe;
     }
 
-    $scope.cancel = function() {
-        $scope.getRecipes();
-        $scope.recipe = new Recipe();
-    }
 /*
     $scope.addPump = function () {
         var index = 0;
@@ -112,6 +128,6 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
         }
     }
 */
-	$scope.getRecipes(); //Run this at startup to fill the table
+	$scope.init(); //Run this at startup to fill the table
 });
 
