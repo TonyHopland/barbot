@@ -12,12 +12,12 @@
             <td>Ingredient</td>
             <!--<td>Filltime</td>-->
             <td><a class="btn" ng-click="fillAllPumps()">Fill all pipes</a></td>
-            <td><a class="btn" ng-click="toggleAllPumps()">{{majorityOff()?'Start all pumps':'Stop all pumps'}}</a></td>
+            <td><a class="btn" ng-click="toggleAllPumps()">{{isMajorityOff()?'Start all pumps':'Stop all pumps'}}</a></td>
             </thead>
             <tr ng-repeat="pump in pumps">
-                <td>{{pump.id+1}}</td>
+                <td>{{pump.id}}</td>
                 <td>
-                    <select ng-model="pump.ingredient" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
+                    <select ng-model="pump.ingredient.id" ng-options="ingredient.id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
                         <option value="">-- choose ingredient --</option>
                     </select>
                 </td>
@@ -40,8 +40,8 @@
             </tr>
         </table>
         <form id="ingredient-form" ng-submit="addIngredient()">
-            <input placeholder="Name" ng-model="newIngredient.name" autofocus="">
-            <input type="color" placeholder="Color" ng-model="newIngredient.color" autofocus="">
+            <input placeholder="Name" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-model="newIngredient.name" autofocus="">
+            <input type="color" placeholder="Color" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-model="newIngredient.color" autofocus="">
             <button>Add</button>
         </form>
     </div>

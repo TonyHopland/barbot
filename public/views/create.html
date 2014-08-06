@@ -16,9 +16,9 @@
     <div id="recipe-editor" ng-controller="IngredientController" ng-style="showRecipe()">
         <h2>Edit recipe</h2>
         <form id="ingredient-form" ng-submit="saveRecipe()">
-            <input ng-model="recipe.name" ng-change="saveRecipe()"/>
-            <select ng-model="recipe.maxsize" ng-options="drinkSize.id as drinkSize.name for drinkSize in drinkSizes" ng-change="saveRecipe()" />
-            <input ng-model="recipe.image" ng-change="saveRecipe()"/>
+            <input ng-model="recipe.name" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
+            <select ng-model="recipe.maxsize" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-options="drinkSize.id as drinkSize.name for drinkSize in drinkSizes" ng-change="saveRecipe()" />
+            <input ng-model="recipe.image" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
             <a class="btn" ng-click="AddRecipepart()">Add ingredient</a>
         <table id="recipe" class="table">
             <thead>
@@ -28,15 +28,15 @@
                 <td>Start delay</td>
                 <td></td>
             </thead>
-            <tr ng-repeat="part in recipe._related.recipe">
+            <tr ng-repeat="part in recipe.recipeparts">
                 <td>
-                    <select ng-model="part.ingredient" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="saveRecipepart(part)" >
+                    <select ng-model="part.IngredientId" ng-options="ingredient.id as ingredient.name for ingredient in ingredients" ng-change="saveRecipepart(part)" >
                         <option value="">-- choose ingredient --</option>
                     </select>
                 </td>
-                <td><input class="shortCol" type="number" ng-model="part.amount" ng-change="saveRecipepart(part)"/></td>
-                <td><input class="shortCol" type="number" ng-model="part.order" ng-change="saveRecipepart(part)" /></td>
-                <td><input class="shortCol" type="number" ng-model="part.startdelay" ng-change="saveRecipepart(part)" /></td>
+                <td><input class="shortCol" type="number" ng-model="part.amount" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)"/></td>
+                <td><input class="shortCol" type="number" ng-model="part.order" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)" /></td>
+                <td><input class="shortCol" type="number" ng-model="part.startdelay" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)" /></td>
                 <td><a class="btn" ng-click="deleteRecipepart(part)">Remove</a></td>
             <tr>
         </table>

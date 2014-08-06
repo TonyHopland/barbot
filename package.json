@@ -1,17 +1,18 @@
- {
-  "name"         : "BarBot",
-  "version"      : "0.0.0",
-  "description"  : "Webapplication to controll a drink mixing robot.",
-  "main"         : "server.js",
-  "private"      : true,
-  "author"       : "Tony",
-  "dependencies" : {
-	"express": "~4.6.1",
-	"mongoose": "~3.8.13",
-	"body-parser" : "~1.4.2",
-	"method-override" : "~2.0.2",
-	"johnny-five": "~0.8.0",
+{
+  "name": "BarBot",
+  "version": "0.0.0",
+  "description": "Webapplication to controll a drink mixing robot.",
+  "main": "server.js",
+  "private": true,
+  "author": "Tony",
+  "dependencies": {
+    "body-parser": "~1.4.2",
+    "express": "~4.6.1",
+    "johnny-five": "~0.8.0",
+    "lodash": "^2.4.1",
+    "method-override": "~2.0.2",
+    "sequelize": "^1.7.9",
     "socket.io": "~1.0.6",
-	"cascading-relations"	:"~0.7.9"
-    }
+    "sqlite3": "^2.2.4"
   }
+}

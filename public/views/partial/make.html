@@ -1,11 +1,9 @@
-<div id="selectSize">
-    <h1 class="section">Velg en størrelse</h1>
-    <div class="drinkSize" ng-click="selectSize('s')">Shot</div>
-	<div class="drinkSize" ng-click="selectSize('m')">Liten</div>
-	<div class="drinkSize" ng-click="selectSize('l')">Stor</div>
-
-    <div>#make(class="{{selectedDrink.name ? '' : 'noselection'}}")
-		<div>#makeText.title MAKE</div>
-		<div>#makeProgress</div>
-	</div>
+<div ng-controller="MakeController">
+    <div class="sizeselect">
+        <div ng-repeat="size in drinkSizes" ng-click="selectSize(size)" class="sizebtn {{selectedSize==size ? 'selected' : ''}} {{selectedDrink.maxsize<size.id ? 'disabled' : ''}}">{{size.name}}</div>
+    </div>
+    <div ng-click="createDrink()" class="make {{selectedDrink ? '' : 'noselection'}}">
+        <div class="progress" ng-style="getProgressCss()"></div>
+        <h3>Make</h3>
+    </div>
 </div>

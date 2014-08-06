@@ -73,7 +73,7 @@ exports.startPump = function (pump) {
 			console.log("[PUMP] Starting pump " + pump);
 		}else {
 			setTimeout(function () {
-				startPump(pump);
+				exports.startPump(pump);
 			}, 10);
 		}
 	} else {
@@ -94,22 +94,22 @@ exports.stopPump = function (pump) {
 exports.usePump = function (pump) {
   var using;
   switch(pump) {
-    case 0:
+    case 1:
       using = pump0;
       break;
-    case 1:
+    case 2:
       using = pump1;
       break;
-    case 2:
+    case 3:
       using = pump2;
       break;
-    case 3:
+    case 4:
       using = pump3;
       break;
-    case 4:
+    case 5:
       using = pump4;
       break;
-    case 5:
+    case 6:
         using = pump5;
         break;
     default:

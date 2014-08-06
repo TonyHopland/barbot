@@ -1,7 +1,7 @@
 angular.module('barbot')
 	.factory('Pump', function ($resource) {
 		return $resource('api/pumps/:pumpId', {
-		  pumpId: '@_id'
+		  pumpId: '@id'
 		}, {
 		  update: {
 			method: 'PUT'

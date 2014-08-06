@@ -1,10 +1,17 @@
 angular.module('barbot')
 	.factory('Recipe', function ($resource) {
-		return $resource('api/recipes/:recipeId', {
-		  recipeId: '@_id'
+
+	    var selectedDrink = null;
+
+		var recipeFactory =  $resource('api/recipes/:recipeId', {
+		  recipeId: '@id'
 		}, {
 		  update: {
 			method: 'PUT'
 		  }
 		});
+
+		recipeFactory.selectedDrink = selectedDrink;
+
+		return recipeFactory;
 	  });

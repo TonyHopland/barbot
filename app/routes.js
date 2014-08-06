@@ -10,13 +10,14 @@ var path = require('path')
 		// route to handle creating (app.post)
 		// route to handle delete (app.delete)
 
+
 		var ingredients = require('./controllers/ingredient');
 		app.param('ingredientId', ingredients.ingredient);
 		app.get('/api/ingredients', ingredients.query);
 		app.post('/api/ingredients', ingredients.create);
 		app.put('/api/ingredients/:ingredientId', ingredients.update);
 		app.delete('/api/ingredients/:ingredientId', ingredients.remove);
-		
+	
 		var pumps = require('./controllers/pump');
 		app.param('pumpId', pumps.pump);
 		app.get('/api/pumps', pumps.query);
@@ -37,11 +38,11 @@ var path = require('path')
 		app.post('/api/recipeparts', recipeparts.create);
 		app.put('/api/recipeparts/:recipepartId', recipeparts.update);
 		app.delete('/api/recipeparts/:recipepartId', recipeparts.remove);
-		
+		/*
 		var drink = require('./controllers/drink');
 		app.param('drinkId', drink.drink);
 		app.get('/api/drinks', drink.query);
-		
+		*/
 		// frontend routes =========================================================
 		// route to handle all angular requests
 		app.get('*', function(req, res) {

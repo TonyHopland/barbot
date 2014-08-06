@@ -14,10 +14,10 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
     $scope.addPump = function () {
         var index = 0;
 
-        index = $scope.pumps.length;
+        index = $scope.pumps.length+1;
         var tmpPump = new Pump({
-            id: index,
-            tubeLength: 1000,
+            newId: index,
+            tubelength: 1000,
         });
         tmpPump.$save(function(pmp, putResponseHeaders) {
              $scope.pumps.push(pmp);
@@ -29,7 +29,7 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
         var pumpToUpdate = new Pump(pump);
         pumpToUpdate.$update();
         for(p in $scope.pumps){
-            if($scope.pumps[p] != pump && $scope.pumps[p].ingredient == pump.ingredient){
+            if($scope.pumps[p] != pump && $scope.pumps[p].ingredient && $scope.pumps[p].ingredient.id == pump.ingredient.id){
                 $scope.pumps[p].ingredient = null;
                 var pumpToUpdate = new Pump($scope.pumps[p]);
                 pumpToUpdate.$update();
@@ -56,7 +56,7 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
         }
     }
 
-    $scope.majorityOff = function () {
+    $scope.isMajorityOff = function () {
         if ($scope.pumpstate.length < ($scope.pumps.length/2)){
             return true;
         }
@@ -75,7 +75,7 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
     }
 
     $scope.toggleAllPumps = function (pump) {
-        if($scope.majorityOff()){
+        if($scope.isMajorityOff()){
             for(var i = 0; i < $scope.pumps.length; i++) {
                 var currentPump = $scope.pumps[i];
                 startPump(currentPump.id);

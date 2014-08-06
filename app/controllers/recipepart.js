@@ -1,29 +1,35 @@
 // app/controllers/recipepart.js
  
-var mongoose = require('mongoose'),
-  Recipepart = mongoose.model('Recipepart');
+var db = require('../../config/db.js');
  
  
 /**
  * Find recipepart by id and store it in the request
  */
 exports.recipepart = function(req, res, next, id) {
-  Recipepart.findById(id).populate('ingredient').exec(function(err, recipepart) {
-    if (err) return next(err);
-    if (!recipepart) return next(new Error('Failed to load recipepart ' + id));
-    req.recipepart = recipepart;
-    next();
-  });
-};
+	db.Recipepart
+		.find({ where: { id: id }, include: [ db.Ingredient ] })
+		.complete(function(err, recipepart) {
+			if (!!err) {
+				new Error('Failed to load recipepart ' + id+': ' + err);
+			} else if (!recipepart) {
+				new Error('Failed to load recipepart ' + id);
+			} else {
+				req.recipepart = recipepart;
+				next();
+			}
+		});
+}; 
 
 /**
  * List of recipepart
  */
 exports.query = function(req, res) {
-  Recipepart.find().populate('ingredient').exec(function(err, recipeparts) {
-    if (err) return res.json(500, err);
-    res.json(recipeparts);
-  });
+	db.Recipepart.findAll({
+		include: [ db.Ingredient ]
+	}).success(function(recipepart) {
+		res.json(recipepart);
+	});
 };
  
  
@@ -31,33 +37,58 @@ exports.query = function(req, res) {
  * Create a recipepart
  */
 exports.create = function(req, res) {
-  var recipepart = new Recipepart(req.body);
- 
-  recipepart.save(function(err) {
-    if (err) return res.json(500, err);
-    res.json(recipepart);
-  });
+	db.Recipepart
+		.create(req.body)
+			.complete(function(err, recipepart) {
+				db.Recipe
+				.find({ where: { id: req.body.recipe }})
+				.complete(function(err, recipe) {
+					if (!!err) {
+						new Error('Failed to load ingredient ' + id+': ' + err);
+					} else if (!recipe) {
+						new Error('Failed to load ingredient ' + id);
+					} else {
+						recipepart.setRecipe(recipe);
+						res.json(recipepart);
+					}
+				})
+				
+			});
 };
  
 /**
  * Update a recipepart
  */
 exports.update = function(req, res) {
-  delete req.body._id;
-  Recipepart.update({ _id: req.recipepart._id }, req.body, { }, function(err, updatedRecipepart) {
-    if (err) return res.json(500, err);
-    res.json(updatedRecipepart);
-  });
+
+var recipepart = req.recipepart;
+recipepart.amount = req.body.amount;
+recipepart.order = req.body.order;
+recipepart.startdelay = req.body.startdelay;
+console.log(" id: " + req.body.IngredientId);
+if(req.body.IngredientId){
+		db.Ingredient
+			.find({ where: { id: req.body.IngredientId }})
+			.complete(function(err, ingredient) {
+				if (!!err) {
+					new Error('Failed to load ingredient ' + id+': ' + err);
+				} else if (!recipepart) {
+					new Error('Failed to load ingredient ' + id);
+				} else {
+					recipepart.setIngredient(ingredient);
+				}
+			})
+}
+
+recipepart.save();
 };
  
 /**
- * Remove a recipepart
+ * Remove a ingredient
  */
-exports.remove = function(req, res) {
-  var recipepart = req.recipepart;
- 
-  recipepart.remove(function(err) {
-    if (err) return res.json(500, err);
-    res.json(recipepart);   
-  });
+exports.remove = function(req, res) {  
+    db.Recipepart.destroy(
+    {id: req.recipepart.id} /* where criteria */,
+    {} /* options */
+  );
 };

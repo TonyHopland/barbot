@@ -3,22 +3,18 @@
 // modules =================================================
 var express        = require('express');
 var app            = express();
-var mongoose       = require('mongoose');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+var sequelize 	   = require("sequelize");
+var db      	   = require('./config/db.js');
 
 // configuration ===========================================
 	
 // config files
-var db = require('./config/db');
+
+
 
 var port = process.env.PORT || 8080; // set our port
-mongoose.connect(db.url); // connect to our mongoDB database (uncomment after you enter in your own credentials in config/db.js)
-
-var Ingredient = require('./models/ingredient.js');
-var Pump = require('./models/pump.js');
-var Recipepart = require('./models/recipe.js');
-var Recipepart = require('./models/recipepart.js');
 
 // get all data/stuff of the body (POST) parameters
 app.use(bodyParser.json()); // parse application/json 
@@ -33,10 +29,22 @@ app.use(express.static(__dirname + '/public')); // set the static files location
 
 require('./app/routes')(app); // configure our routes
 
+// start DB ===============================================
+//db.sequelize.sync();
+/* //Use this if you want to clean and populate database on startup*/
+db.sequelize.sync({force: true}).complete(function(err) {
+    if (err) {
+      throw err[0]
+    } else {
+		require('./config/initDb.js');
+    }
+});
+
 // start app ===============================================
 var server = app.listen(port);							// startup our app at http://localhost:8080
 console.log('Magic happens on port ' + port); 			// shoutout to the user
 exports = module.exports = app; 						// expose app
+
 
 
 var hardware = require('./app/controllers/pumpHardware.js');

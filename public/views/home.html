@@ -28,14 +28,14 @@
 
                     <div class="ingredientglass" >
                         <h3>Ratio</h3>
-                        <div ng-repeat="part in selectedDrink.recipe" class="ingredientpart" ng-style="getGlassCss(part)"></div>
+                        <div ng-repeat="part in selectedDrink.recipeparts" class="ingredientpart" ng-style="getGlassCss(part)"></div>
                     </div>
                     <div class="ingredientdetails">
                         <div class="ingredientstatus">
                             <h3>Ingredients</h3>
-                            <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipe"><span>
-                                <i ng-if="part.ingredient.pump != null" class=" fa fa-check-square-o "></i>
-                                <i ng-if="part.ingredient.pump == null" class=" fa fa-square-o "></i> {{part.ingredient.name}}</span></p>
+                            <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipeparts"><span>
+                                <i ng-if="part.ingredient.PumpId != null" class=" fa fa-check-square-o "></i>
+                                <i ng-if="part.ingredient.PumpId == null" class=" fa fa-square-o "></i> {{part.ingredient.name}}</span></p>
                         </div>
                         <div class="drinknotes">
                             <h3>Notes</h3>
@@ -44,14 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div class="sizeselect">
-                    <div ng-repeat="size in drinkSizes" ng-click="selectSize(size)" class="sizebtn {{selectedSize==size ? 'selected' : ''}} {{selectedDrink.maxsize<size.id ? 'disabled' : ''}}">{{size.name}}</div>
-                </div>
-                <div ng-click="createDrink()" class="make {{selectedDrink ? '' : 'noselection'}}">
-                    <div class="progress" ng-style="getProgressCss()"></div>
-                    <h3>Make</h3>
-                </div>
+            <div ng-include src="'views/partial/make.html'">
             </div>
         </div>
 

@@ -1,29 +1,35 @@
 // app/controllers/ingredients.js
  
-var mongoose = require('mongoose'),
-  Ingredient = mongoose.model('Ingredient');
+var db = require('../../config/db.js');
  
  
 /**
  * Find ingredient by id and store it in the request
  */
 exports.ingredient = function(req, res, next, id) {
-  Ingredient.findById(id, function(err, ingredient) {
-    if (err) return next(err);
-    if (!ingredient) return next(new Error('Failed to load ingredient ' + id));
-    req.ingredient = ingredient;
-    next();
-  });
+	db.Ingredient
+		.find({ where: { id: id }/*, include: [ db.Pump ] */})
+		.complete(function(err, ingredient) {
+			if (!!err) {
+				new Error('Failed to load Ingredient ' + id+': ' + err);
+			} else if (!ingredient) {
+				new Error('Failed to load Ingredient ' + id);
+			} else {
+				req.ingredient = ingredient;
+				next();
+			}
+		});
 }; 
 
 /**
  * List of ingredients
  */
 exports.query = function(req, res) {
-  Ingredient.find().sort('name').exec(function(err, ingredients) {
-    if (err) return res.json(500, err);
-    res.json(ingredients);
-  });
+	db.Ingredient.findAll({
+		/*include: [ db.Pump ]*/
+	}).success(function(ingredient) {
+		res.json(ingredient);
+	});
 };
  
  
@@ -31,33 +37,31 @@ exports.query = function(req, res) {
  * Create a ingredient
  */
 exports.create = function(req, res) {
-  var ingredient = new Ingredient(req.body);
- 
-  ingredient.save(function(err) {
-    if (err) return res.json(500, err);
-    res.json(ingredient);
-  });
+	db.Ingredient
+		.create(req.body)
+			.complete(function(err, ingredient) {
+				res.json(ingredient);
+			});
 };
  
 /**
  * Update a ingredient
  */
 exports.update = function(req, res) {
-  delete req.body._id;
-  Ingredient.update({ _id: req.ingredient._id }, req.body, { }, function(err, updatedIngredient) {
-    if (err) return res.json(500, err);
-    res.json(updatedIngredient);
-  });
+
+var ingredient = req.ingredient;
+ingredient.name = req.body.name;
+ingredient.color = req.body.color;
+
+ingredient.save();
 };
  
 /**
  * Remove a ingredient
  */
-exports.remove = function(req, res) {
-  var ingredient = req.ingredient;
- 
-  ingredient.remove(function(err) {
-    if (err) return res.json(500, err);
-    res.json(ingredient);   
-  });
+exports.remove = function(req, res) {  
+    db.Ingredient.destroy(
+    {id: req.ingredient.id} /* where criteria */,
+    {} /* options */
+  );
 };

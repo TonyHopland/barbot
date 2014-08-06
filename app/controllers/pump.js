@@ -1,30 +1,36 @@
 // app/controllers/pump.js
  
-var mongoose = require('mongoose'),
-  Pump = mongoose.model('Pump');
-  Ingredient = mongoose.model('Ingredient');
+var db = require('../../config/db.js');
  
  
 /**
  * Find pump by id and store it in the request
  */
+ 
 exports.pump = function(req, res, next, id) {
-  Pump.findById(id).populate('ingredient').exec(function(err, pump) {
-    if (err) return next(err);
-    if (!pump) return next(new Error('Failed to load pump ' + id));
-    req.pump = pump;
-    next();
-  });
+	db.Pump
+		.find({ where: { id: id },include    : { model: db.Ingredient, attributes: ['id']}})
+		.complete(function(err, pump) {
+			if (!!err) {
+				new Error('Failed to load pump ' + id+': ' + err);
+			} else if (!pump) {
+				new Error('Failed to load pump ' + id);
+			} else {
+				req.pump = pump;
+				next();
+			}
+		})
 };
 
 /**
  * List of pumps
  */
 exports.query = function(req, res) {
-  Pump.find().populate('ingredient').sort('id').exec(function(err, pumps) {
-    if (err) return res.json(500, err);
-    res.json(pumps);
-  });
+	  db.Pump.findAll({
+			include    : { model: db.Ingredient, attributes: ['id']}
+	  }).success(function(pump) {
+			res.json(pump);
+	  })
 };
  
  
@@ -32,39 +38,47 @@ exports.query = function(req, res) {
  * Create a pump
  */
 exports.create = function(req, res) {
-  var pump = new Pump(req.body);
+	req.body.id = req.body.newId;
+	delete req.body.newId;
+	db.Pump
+		.create(req.body)
+			.complete(function(err, pump) {
+				res.json(pump);
+			})
  
-  pump.save(function(err) {
-    if (err) return res.json(500, err);
-    res.json(pump);
-  });
 };
  
 /**
  * Update a pump
  */
 exports.update = function(req, res) {
-  delete req.body._id;
-  Pump.update({ _id: req.pump._id }, req.body, { upsert: true}, function(err, updatedPump) {
-    if (err) return res.json(500, err);
-	Ingredient.update({pump: req.pump._id}, { $set : { pump: null }}, function(err, updateding) {
-		if (err) return res.json(500, err);
-		Ingredient.update({_id: req.body.ingredient}, { $set : { pump: req.pump._id }}, function(err, updateding) {
-			if (err) return res.json(500, err);
-		});
-	});
-	res.json(updatedPump);
-  });
+
+var pump = req.pump;
+pump.tubelength = req.body.tubelength;
+if(req.body.ingredient){
+	db.Ingredient
+			.find({ where: { id: req.body.ingredient.id }})
+			.complete(function(err, ingredient) {
+				if (!!err) {
+					new Error('Failed to load ingredient ' + id+': ' + err);
+				} else if (!ingredient) {
+					new Error('Failed to load ingredient ' + id);
+				} else {
+					pump.setIngredient(ingredient);
+				}
+			})
+}
+pump.save();
+
 };
  
 /**
  * Remove a pump
  */
 exports.remove = function(req, res) {
-  var pump = req.pump;
- 
-  pump.remove(function(err) {
-    if (err) return res.json(500, err);
-    res.json(pump);   
-  });
+console.log(res.pump);
+   db.Pump.destroy(
+    {id: req.pump.id} /* where criteria */,
+    {} /* options */
+  );
 };
