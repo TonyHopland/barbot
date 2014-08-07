@@ -18,6 +18,9 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
 
 	$scope.init = function () {
         Recipe.query(function(response) {
+            response.sort(function(a, b){
+                return (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : 0;
+            });
             $scope.recipes = response;
         });
         if(drinkSizes != undefined){

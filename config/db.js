@@ -4,11 +4,12 @@ var fs        = require('fs')
   , Sequelize = require('sequelize')
   , lodash    = require('lodash')
   , sequelize = new Sequelize('bar', 'barbot', '', {
+    logging: false,
 	dialect: 'sqlite',
-	storage: './db/barbot.sqlite'
+	storage: path.join(__dirname, '../db/barbot.sqlite')
   })
   , db        = {}
- var modelpath = path.join(__dirname, 'models')
+ var modelpath = path.join(__dirname, '../models')
 fs
   .readdirSync(modelpath)
   .filter(function(file) {

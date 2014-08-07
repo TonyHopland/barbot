@@ -9,45 +9,47 @@ angular.module('barbot').controller('DrinkController', function($scope, $timeout
         }
     ]; //One size is set in case settings are not filled out
 	$scope.drinks = [];
-	$scope.missingDrinks = [];
-	$scope.selectedDrink;
-    $scope.selectedSize;
+	$scope.selectedDrink={};
+
+    var updateSelectedDrink = function(drink){
+        $scope.selectedDrink = drink
+        console.log("Selected: " + drink.name);
+
+        var sum = 0;
+        for(var i in drink.recipeparts){
+            sum += drink.recipeparts[i].amount;
+        }
+        $scope.normalFactor = 100/sum;
+    }
+
+    Recipe.registerWatcher(updateSelectedDrink);
+
+    $scope.$on("$destroy", function() {
+        Recipe.unregisterWatcher(updateSelectedDrink);
+    });
+
 	$scope.normalFactor;
 
 	$scope.progressCss = {};
 
-	$scope.initController = function () {
-		Recipe.query(function(response) {
-		for(var d = 0; d < response.length; d++) {
-		    var missingIngredients = false;
-		    for(var r in response[d].recipeparts){
-		        if (response[d].recipeparts[r].ingredient.PumpId == null){
-		            missingIngredients = true;
-		            break;
-		        }
-		    }
-		    if(missingIngredients){
-		        $scope.missingDrinks.push(response[d]);
-		    }else {
-                $scope.drinks.push(response[d]);
+
+    Recipe.query(function(response) {
+        response.sort(function(a, b){
+            if(a.missingIngredients == b.missingIngredients)
+            {
+                return (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : 0;
             }
-		}
-      });
-	};
+            else
+            {
+                return (a.missingIngredients < b.missingIngredients) ? -1 : 1;
+            }
+        });
+        $scope.drinks = response;
+    });
+
 
 	$scope.selectDrink = function(drink) {
-	    $scope.selectedDrink = Recipe.selectedDrink = drink;
-	    console.log("Selected: " + drink.name);
-
-        if($scope.selectedSize != undefined && $scope.selectedDrink.maxsize < $scope.selectedSize.id){
-            $scope.selectedSize = undefined;
-        }
-
-        var sum = 0;
-        for(var i in $scope.selectedDrink.recipeparts){
-            sum += $scope.selectedDrink.recipeparts[i].amount;
-        }
-        $scope.normalFactor = 100/sum;
+	    Recipe.setSelectedDrink(drink);
 	}
 
 	$scope.getAmountInPercent = function(amount) {
@@ -92,6 +94,5 @@ angular.module('barbot').controller('DrinkController', function($scope, $timeout
         }
     }
 
-	$scope.initController(); //Run this at startup to fill the table
 });
 

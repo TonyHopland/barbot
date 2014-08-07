@@ -65,7 +65,6 @@ var recipepart = req.recipepart;
 recipepart.amount = req.body.amount;
 recipepart.order = req.body.order;
 recipepart.startdelay = req.body.startdelay;
-console.log(" id: " + req.body.IngredientId);
 if(req.body.IngredientId){
 		db.Ingredient
 			.find({ where: { id: req.body.IngredientId }})

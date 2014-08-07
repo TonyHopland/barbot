@@ -3,22 +3,7 @@
         <div class="drinks">
             <h2 class="title">Drinks</h2>
             <div class="list horizontalFlexcontainer">
-                <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in drinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)" scroll-to="drinkdetails">
-                    <h2><i class="icon fa fa-check-square-o right"></i><span>{{drink.name}}</span></h2>
-                    <div class="ingredients">
-                        <p ng-repeat="part in drink.recipe">
-                            {{part.ingredient.name}}
-                        </p>
-                    </div>
-                </div>
-                <div class="drinkview {{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in missingDrinks" ng-style="{'background-image':'url(./img/drinks/'+drink.image+')'}" ng-click="selectDrink(drink)" scroll-to="drinkdetails">
-                    <h2><i class="icon fa fa-square-o right"></i><span>{{drink.name}}</span></h2>
-                    <div class="ingredients">
-                        <p ng-repeat="part in drink.recipe">
-                            {{part.ingredient.pump == null?'x':''}} {{part.ingredient.name}}
-                        </p>
-                    </div>
-                </div>
+                <div class="{{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in drinks" ng-include src="'views/partial/drinkview.html'" ng-click="selectDrink(drink)"></div>
             </div>
         </div>
         <div class="verticalFlexcontainer rightCol">

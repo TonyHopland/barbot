@@ -3,7 +3,20 @@ module.exports = function(sequelize, DataTypes) {
   	name: 		DataTypes.STRING,
 	maxsize: 	DataTypes.INTEGER,
 	image:		DataTypes.STRING,
-	notes:		DataTypes.TEXT
+	notes:		DataTypes.TEXT,
+	missingIngredients: {
+    type     : DataTypes.INTEGER,
+    allowNull: true,
+    get      : function()  {
+        var missingIngredients = 0;
+		for(var r in this.recipeparts){
+			if (this.recipeparts[r].ingredient.PumpId == null){
+				missingIngredients++;
+			}
+		}
+		return missingIngredients;
+    }
+  }
   }, {
 	timestamps: false,
     classMethods: {

@@ -7,12 +7,13 @@
   "author": "Tony",
   "dependencies": {
     "body-parser": "~1.4.2",
+	"method-override": "~2.0.2",
     "express": "~4.6.1",
-    "johnny-five": "~0.8.0",
-    "lodash": "^2.4.1",
-    "method-override": "~2.0.2",
+	"lodash": "^2.4.1",
     "sequelize": "^1.7.9",
-    "socket.io": "~1.0.6",
-    "sqlite3": "^2.2.4"
+    "sqlite3": "^2.2.4",
+    "johnny-five": "~0.8.0",
+	"raspi-io": "~0.1.14",
+	"socket.io": "~1.0.6"
   }
 }

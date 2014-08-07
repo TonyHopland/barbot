@@ -5,18 +5,26 @@ var board, pump0, pump1, pump2, pump3, pump4, pump5;
 var barReady = false;
 
 var minPumpDelay = 30;
-/*
+/* //Code to use arduino
 var five = require('johnny-five');
-board = new five.Board('COM5');
+board = new five.Board();
+*/
+
+/* //Code to use raspberry io
+var raspi = require('raspi-io'),
+    five = require('johnny-five'),
+    board = new five.Board({
+      io: new raspi()
+    });
 
 board.on('ready', function () {
 
-	pump0 = new five.Led(2);
-	pump1 = new five.Led(3);
-	pump2 = new five.Led(4);
-	pump3 = new five.Led(5);
-	pump4 = new five.Led(6);
-	pump5 = new five.Led(7);
+	pump0 = new five.Led(23);
+	pump1 = new five.Led(21);
+	pump2 = new five.Led(19);
+	pump3 = new five.Led(15);
+	pump4 = new five.Led(13);
+	pump5 = new five.Led(11);
 
 	board.repl.inject({
 		p0: pump0,
@@ -94,22 +102,22 @@ exports.stopPump = function (pump) {
 exports.usePump = function (pump) {
   var using;
   switch(pump) {
-    case 1:
+    case 0:
       using = pump0;
       break;
-    case 2:
+    case 1:
       using = pump1;
       break;
-    case 3:
+    case 2:
       using = pump2;
       break;
-    case 4:
+    case 3:
       using = pump3;
       break;
-    case 5:
+    case 4:
       using = pump4;
       break;
-    case 6:
+    case 5:
         using = pump5;
         break;
     default:

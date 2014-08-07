@@ -15,13 +15,24 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
     $scope.selectedSize;
 	$scope.progressCss = {};
 
+    var updateSelectedDrink = function(drink){
+        if($scope.selectedSize != undefined && drink.maxsize < $scope.selectedSize.id){
+            $scope.selectedSize = undefined;
+        }
+    }
+
+    //Register and unregister watcher for selected drink.
+    Recipe.registerWatcher(updateSelectedDrink);
+    $scope.$on("$destroy", function() {
+        Recipe.unregisterWatcher(updateSelectedDrink);
+    });
 
 	$scope.selectSize = function(size) {
-        if($scope.selectedDrink == undefined) {
+	    var drink = Recipe.getSelectedDrink();
+        if(drink == undefined) {
             $scope.selectedSize = size;
-        }else if($scope.selectedDrink.maxsize >= size.id) {
+        }else if(drink.maxsize >= size.id) {
             $scope.selectedSize = size;
-            calculateNormalFactor();
         }
 	}
 
@@ -48,7 +59,8 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
             alert("Please wait for current drink to finish");
             return;
         }
-        if(Recipe.selectedDrink == undefined){
+        var drink = Recipe.getSelectedDrink();
+        if(drink == undefined){
             alert("Please select a drink");
             return;
         }
@@ -57,7 +69,6 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
             return;
         }
 
-        var drink = Recipe.selectedDrink;
         var normalFactor = calcNormalFactor(drink);
         var sizeFactor = $scope.selectedSize.size/100;
 
