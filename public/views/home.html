@@ -3,22 +3,23 @@
         <div class="drinks">
             <h2 class="title">Drinks</h2>
             <div class="list horizontalFlexcontainer">
-                <div class="{{selectedDrink==drink ? 'selected' : 'notselected'}}" ng-repeat="drink in drinks" ng-include src="'views/partial/drinkview.html'" ng-click="selectDrink(drink)"></div>
+                <div ng-repeat="drink in drinks" ng-include src="'views/partial/drinkview.html'" ng-click="selectDrink(drink)"></div>
             </div>
         </div>
         <div class="verticalFlexcontainer rightCol">
             <div id="drinkdetails" class="drinkdetails">
-                <h2 class="title"> {{selectedDrink != undefined ? selectedDrink.name : "Drink details"}} </h2>
+                <h2 class="title"> {{drinkService.selectedDrink != undefined ? drinkService.selectedDrink.name : "Drink details"}} </h2>
                 <div class="horizontalFlexcontainer ingredients">
-
-                    <div class="ingredientglass" >
+                    <div class="glasscontainer">
                         <h3>Ratio</h3>
-                        <div ng-repeat="part in selectedDrink.recipeparts" class="ingredientpart" ng-style="getGlassCss(part)"></div>
+                        <div class="ingredientglass" >
+                            <div ng-repeat="part in drinkService.selectedDrink.recipeparts" class="ingredientpart" ng-style="drinkService.getGlassCss(part)"></div>
+                        </div>
                     </div>
                     <div class="ingredientdetails">
                         <div class="ingredientstatus">
                             <h3>Ingredients</h3>
-                            <p ng-style="getIngredientCss(part)" ng-repeat="part in selectedDrink.recipeparts"><span>
+                            <p ng-style="drinkService.getIngredientCss(part)" ng-repeat="part in drinkService.selectedDrink.recipeparts"><span>
                                 <i ng-if="part.ingredient.PumpId != null" class=" fa fa-check-square-o "></i>
                                 <i ng-if="part.ingredient.PumpId == null" class=" fa fa-square-o "></i> {{part.ingredient.name}}</span></p>
                         </div>

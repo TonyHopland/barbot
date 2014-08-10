@@ -54,6 +54,7 @@ ingredient.name = req.body.name;
 ingredient.color = req.body.color;
 
 ingredient.save();
+res.json(ingredient);
 };
  
 /**

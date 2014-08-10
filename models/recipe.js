@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
     get      : function()  {
         var missingIngredients = 0;
 		for(var r in this.recipeparts){
-			if (this.recipeparts[r].ingredient.PumpId == null){
+			if (this.recipeparts[r].ingredient==null || this.recipeparts[r].ingredient.PumpId == null){
 				missingIngredients++;
 			}
 		}

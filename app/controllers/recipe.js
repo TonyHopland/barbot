@@ -74,6 +74,8 @@ if(req.body.recipepart){
 }
 
 recipe.save();
+res.json(recipe);
+
 };
  
 /**

@@ -91,30 +91,34 @@ header {
   align-items: center;
 }
 /* line 18, sass/style.scss */
+header a {
+  text-decoration: none;
+}
+/* line 21, sass/style.scss */
 header h1 {
   color: red;
-  font-size: 5em;
+  font-size: 8vh;
 }
-/* line 22, sass/style.scss */
+/* line 25, sass/style.scss */
 header p {
   font-size: 2em;
 }
-/* line 26, sass/style.scss */
+/* line 29, sass/style.scss */
 header #navigationMenu {
   position: absolute;
   text-align: center;
   width: 10%;
-  top: 2em;
+  top: 3vh;
   right: 0em;
 }
-/* line 33, sass/style.scss */
+/* line 36, sass/style.scss */
 header #navigationMenu #navigationChoices {
   position: relative;
   display: none;
   text-align: left;
   list-style: none;
 }
-/* line 38, sass/style.scss */
+/* line 41, sass/style.scss */
 header #navigationMenu #navigationChoices li {
   font: bold 12px/18px sans-serif;
   margin-bottom: 0.5em;
@@ -135,24 +139,12 @@ header #navigationMenu #navigationChoices li.selected {
 header #navigationMenu #navigationChoices li.disabled {
   background-color: gray;
 }
-/* line 44, sass/style.scss */
-header #navigationMenu #navigationChoices li a:link {
-  color: white;
-}
 /* line 47, sass/style.scss */
-header #navigationMenu #navigationChoices li a:visited {
-  color: white;
-}
-/* line 50, sass/style.scss */
-header #navigationMenu #navigationChoices li a:hover {
-  color: white;
-}
-/* line 53, sass/style.scss */
-header #navigationMenu #navigationChoices li a:active {
+header #navigationMenu #navigationChoices li a:link, header #navigationMenu #navigationChoices li a:visited, header #navigationMenu #navigationChoices li a:hover, header #navigationMenu #navigationChoices li a:active {
   color: white;
 }
 
-/* line 64, sass/style.scss */
+/* line 58, sass/style.scss */
 .horizontalFlexcontainer {
   display: -webkit-box;
   display: -moz-box;
@@ -173,7 +165,7 @@ header #navigationMenu #navigationChoices li a:active {
   margin: 0;
 }
 
-/* line 72, sass/style.scss */
+/* line 66, sass/style.scss */
 .verticalFlexcontainer {
   display: -webkit-box;
   display: -moz-box;
@@ -194,22 +186,22 @@ header #navigationMenu #navigationChoices li a:active {
   margin: 0;
 }
 
-/* line 80, sass/style.scss */
+/* line 74, sass/style.scss */
 .fullHeight {
   height: 90vh;
 }
 
-/* line 84, sass/style.scss */
+/* line 78, sass/style.scss */
 .left {
   float: left;
 }
 
-/* line 87, sass/style.scss */
+/* line 81, sass/style.scss */
 .right {
   float: right;
 }
 
-/* line 91, sass/style.scss */
+/* line 85, sass/style.scss */
 .title {
   text-align: center;
   width: 100%;
@@ -219,30 +211,30 @@ header #navigationMenu #navigationChoices li a:active {
   margin: 0;
 }
 
-/* line 99, sass/style.scss */
+/* line 93, sass/style.scss */
 .icon {
   margin-top: 0.12em;
 }
 
-/* line 102, sass/style.scss */
+/* line 96, sass/style.scss */
 .drinks {
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
 }
 @media (min-width: 480px) {
-  /* line 102, sass/style.scss */
+  /* line 96, sass/style.scss */
   .drinks {
     width: 40%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 102, sass/style.scss */
+  /* line 96, sass/style.scss */
   .drinks {
     width: 50%;
   }
 }
-/* line 115, sass/style.scss */
+/* line 109, sass/style.scss */
 .drinks .list {
   align-items: flex-start;
   width: 100%;
@@ -250,7 +242,7 @@ header #navigationMenu #navigationChoices li a:active {
   /*Probably not the best solution but it works*/
   overflow-y: auto;
 }
-/* line 122, sass/style.scss */
+/* line 116, sass/style.scss */
 .drinks .list .drinkview {
   background-size: cover;
   background-position: center;
@@ -260,94 +252,94 @@ header #navigationMenu #navigationChoices li a:active {
   height: 150px;
   margin: 1em 0 1em 0;
 }
-/* line 132, sass/style.scss */
+/* line 126, sass/style.scss */
 .drinks .list .drinkview.selected h2 {
   background-color: rgba(255, 0, 0, 0.7);
 }
-/* line 137, sass/style.scss */
+/* line 131, sass/style.scss */
 .drinks .list .drinkview h2 {
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
   border-radius: 5px 5px 0 0;
   padding: 0 8px 0 8px;
 }
-/* line 144, sass/style.scss */
+/* line 138, sass/style.scss */
 .drinks .list .drinkview .ingredients {
   display: none;
 }
 @media (min-width: 480px) {
-  /* line 122, sass/style.scss */
+  /* line 116, sass/style.scss */
   .drinks .list .drinkview {
     width: 180px;
     height: 180px;
   }
 }
 @media (min-width: 1024px) {
-  /* line 122, sass/style.scss */
+  /* line 116, sass/style.scss */
   .drinks .list .drinkview {
     width: 230px;
     height: 230px;
   }
 }
 
-/* line 159, sass/style.scss */
+/* line 153, sass/style.scss */
 .rightCol {
   width: 100%;
   justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.4);
 }
 @media (min-width: 480px) {
-  /* line 159, sass/style.scss */
+  /* line 153, sass/style.scss */
   .rightCol {
     width: 60%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 159, sass/style.scss */
+  /* line 153, sass/style.scss */
   .rightCol {
     width: 50%;
   }
 }
 
-/* line 174, sass/style.scss */
+/* line 168, sass/style.scss */
 .drinkdetails h3 {
   text-decoration: underline;
   margin-bottom: 5px;
 }
-/* line 179, sass/style.scss */
+/* line 173, sass/style.scss */
 .drinkdetails .ingredients {
   align-items: flex-start;
   margin: 25px 25px 25px 25px;
 }
-/* line 183, sass/style.scss */
-.drinkdetails .ingredients .ingredientglass {
-  width: 20%;
-  height: 250px;
-}
-/* line 186, sass/style.scss */
-.drinkdetails .ingredients .ingredientglass .ingredientpart {
-  width: 80%;
-}
-/* line 190, sass/style.scss */
+/* line 177, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails {
   width: 80%;
 }
-/* line 193, sass/style.scss */
+/* line 180, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails .ingredientstatus p {
   font-size: 1.5em;
 }
-/* line 200, sass/style.scss */
+/* line 187, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails .drinknotes {
   margin: 1.5em 0 0 0;
 }
-/* line 202, sass/style.scss */
+/* line 189, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails .drinknotes p {
   white-space: pre-line;
   margin: 0;
   font-size: 1em;
 }
 
-/* line 212, sass/style.scss */
+/* line 198, sass/style.scss */
+.glasscontainer {
+  width: 10%;
+}
+/* line 200, sass/style.scss */
+.glasscontainer .ingredientglass {
+  height: 250px;
+}
+
+/* line 205, sass/style.scss */
 .sizeselect {
   display: -webkit-box;
   display: -moz-box;
@@ -368,7 +360,7 @@ header #navigationMenu #navigationChoices li a:active {
   align-items: flex-start;
   width: 100%;
 }
-/* line 220, sass/style.scss */
+/* line 213, sass/style.scss */
 .sizeselect .sizebtn {
   width: 100px;
   height: 100px;
@@ -380,16 +372,16 @@ header #navigationMenu #navigationChoices li a:active {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.4);
 }
-/* line 231, sass/style.scss */
+/* line 224, sass/style.scss */
 .sizeselect .sizebtn.selected {
   background-color: rgba(255, 0, 0, 0.7);
 }
-/* line 234, sass/style.scss */
+/* line 227, sass/style.scss */
 .sizeselect .sizebtn.disabled {
   background-color: gray;
 }
 
-/* line 240, sass/style.scss */
+/* line 233, sass/style.scss */
 .make {
   position: relative;
   width: 80%;
@@ -405,11 +397,11 @@ header #navigationMenu #navigationChoices li a:active {
   margin-left: auto;
   margin-right: auto;
 }
-/* line 255, sass/style.scss */
+/* line 248, sass/style.scss */
 .make h3 {
   position: relative;
 }
-/* line 260, sass/style.scss */
+/* line 253, sass/style.scss */
 .make .progress {
   position: absolute;
   top: 0;
@@ -419,14 +411,14 @@ header #navigationMenu #navigationChoices li a:active {
   width: 0%;
 }
 
-/* line 271, sass/style.scss */
+/* line 264, sass/style.scss */
 .table {
   border-top: 1px solid #e5eff8;
   border-right: 1px solid #e5eff8;
   margin: 25px;
   border-collapse: collapse;
 }
-/* line 276, sass/style.scss */
+/* line 269, sass/style.scss */
 .table td {
   border-bottom: 1px solid #e5eff8;
   border-left: 1px solid #e5eff8;
@@ -434,7 +426,7 @@ header #navigationMenu #navigationChoices li a:active {
   text-align: center;
 }
 
-/* line 284, sass/style.scss */
+/* line 277, sass/style.scss */
 .shortCol {
   width: 3em;
 }

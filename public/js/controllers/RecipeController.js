@@ -1,9 +1,9 @@
 // public/js/controllers/RecipeController.js
-angular.module('barbot').controller('RecipeController', function($scope, Recipe, Recipepart) {
+angular.module('barbot').controller('RecipeController', function($scope, Recipe, Recipepart, Drink) {
 
 
 	$scope.recipes = [];
-	$scope.recipe = null;
+	$scope.drinkService = Drink;
 
 	var recipeModel = {"name":"New Recipe","maxsize":3,"image":"","recipe":[]};
 	var recipepartModel = {"amount":0,"order":0,"startdelay":0};
@@ -15,6 +15,10 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
             size: 15000
         }
     ]; //One size is set in case settings are not filled out
+
+    $scope.$on("$destroy", function() {
+        Drink.selectedDrink = null;
+    });
 
 	$scope.init = function () {
         Recipe.query(function(response) {
@@ -30,16 +34,16 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
 
 	$scope.AddRecipepart = function () {
         recipepart = new Recipepart(recipepartModel);
-        recipepart.recipe = $scope.recipe.id;
+        recipepart.recipe = Drink.selectedDrink.id;
         recipepart.$save(
             function(rp, putResponseHeaders) {
-                $scope.recipe.recipeparts.push(rp);
+                Drink.selectedDrink.recipeparts.push(rp);
             }
         );
 	}
 
     $scope.showRecipe = function () {
-        if($scope.recipe != null) {
+        if(Drink.selectedDrink != null) {
             return {'display': 'block'};
         } else {
             return {'display': 'none'};
@@ -48,39 +52,36 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
     }
 
     $scope.saveRecipepart = function (recipepart) {
-        var recipepartToUpdate = new Recipepart(recipepart);
-        recipepartToUpdate.$update();
+        var recipepart = new Recipepart(recipepart);
+        recipepart.$update(function(rp, putResponseHeaders) {
+                                           Drink.updateDrinkPart(rp);
+                                   });
     }
 
     $scope.saveRecipe = function() {
-        var recipeToUpdate = new Recipe($scope.recipe);
-        recipeToUpdate.$update();
+        Drink.selectedDrink.$update();
     }
 
     $scope.newRecipe = function () {
-        $scope.recipe = new Recipe(recipeModel);
-        $scope.recipe.$save(function(rp, putResponseHeaders) {
+        Drink.selectedDrink = new Recipe(recipeModel);
+        Drink.selectedDrink.$save(function(rp, putResponseHeaders) {
                 $scope.recipes.push(rp);
         });
     }
 
 	$scope.deleteRecipepart = function(recipepart) {
-	    var index = $scope.recipe.recipe.indexOf(recipepart._id);
-	    var indexrel = $scope.recipe._related.recipe.indexOf(recipepart);
-        recipepart = new Recipepart(recipepart);
-        recipepart.$delete();
-        if(indexrel >= 0){
-            $scope.recipe._related.recipe.splice(indexrel, 1);
-	    }
+        recipepartToDelete = new Recipepart(recipepart);
+        recipepartToDelete.$delete();
+        var index = Drink.selectedDrink.recipeparts.indexOf(recipepart);
 	    if(index >= 0){
-             $scope.recipe.recipe.splice(index, 1);
+             Drink.selectedDrink.recipeparts.splice(index, 1);
         }
-        $scope.saveRecipe();
+
 	}
     $scope.deleteRecipe = function(recipe) {
         var index = $scope.recipes.indexOf(recipe);
-        if($scope.recipe == recipe){
-        $scope.recipe =  null;
+        if(Drink.selectedDrink == recipe){
+        Drink.selectedDrink =  null;
         }
         recipe.$delete();
         if(index >= 0){
@@ -89,7 +90,7 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
     }
 
     $scope.editRecipe = function(recipe) {
-        $scope.recipe = recipe;
+        Drink.selectedDrink = recipe;
     }
 
 	$scope.init(); //Run this at startup to fill the table

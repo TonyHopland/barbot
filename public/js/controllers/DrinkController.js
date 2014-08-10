@@ -1,40 +1,16 @@
 // public/js/controllers/RecipeController.js
-angular.module('barbot').controller('DrinkController', function($scope, $timeout, Recipe) {
+angular.module('barbot').controller('DrinkController', function($scope, $timeout, Recipe, Drink) {
 
-    $scope.drinkSizes = [
-        {
-            id: 1,
-            name: 'shot',
-            size: 15000
-        }
-    ]; //One size is set in case settings are not filled out
 	$scope.drinks = [];
-	$scope.selectedDrink={};
-
-    var updateSelectedDrink = function(drink){
-        $scope.selectedDrink = drink
-        console.log("Selected: " + drink.name);
-
-        var sum = 0;
-        for(var i in drink.recipeparts){
-            sum += drink.recipeparts[i].amount;
-        }
-        $scope.normalFactor = 100/sum;
-    }
-
-    Recipe.registerWatcher(updateSelectedDrink);
+	$scope.drinkService=Drink;
+    $scope.progressCss = {};
 
     $scope.$on("$destroy", function() {
-        Recipe.unregisterWatcher(updateSelectedDrink);
+        Drink.selectedDrink = null;
     });
 
-	$scope.normalFactor;
-
-	$scope.progressCss = {};
-
-
-    Recipe.query(function(response) {
-        response.sort(function(a, b){
+    setDrinks = function(drinks){
+        drinks.sort(function(a, b){
             if(a.missingIngredients == b.missingIngredients)
             {
                 return (a.name.toLowerCase() < b.name.toLowerCase()) ? -1 : (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : 0;
@@ -44,38 +20,25 @@ angular.module('barbot').controller('DrinkController', function($scope, $timeout
                 return (a.missingIngredients < b.missingIngredients) ? -1 : 1;
             }
         });
-        $scope.drinks = response;
-    });
+        $scope.drinks = drinks;
+    }
+
+    Recipe.query().$promise.then(setDrinks);
 
 
 	$scope.selectDrink = function(drink) {
-	    Recipe.setSelectedDrink(drink);
+        Drink.selectedDrink = drink;
+        console.log("Selected: " + drink.name);
 	}
-
-	$scope.getAmountInPercent = function(amount) {
-	    return amount * $scope.normalFactor;
-	}
-
-    $scope.getGlassCss = function (part) {
-        return {
-            height: $scope.getAmountInPercent(part.amount) + "%",
-            background_color: part.ingredient.color
-        }
-    }
-    $scope.getIngredientCss = function (part) {
-        return {
-            //'height': $scope.getAmountInPercent(part.amount) + "%",
-            'color': part.ingredient.color
-        }
-    }
 
     $scope.getCurrentDrinkNotes = function () {
-        if($scope.selectedDrink != undefined) {
+        var drink = Drink.selectedDrink;
+        if(drink != undefined) {
             var note = "";
             var missingIngredients = [];
-            for(var i in $scope.selectedDrink.recipeparts){
-                if(!$scope.selectedDrink.recipeparts[i].ingredient.PumpId) {
-                    missingIngredients.push($scope.selectedDrink.recipeparts[i].ingredient.name);
+            for(var i in drink.recipeparts){
+                if(!drink.recipeparts[i].ingredient.PumpId) {
+                    missingIngredients.push(drink.recipeparts[i].ingredient.name);
                 }
             }
             if(missingIngredients.length > 0){
@@ -83,11 +46,11 @@ angular.module('barbot').controller('DrinkController', function($scope, $timeout
                 for (var i in missingIngredients){
                     note = note + "\n- " + missingIngredients[i];
                 }
-                if($scope.selectedDrink.notes != undefined || $scope.selectedDrink.notes)
+                if(drink.notes)
                     note = note + "\n\n Aditional notes: \n";
             }
-            if($scope.selectedDrink.notes != undefined || $scope.selectedDrink.notes)
-                note = note + $scope.selectedDrink.notes;
+            if(drink.notes)
+                note = note + drink.notes;
             return note;
         } else {
             return "";

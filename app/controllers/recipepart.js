@@ -61,25 +61,27 @@ exports.create = function(req, res) {
  */
 exports.update = function(req, res) {
 
-var recipepart = req.recipepart;
-recipepart.amount = req.body.amount;
-recipepart.order = req.body.order;
-recipepart.startdelay = req.body.startdelay;
-if(req.body.IngredientId){
-		db.Ingredient
-			.find({ where: { id: req.body.IngredientId }})
-			.complete(function(err, ingredient) {
-				if (!!err) {
-					new Error('Failed to load ingredient ' + id+': ' + err);
-				} else if (!recipepart) {
-					new Error('Failed to load ingredient ' + id);
-				} else {
-					recipepart.setIngredient(ingredient);
-				}
-			})
-}
+	var recipepart = req.recipepart;
+	recipepart.amount = req.body.amount;
+	recipepart.order = req.body.order;
+	recipepart.startdelay = req.body.startdelay;
+	recipepart.IngredientId = req.body.IngredientId;
 
-recipepart.save();
+	recipepart.save().complete(function(err, rp) {
+		db.Recipepart
+			.find({ where: { id: rp.id }, include: [ db.Ingredient ] })
+			.complete(function(err, recipepart) {
+				if (!!err) {
+					new Error('Failed to load recipepart ' + id+': ' + err);
+				} else if (!recipepart) {
+					new Error('Failed to load recipepart ' + id);
+				} else {
+					res.json(recipepart)
+				}
+			});
+	});
+
+
 };
  
 /**

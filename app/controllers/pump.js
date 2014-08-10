@@ -69,6 +69,7 @@ if(req.body.ingredient){
 			})
 }
 pump.save();
+res.json(pump);
 
 };
  

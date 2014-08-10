@@ -15,9 +15,12 @@ header {
     @include flexbox();
     @include flex-direction(column);
     align-items: center;
+    a {
+        text-decoration: none;
+    }
     h1 {
         color: red;
-        font-size: 5em;
+        font-size: 8vh;
     }
     p {
         font-size: 2em;
@@ -27,7 +30,7 @@ header {
         position: absolute;
         text-align: center;
         width: 10%;
-        top: 2em;
+        top: 3vh;
         right: 0em;
 
         #navigationChoices{
@@ -41,16 +44,7 @@ header {
                 color: white;
                 @include btn(5em,3em);
                 background-color: black;
-                a:link {
-                    color: white;
-                }
-                a:visited {
-                    color: white;
-                }
-                a:hover {
-                    color: white;
-                }
-                a:active {
+                a:link, a:visited, a:hover, a:active {
                     color: white;
                 }
             }
@@ -180,13 +174,6 @@ header {
         align-items: flex-start;
         margin: 25px 25px 25px 25px;
 
-        .ingredientglass {
-            width: 20%;
-            height: 250px;
-            .ingredientpart {
-                width: 80%;
-            }
-        }
         .ingredientdetails {
             width: 80%;
             .ingredientstatus{
@@ -206,6 +193,12 @@ header {
                 }
             }
         }
+    }
+}
+.glasscontainer{
+    width: 10%;
+    .ingredientglass {
+        height: 250px;
     }
 }
 

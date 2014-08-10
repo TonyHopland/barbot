@@ -1,5 +1,5 @@
 // public/js/controllers/RecipeController.js
-angular.module('barbot').controller('MakeController', function($scope, $timeout, Recipe) {
+angular.module('barbot').controller('MakeController', function($scope, $timeout, Drink) {
 
     if(drinkSizes != undefined){
         $scope.drinkSizes = drinkSizes;
@@ -12,38 +12,18 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
             }
         ];
     }
+    $scope.drink = Drink;
     $scope.selectedSize;
 	$scope.progressCss = {};
 
-    var updateSelectedDrink = function(drink){
-        if($scope.selectedSize != undefined && drink.maxsize < $scope.selectedSize.id){
-            $scope.selectedSize = undefined;
-        }
-    }
-
-    //Register and unregister watcher for selected drink.
-    Recipe.registerWatcher(updateSelectedDrink);
-    $scope.$on("$destroy", function() {
-        Recipe.unregisterWatcher(updateSelectedDrink);
-    });
-
 	$scope.selectSize = function(size) {
-	    var drink = Recipe.getSelectedDrink();
+	    var drink = Drink.selectedDrink;
         if(drink == undefined) {
             $scope.selectedSize = size;
         }else if(drink.maxsize >= size.id) {
             $scope.selectedSize = size;
         }
 	}
-
-    calcNormalFactor = function(drink){
-        var sum = 0;
-        for(var i in drink.recipeparts){
-            sum += drink.recipeparts[i].amount;
-        }
-        return 100/sum;
-    }
-
 
     $scope.getProgressCss = function () {
         return {
@@ -59,17 +39,21 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
             alert("Please wait for current drink to finish");
             return;
         }
-        var drink = Recipe.getSelectedDrink();
+        var drink = Drink.selectedDrink;
         if(drink == undefined){
             alert("Please select a drink");
             return;
+        }
+
+        if($scope.selectedSize != undefined && drink.maxsize < $scope.selectedSize.id){
+            $scope.selectedSize = undefined;
         }
         if($scope.selectedSize == undefined){
             alert("Please select a size");
             return;
         }
 
-        var normalFactor = calcNormalFactor(drink);
+        var normalFactor = Drink.getNormalFactor();
         var sizeFactor = $scope.selectedSize.size/100;
 
         var drinkInstructions = [];
@@ -110,10 +94,6 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
         //dispenseDrink(drinkInstructions);
     }
 
-    $scope.getProgressCss = function () {
-        return $scope.progressCss;
-    }
-
     calculateDrinkTime = function(instructions){
         instructions = instructions.sort(function(a, b) {
             return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
@@ -139,8 +119,5 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
 
         return totalTime;
     }
-
-    Recipe.selectedDrink = null;
-
 });
 

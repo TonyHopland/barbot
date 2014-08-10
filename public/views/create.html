@@ -1,68 +1,57 @@
-<div id="Create" ng-controller="RecipeController" class="horizontalFlexcontainer create" >
-    <div id="recipes">
-        <h2>Recipes</h2>
-        <table id="recipe-list" class="table">
-            <tr ng-repeat="recipe in recipes">
-                <td>{{recipe.name}}</td>
-                <td><a class="btn" ng-click="editRecipe(recipe)">Edit</a></td>
-                <td><a class="btn" ng-click="deleteRecipe(recipe)">Delete</a></td>
-            </tr>
-            <tr>
-                <td colspan="3"><a class="btn" ng-click="newRecipe()">Add new recipe</a></td>
-            </tr>
-        </table>
+<div id="Create" ng-controller="RecipeController" class="horizontalFlexcontainer create fullHeight" >
+    <div class="drinks">
 
+        <h2 class="title">Drinks
+            <a class="btn right" ng-click="newRecipe()"><i class="fa fa-plus"></i></a>
+        </h2>
+
+        <div class="list horizontalFlexcontainer">
+            <div ng-repeat="drink in recipes" ng-include src="'views/partial/drinkview.html'" ng-click="editRecipe(drink)"></div>
+        </div>
     </div>
-    <div id="recipe-editor" ng-controller="IngredientController" ng-style="showRecipe()">
-        <h2>Edit recipe</h2>
-        <form id="ingredient-form" ng-submit="saveRecipe()">
-            <input ng-model="recipe.name" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
-            <select ng-model="recipe.maxsize" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-options="drinkSize.id as drinkSize.name for drinkSize in drinkSizes" ng-change="saveRecipe()" />
-            <input ng-model="recipe.image" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
-            <a class="btn" ng-click="AddRecipepart()">Add ingredient</a>
-        <table id="recipe" class="table">
-            <thead>
-                <td>Ingredient</td>
-                <td>Amount</td>
-                <td>Order</td>
-                <td>Start delay</td>
-                <td></td>
-            </thead>
-            <tr ng-repeat="part in recipe.recipeparts">
-                <td>
-                    <select ng-model="part.IngredientId" ng-options="ingredient.id as ingredient.name for ingredient in ingredients" ng-change="saveRecipepart(part)" >
-                        <option value="">-- choose ingredient --</option>
-                    </select>
-                </td>
-                <td><input class="shortCol" type="number" ng-model="part.amount" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)"/></td>
-                <td><input class="shortCol" type="number" ng-model="part.order" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)" /></td>
-                <td><input class="shortCol" type="number" ng-model="part.startdelay" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)" /></td>
-                <td><a class="btn" ng-click="deleteRecipepart(part)">Remove</a></td>
-            <tr>
-        </table>
-        </form>
+
+    <div class="verticalFlexcontainer rightCol" >
+        <div id="drinkdetails" class="drinkdetails" >
+            <h2 class="title"> {{drinkService.selectedDrink != undefined ? drinkService.selectedDrink.name : "Drink details"}}
+                <a class="btn right" ng-click="deleteRecipe(drinkService.selectedDrink)" ng-if="drinkService.selectedDrink"><i class="fa fa-trash-o"></i></a></h2>
+            <div class="horizontalFlexcontainer ingredients" ng-if="drinkService.selectedDrink">
+
+                <div class="glasscontainer">
+                    <h3>Ratio</h3>
+                    <div class="ingredientglass">
+                        <div ng-repeat="part in drinkService.selectedDrink.recipeparts" class="ingredientpart" ng-style="drinkService.getGlassCss(part)"></div>
+                    </div>
+                </div>
+                <div>
+                <form id="ingredient-form" ng-submit="saveRecipe()">
+                    <input ng-model="drinkService.selectedDrink.name" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
+                    <select ng-model="drinkService.selectedDrink.maxsize" ng-options="drinkSize.id as drinkSize.name for drinkSize in drinkSizes" ng-change="saveRecipe()" />
+                    <input ng-model="drinkService.selectedDrink.image" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
+                </form>
+                </div>
+                <table id="recipe" class="table" ng-controller="IngredientController">
+                    <thead>
+                    <td>Ingredient</td>
+                    <td>Amount</td>
+                    <td>Order</td>
+                    <td>Start delay</td>
+                    <td><a class="btn" ng-click="AddRecipepart()"><i class="fa fa-plus"></i></a></td>
+                    </thead>
+                    <tr ng-repeat="part in drinkService.selectedDrink.recipeparts">
+                        <td>
+                            <select ng-model="part.IngredientId" ng-options="ingredient.id as ingredient.name for ingredient in ingredients" ng-change="saveRecipepart(part)" >
+                                <option value="">-- choose ingredient --</option>
+                            </select>
+                        </td>
+                        <td><input class="shortCol" type="number" ng-model="part.amount" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)"/></td>
+                        <td><input class="shortCol" type="number" ng-model="part.order" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)" /></td>
+                        <td><input class="shortCol" type="number" ng-model="part.startdelay" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipepart(part)" /></td>
+                        <td><a class="btn" ng-click="deleteRecipepart(part)"><i class="fa fa-trash-o"></i></a></td>
+                    <tr>
+                </table>
+            </div>
+        </div>
+        <div ng-include src="'views/partial/make.html'">
+        </div>
     </div>
-    <!--<td>
-        <select ng-model="pump.ingredient._id" ng-options="ingredient._id as ingredient.name for ingredient in ingredients" ng-change="updatePump(pump)" >
-            <option value="">-- choose ingredient --</option>
-        </select>
-    </td>-->
-    <!--<h2>Ingredients</h2>
-    <div ng-controller="IngredientController">
-        <table id="ingredient-list">
-            <tr ng-repeat="ingredient in ingredients">
-                <td><input type="color" ng-model="ingredient.color" ng-change="updateIngredient(ingredient)"/></td>
-                <td><input ng-model="ingredient.name" ng-change="updateIngredient(ingredient)"/></td>
-            </tr>
-        </table>
-        <form id="ingredient-form" ng-submit="addIngredient()">
-            <input type="color" placeholder="Color" ng-model="newIngredient.color" autofocus="">
-            <input placeholder="Name" ng-model="newIngredient.name" autofocus="">
-            <button>Add</button>
-        </form>
-    </div>-->
 </div>
-
-<!--
-<div ng-include src="'./views/partial/make.html'"></div>
--->
