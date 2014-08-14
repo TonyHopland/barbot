@@ -30,8 +30,8 @@ app.use(express.static(__dirname + '/public')); // set the static files location
 require('./app/routes')(app); // configure our routes
 
 // start DB ===============================================
-db.sequelize.sync();
-/*//Use this if you want to clean and populate database on startup
+//db.sequelize.sync();
+//Use this if you want to clean and populate database on startup
 db.sequelize.sync({force: true}).complete(function(err) {
     if (err) {
       throw err[0]
@@ -39,7 +39,7 @@ db.sequelize.sync({force: true}).complete(function(err) {
 		require('./config/initDb.js');
     }
 });
-*/
+
 // start app ===============================================
 var server = app.listen(port);							// startup our app at http://localhost:8080
 console.log('Magic happens on port ' + port); 			// shoutout to the user

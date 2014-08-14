@@ -53,7 +53,25 @@ header {
     }
 }
 
-
+.unavalable{
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.1) 5px,
+      rgba(255, 255, 255, 0.1) 5px,
+      rgba(255, 255, 255, 0.1) 10px
+    )
+}
+form {
+    width: 80%;
+    label{
+        display: block;
+    }
+    input, select, textarea {
+        vertical-align: baseline;
+        width: 80%;
+    }
+}
 
 .horizontalFlexcontainer {
     @include flexbox();
@@ -164,7 +182,7 @@ header {
     }
 }
 .drinkdetails {
-
+    width: 100%;
     h3 {
         text-decoration: underline;
         margin-bottom: 5px;

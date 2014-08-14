@@ -1,4 +1,4 @@
-<div id="Create" ng-controller="RecipeController" class="horizontalFlexcontainer create fullHeight" >
+<div id="Create" ng-controller="RecipeController" class="horizontalFlexcontainer create" >
     <div class="drinks">
 
         <h2 class="title">Drinks
@@ -19,16 +19,32 @@
                 <div class="glasscontainer">
                     <h3>Ratio</h3>
                     <div class="ingredientglass">
-                        <div ng-repeat="part in drinkService.selectedDrink.recipeparts" class="ingredientpart" ng-style="drinkService.getGlassCss(part)"></div>
+                        <div ng-repeat="part in drinkService.selectedDrink.recipeparts" class="ingredientpart {{part.ingredient.PumpId ? '' : 'unavalable'}}" ng-style="drinkService.getGlassCss(part)"></div>
                     </div>
                 </div>
-                <div>
                 <form id="ingredient-form" ng-submit="saveRecipe()">
-                    <input ng-model="drinkService.selectedDrink.name" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
-                    <select ng-model="drinkService.selectedDrink.maxsize" ng-options="drinkSize.id as drinkSize.name for drinkSize in drinkSizes" ng-change="saveRecipe()" />
-                    <input ng-model="drinkService.selectedDrink.image" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="saveRecipe()"/>
+                    <label for="editName">Name:</label>
+                    <input id="editName"
+                            ng-model="drinkService.selectedDrink.name"
+                            ng-model-options="{debounce: {default: 1000, blur: 0}}"
+                            ng-change="saveRecipe()"/>
+                    <label for="editSize">Size:</label>
+                    <select id="editSize"
+                            ng-model="drinkService.selectedDrink.maxsize"
+                            ng-options="drinkSize.id as drinkSize.name for drinkSize in drinkSizes"
+                            ng-change="saveRecipe()" ></select>
+                    <label for="editImage">Image:</label>
+                    <input id="editImage"
+                           ng-model="drinkService.selectedDrink.image"
+                           ng-model-options="{debounce: {default: 1000, blur: 0}}"
+                           ng-change="saveRecipe()"/>
+                    <label for="editNotes">Notes:</label>
+                    <textarea id="editNotes"
+                           rows="4" cols="35"
+                           ng-model="drinkService.selectedDrink.notes"
+                           ng-model-options="{debounce: {default: 1000, blur: 0}}"
+                           ng-change="saveRecipe()"></textarea>
                 </form>
-                </div>
                 <table id="recipe" class="table" ng-controller="IngredientController">
                     <thead>
                     <td>Ingredient</td>
@@ -51,7 +67,7 @@
                 </table>
             </div>
         </div>
-        <div ng-include src="'views/partial/make.html'">
+        <div ng-include src="'views/partial/make.html'" ng-if="drinkService.selectedDrink">
         </div>
     </div>
 </div>

@@ -7,9 +7,13 @@ var path = require('path')
 		// authentication routes
 
 
-		// route to handle creating (app.post)
-		// route to handle delete (app.delete)
-
+		//Prevent IE from caching stuffs
+		app.use(function noCache(req, res, next){
+			res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+			res.header("Pragma", "no-cache");
+			res.header("Expires",0);
+			next();
+		});
 
 		var ingredients = require('./controllers/ingredient');
 		app.param('ingredientId', ingredients.ingredient);
