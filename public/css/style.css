@@ -183,8 +183,12 @@ form input, form select, form textarea {
   justify-content: space-around;
   margin: 0;
 }
+/* line 83, sass/style.scss */
+.horizontalFlexcontainer.flex-start {
+  justify-content: flex-start;
+}
 
-/* line 84, sass/style.scss */
+/* line 88, sass/style.scss */
 .verticalFlexcontainer {
   display: -webkit-box;
   display: -moz-box;
@@ -205,22 +209,22 @@ form input, form select, form textarea {
   margin: 0;
 }
 
-/* line 92, sass/style.scss */
+/* line 96, sass/style.scss */
 .fullHeight {
   height: 90vh;
 }
 
-/* line 96, sass/style.scss */
+/* line 100, sass/style.scss */
 .left {
   float: left;
 }
 
-/* line 99, sass/style.scss */
+/* line 103, sass/style.scss */
 .right {
   float: right;
 }
 
-/* line 103, sass/style.scss */
+/* line 107, sass/style.scss */
 .title {
   text-align: center;
   width: 100%;
@@ -230,30 +234,30 @@ form input, form select, form textarea {
   margin: 0;
 }
 
-/* line 111, sass/style.scss */
+/* line 115, sass/style.scss */
 .icon {
   margin-top: 0.12em;
 }
 
-/* line 114, sass/style.scss */
+/* line 118, sass/style.scss */
 .drinks {
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
 }
 @media (min-width: 480px) {
-  /* line 114, sass/style.scss */
+  /* line 118, sass/style.scss */
   .drinks {
     width: 40%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 114, sass/style.scss */
+  /* line 118, sass/style.scss */
   .drinks {
     width: 50%;
   }
 }
-/* line 127, sass/style.scss */
+/* line 131, sass/style.scss */
 .drinks .list {
   align-items: flex-start;
   width: 100%;
@@ -261,7 +265,7 @@ form input, form select, form textarea {
   /*Probably not the best solution but it works*/
   overflow-y: auto;
 }
-/* line 134, sass/style.scss */
+/* line 138, sass/style.scss */
 .drinks .list .drinkview {
   background-size: cover;
   background-position: center;
@@ -271,98 +275,133 @@ form input, form select, form textarea {
   height: 150px;
   margin: 1em 0 1em 0;
 }
-/* line 144, sass/style.scss */
+/* line 148, sass/style.scss */
 .drinks .list .drinkview.selected h2 {
   background-color: rgba(255, 0, 0, 0.7);
 }
-/* line 149, sass/style.scss */
+/* line 153, sass/style.scss */
 .drinks .list .drinkview h2 {
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
   border-radius: 5px 5px 0 0;
   padding: 0 8px 0 8px;
 }
-/* line 156, sass/style.scss */
+/* line 160, sass/style.scss */
 .drinks .list .drinkview .ingredients {
   display: none;
 }
 @media (min-width: 480px) {
-  /* line 134, sass/style.scss */
+  /* line 138, sass/style.scss */
   .drinks .list .drinkview {
     width: 180px;
     height: 180px;
   }
 }
 @media (min-width: 1024px) {
-  /* line 134, sass/style.scss */
+  /* line 138, sass/style.scss */
   .drinks .list .drinkview {
     width: 230px;
     height: 230px;
   }
 }
 
-/* line 171, sass/style.scss */
+/* line 175, sass/style.scss */
 .rightCol {
   width: 100%;
   justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.4);
 }
 @media (min-width: 480px) {
-  /* line 171, sass/style.scss */
+  /* line 175, sass/style.scss */
   .rightCol {
     width: 60%;
   }
 }
 @media (min-width: 1024px) {
-  /* line 171, sass/style.scss */
+  /* line 175, sass/style.scss */
   .rightCol {
     width: 50%;
   }
 }
 
-/* line 184, sass/style.scss */
+/* line 188, sass/style.scss */
 .drinkdetails {
   width: 100%;
 }
-/* line 186, sass/style.scss */
+/* line 190, sass/style.scss */
 .drinkdetails h3 {
   text-decoration: underline;
   margin-bottom: 5px;
 }
-/* line 191, sass/style.scss */
+/* line 195, sass/style.scss */
 .drinkdetails .ingredients {
   align-items: flex-start;
   margin: 25px 25px 25px 25px;
 }
-/* line 195, sass/style.scss */
+/* line 199, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails {
   width: 80%;
 }
-/* line 198, sass/style.scss */
+/* line 202, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails .ingredientstatus p {
   font-size: 1.5em;
 }
-/* line 205, sass/style.scss */
+/* line 209, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails .drinknotes {
   margin: 1.5em 0 0 0;
 }
-/* line 207, sass/style.scss */
+/* line 211, sass/style.scss */
 .drinkdetails .ingredients .ingredientdetails .drinknotes p {
   white-space: pre-line;
   margin: 0;
   font-size: 1em;
 }
 
-/* line 216, sass/style.scss */
+/* line 220, sass/style.scss */
 .glasscontainer {
   width: 10%;
 }
-/* line 218, sass/style.scss */
+/* line 222, sass/style.scss */
 .glasscontainer .ingredientglass {
   height: 250px;
 }
 
-/* line 223, sass/style.scss */
+/* line 227, sass/style.scss */
+.button {
+  border-radius: 12px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 1.5em;
+  min-width: 100px;
+  height: 40px;
+  line-height: 40px;
+}
+/* line 238, sass/style.scss */
+.button.symbol {
+  margin-left: 10px;
+  height: 30px;
+  min-width: 30px;
+  line-height: 30px;
+  font-size: 2em;
+}
+/* line 246, sass/style.scss */
+.button.size {
+  height: 100px;
+  line-height: 100px;
+  font-size: 2em;
+  margin: 10px;
+}
+/* line 253, sass/style.scss */
+.button.selected, .button:active {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+/* line 256, sass/style.scss */
+.button.disabled {
+  background-color: gray;
+}
+
+/* line 261, sass/style.scss */
 .sizeselect {
   display: -webkit-box;
   display: -moz-box;
@@ -383,28 +422,8 @@ form input, form select, form textarea {
   align-items: flex-start;
   width: 100%;
 }
-/* line 231, sass/style.scss */
-.sizeselect .sizebtn {
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
-  margin: 10px;
-  font-size: 2em;
-  border-radius: 12px;
-  vertical-align: middle;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-/* line 242, sass/style.scss */
-.sizeselect .sizebtn.selected {
-  background-color: rgba(255, 0, 0, 0.7);
-}
-/* line 245, sass/style.scss */
-.sizeselect .sizebtn.disabled {
-  background-color: gray;
-}
 
-/* line 251, sass/style.scss */
+/* line 270, sass/style.scss */
 .make {
   position: relative;
   width: 80%;
@@ -420,11 +439,11 @@ form input, form select, form textarea {
   margin-left: auto;
   margin-right: auto;
 }
-/* line 266, sass/style.scss */
+/* line 285, sass/style.scss */
 .make h3 {
   position: relative;
 }
-/* line 271, sass/style.scss */
+/* line 290, sass/style.scss */
 .make .progress {
   position: absolute;
   top: 0;
@@ -434,14 +453,14 @@ form input, form select, form textarea {
   width: 0%;
 }
 
-/* line 282, sass/style.scss */
+/* line 301, sass/style.scss */
 .table {
   border-top: 1px solid #e5eff8;
   border-right: 1px solid #e5eff8;
   margin: 25px;
   border-collapse: collapse;
 }
-/* line 287, sass/style.scss */
+/* line 306, sass/style.scss */
 .table td {
   border-bottom: 1px solid #e5eff8;
   border-left: 1px solid #e5eff8;
@@ -449,7 +468,7 @@ form input, form select, form textarea {
   text-align: center;
 }
 
-/* line 295, sass/style.scss */
+/* line 314, sass/style.scss */
 .shortCol {
   width: 3em;
 }

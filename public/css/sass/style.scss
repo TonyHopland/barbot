@@ -79,6 +79,10 @@ form {
     @include flex-wrap(wrap);
     justify-content: space-around;
     margin:0;
+
+    &.flex-start {
+        justify-content: flex-start;
+    }
 }
 
 .verticalFlexcontainer {
@@ -220,6 +224,40 @@ form {
     }
 }
 
+.button {
+
+    border-radius: 12px;
+    vertical-align: middle;
+    text-align: center;
+    background-color: $transparent-black;
+    font-size: 1.5em;
+    min-width: 100px;
+    height: 40px;
+    line-height: 40px;
+
+    &.symbol {
+        margin-left: 10px;
+        height: 30px;
+        min-width: 30px;
+        line-height: 30px;
+        font-size: 2em;
+    }
+
+    &.size {
+        height: 100px;
+        line-height: 100px;
+        font-size: 2em;
+        margin: 10px;
+    }
+
+    &.selected, &:active {
+        background-color: $transparent-orange;
+    }
+    &.disabled {
+        background-color: gray;
+    }
+}
+
 .sizeselect {
      @include flexbox();
      @include flex-direction(row);
@@ -227,25 +265,6 @@ form {
      justify-content: space-around;
      align-items: flex-start;
      width: 100%;
-
-     .sizebtn {
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        margin: 10px;
-        font-size: 2em;
-        border-radius: 12px;
-        vertical-align: middle;
-        text-align: center;
-        background-color: $transparent-black;
-
-        &.selected {
-            background-color: $transparent-orange;
-        }
-        &.disabled {
-            background-color: gray;
-        }
-     }
 }
 
 .make {

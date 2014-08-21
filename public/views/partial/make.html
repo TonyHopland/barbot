@@ -1,6 +1,6 @@
 <div ng-controller="MakeController">
     <div class="sizeselect">
-        <div ng-repeat="size in drinkSizes" ng-click="selectSize(size)" class="sizebtn {{selectedSize==size ? 'selected' : ''}} {{drink.selectedDrink.maxsize<size.id ? 'disabled' : ''}}">{{size.name}}</div>
+        <div ng-repeat="size in drinkSizes" ng-click="selectSize(size)" class="button size {{selectedSize==size ? 'selected' : ''}} {{drink.selectedDrink.maxsize<size.id ? 'disabled' : ''}}">{{size.name}}</div>
     </div>
     <div ng-click="createDrink()" class="make {{selectedDrink ? '' : 'noselection'}}">
         <div class="progress" ng-style="progressCss"></div>
