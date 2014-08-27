@@ -229,13 +229,13 @@ form {
     border-radius: 12px;
     vertical-align: middle;
     text-align: center;
-    background-color: $transparent-black;
+    background-color: $button;
     font-size: 1.5em;
     min-width: 100px;
     height: 40px;
     line-height: 40px;
 
-    &.symbol {
+    &.small {
         margin-left: 10px;
         height: 30px;
         min-width: 30px;
@@ -243,18 +243,49 @@ form {
         font-size: 2em;
     }
 
-    &.size {
+    &.large {
         height: 100px;
         line-height: 100px;
         font-size: 2em;
         margin: 10px;
     }
 
-    &.selected, &:active {
-        background-color: $transparent-orange;
+    &.selected {
+        background-color: $button_selected;
+    }
+    &:active {
+        background-color: $button_pushed;
     }
     &.disabled {
-        background-color: gray;
+        background-color: $button_disabled;
+    }
+
+    &.make {
+        position: relative;
+        width: 80%;
+        height: 100px;
+        line-height: 100px;
+        font-size: 3em;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+
+        h3 {
+            position: relative;
+
+        }
+        .progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: $button_selected;
+            height: 100%;
+            width: 0%;
+
+        }
+        &:active {
+            background-color: $button;
+        }
     }
 }
 
@@ -267,36 +298,6 @@ form {
      width: 100%;
 }
 
-.make {
-    position: relative;
-    width: 80%;
-    height: 100px;
-    line-height: 100px;
-    margin: 10px;
-    font-size: 3em;
-    border-radius: 12px;
-    vertical-align: middle;
-    text-align: center;
-    background-color: $transparent-black;
-    overflow: hidden;
-    margin-left: auto;
-    margin-right: auto;
-
-    h3 {
-        position: relative;
-
-    }
-
-    .progress {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: $transparent-orange;
-        height: 100%;
-        width: 0%;
-
-    }
-}
 
 .table {
     border-top:1px solid #e5eff8;

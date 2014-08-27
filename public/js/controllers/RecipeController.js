@@ -54,7 +54,7 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
     $scope.saveRecipepart = function (recipepart) {
         var recipepart = new Recipepart(recipepart);
         recipepart.$update(function(rp, putResponseHeaders) {
-                                           Drink.updateDrinkPart(rp);
+                                           Drink.updateDrinkPartIngredient(rp);
                                    });
     }
 

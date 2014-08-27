@@ -4,5 +4,10 @@ $transparent-orange: transparentize(#FF0000, 0.3);
 $transparent-black: transparentize(#000000, 0.6);
 
 
+$button: transparentize(#000000, 0.6);
+$button_disabled: gray;
+$button_selected: transparentize(#FF0000, 0.3);
+$button_pushed: transparentize(#FF0000, 0.3);
+
 $break-medium: 480px;
 $break-big: 1024px;

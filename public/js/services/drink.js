@@ -28,13 +28,13 @@ angular.module('barbot')
             }
         }
 
-        drink.updateDrinkPart = function (part) {
+        drink.updateDrinkPartIngredient = function (part) {
             if(!drink.selectedDrink)
                 return;
 
             for(var i in drink.selectedDrink.recipeparts){
                 if(drink.selectedDrink.recipeparts[i].id == part.id){
-                    drink.selectedDrink.recipeparts[i] = part;
+                    drink.selectedDrink.recipeparts[i].ingredient = part.ingredient;
                     return;
                 }
             }

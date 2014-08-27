@@ -1,6 +1,6 @@
 // app/controllers/pumpHardware.js
 
-var board, pump0, pump1, pump2, pump3, pump4, pump5;
+var board, pump0, pump1, pump2, pump3, pump4, pump5, pump6, pump7;
 
 var barReady = false;
 

@@ -378,7 +378,7 @@ form input, form select, form textarea {
   line-height: 40px;
 }
 /* line 238, sass/style.scss */
-.button.symbol {
+.button.small {
   margin-left: 10px;
   height: 30px;
   min-width: 30px;
@@ -386,22 +386,54 @@ form input, form select, form textarea {
   font-size: 2em;
 }
 /* line 246, sass/style.scss */
-.button.size {
+.button.large {
   height: 100px;
   line-height: 100px;
   font-size: 2em;
   margin: 10px;
 }
 /* line 253, sass/style.scss */
-.button.selected, .button:active {
+.button.selected {
   background-color: rgba(255, 0, 0, 0.7);
 }
 /* line 256, sass/style.scss */
+.button:active {
+  background-color: rgba(255, 0, 0, 0.7);
+}
+/* line 259, sass/style.scss */
 .button.disabled {
   background-color: gray;
 }
+/* line 263, sass/style.scss */
+.button.make {
+  position: relative;
+  width: 80%;
+  height: 100px;
+  line-height: 100px;
+  font-size: 3em;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 273, sass/style.scss */
+.button.make h3 {
+  position: relative;
+}
+/* line 277, sass/style.scss */
+.button.make .progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 0, 0, 0.7);
+  height: 100%;
+  width: 0%;
+}
+/* line 286, sass/style.scss */
+.button.make:active {
+  background-color: rgba(0, 0, 0, 0.4);
+}
 
-/* line 261, sass/style.scss */
+/* line 292, sass/style.scss */
 .sizeselect {
   display: -webkit-box;
   display: -moz-box;
@@ -423,44 +455,14 @@ form input, form select, form textarea {
   width: 100%;
 }
 
-/* line 270, sass/style.scss */
-.make {
-  position: relative;
-  width: 80%;
-  height: 100px;
-  line-height: 100px;
-  margin: 10px;
-  font-size: 3em;
-  border-radius: 12px;
-  vertical-align: middle;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-  margin-left: auto;
-  margin-right: auto;
-}
-/* line 285, sass/style.scss */
-.make h3 {
-  position: relative;
-}
-/* line 290, sass/style.scss */
-.make .progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(255, 0, 0, 0.7);
-  height: 100%;
-  width: 0%;
-}
-
-/* line 301, sass/style.scss */
+/* line 302, sass/style.scss */
 .table {
   border-top: 1px solid #e5eff8;
   border-right: 1px solid #e5eff8;
   margin: 25px;
   border-collapse: collapse;
 }
-/* line 306, sass/style.scss */
+/* line 307, sass/style.scss */
 .table td {
   border-bottom: 1px solid #e5eff8;
   border-left: 1px solid #e5eff8;
@@ -468,7 +470,7 @@ form input, form select, form textarea {
   text-align: center;
 }
 
-/* line 314, sass/style.scss */
+/* line 315, sass/style.scss */
 .shortCol {
   width: 3em;
 }
