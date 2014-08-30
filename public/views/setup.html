@@ -48,4 +48,21 @@
             <button>Add</button>
         </form>
     </div>
+    <div id="editSizes" ng-controller="SizeController">
+        <div class="horizontalFlexcontainer flex-start">
+            <h2>Sizes</h2>
+            <div class="button small" ng-click="addSize()">+</div>
+            <div class="button small" ng-click="deleteSize()">-</div>
+        </div>
+        <table id="size-list" class="table">
+            <thead>
+            <td>Name</td>
+            <td>Size (cl)</td>
+            </thead>
+            <tr ng-repeat="size in sizes">
+                <td><input ng-model="size.name" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="updateSize(size)"/></td>
+                <td><input ng-model="size.cl" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="updateSize(size)"/></td>
+            </tr>
+        </table>
+    </div>
 </div>

@@ -46,9 +46,11 @@ console.log('Magic happens on port ' + port); 			// shoutout to the user
 exports = module.exports = app; 						// expose app
 
 
-
+var drinkCreator = require('./app/controllers/drinkController.js');
 var hardware = require('./app/controllers/pumpHardware.js');
 var io = require('socket.io').listen(server);
+
+drinkCreator.Init(io.sockets);
 
 io.sockets.on('connection', function (socket) {
   socket.on("Start Pump", function (pump) {
@@ -63,7 +65,7 @@ io.sockets.on('connection', function (socket) {
     hardware.pumpMilliseconds(pump, ms);
   });
   
-  socket.on("Dispense drink", function (name, instructions) {
-    hardware.dispenseDrink(name, instructions);
+  socket.on("Dispense drink", function (drinkId, sizeId) {
+	drinkCreator.CreateDrink(drinkId, sizeId);
   });
 });

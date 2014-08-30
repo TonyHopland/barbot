@@ -55,6 +55,7 @@ exports.update = function(req, res) {
 
 var pump = req.pump;
 pump.tubelength = req.body.tubelength;
+pump.msPerCl = req.body.msPerCl;
 if(req.body.ingredient){
 	db.Ingredient
 			.find({ where: { id: req.body.ingredient.id }})

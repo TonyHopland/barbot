@@ -1,17 +1,10 @@
 // public/js/controllers/RecipeController.js
-angular.module('barbot').controller('MakeController', function($scope, $timeout, Drink) {
+angular.module('barbot').controller('MakeController', function($scope, $timeout, Drink, Size) {
 
-    if(drinkSizes != undefined){
-        $scope.drinkSizes = drinkSizes;
-    }else{
-        $scope.drinkSizes = [
-            {
-                id: 1,
-                name: 'shot',
-                size: 15000
-            }
-        ];
-    }
+    Size.query(function(response) {
+        $scope.drinkSizes = response;
+    });
+
     $scope.drink = Drink;
     $scope.selectedSize;
 	$scope.progressCss = {};
@@ -27,7 +20,6 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
 
     $scope.getProgressCss = function () {
         return {
-            //'height': $scope.getAmountInPercent(part.amount) + "%",
             'animation': 'expand 5s'
         }
     }
@@ -53,71 +45,30 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
             return;
         }
 
-        var normalFactor = Drink.getNormalFactor();
-        var sizeFactor = $scope.selectedSize.size/100;
-
-        var drinkInstructions = [];
-
-        for(var i in drink.recipeparts){
-            drinkInstructions.push(
-            {
-            'time': (drink.recipeparts[i].amount*normalFactor)*sizeFactor,
-            'order': drink.recipeparts[i].order,
-            'startdelay': drink.recipeparts[i].startdelay,
-            'pump': drink.recipeparts[i].ingredient.PumpId == null?"-1":drink.recipeparts[i].ingredient.PumpId,
-            'ingredient': drink.recipeparts[i].ingredient.name
-            }
-            );
-        }
+        dispenseDrink(drink.id, $scope.selectedSize.id);
         makingDrink = true;
-        dispenseDrink(drink.name,drinkInstructions);
-        var timeToMake = calculateDrinkTime(drinkInstructions);
-        console.log("Making: '" + drink.name + "' Total duration: " + timeToMake);
+        console.log("Making: '" + drink.name);
+    }
 
-        var roundedTime = Math.ceil(timeToMake);
+    socket.on('DispensingTime', function (time) {
+        console.log('Time to dispanse: '+ time);
         $scope.progressCss = {
             '-webkit-animation-name': 'expand',
-            '-webkit-animation-duration': roundedTime +'ms',
+            '-webkit-animation-duration': time +'ms',
             '-webkit-animation-timing-function': 'linear',
             '-webkit-animation-fill-mode': 'forwards',
             /* Standard syntax */
             'animation-name': 'expand',
-            'animation-duration': timeToMake +'ms',
+            'animation-duration': time +'ms',
             'animation-timing-function': 'linear',
             'animation-fill-mode': 'forwards'
         }
+        $scope.$apply();
         $timeout(function () {
                              $scope.progressCss={};
                              makingDrink = false;
-                         }, roundedTime + 500);
+                         }, time + 500);
+    });
 
-        //dispenseDrink(drinkInstructions);
-    }
-
-    calculateDrinkTime = function(instructions){
-        instructions = instructions.sort(function(a, b) {
-            return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
-        });
-        currentStep = -10000;
-        var orderSteps = []
-        var totalTime = 0;
-        for(var inst in instructions){
-            if(currentStep < instructions[inst].order){
-                currentStep = instructions[inst].order
-                //orderSteps.push(currentStep);
-                orderSteps[currentStep] = {};
-                orderSteps[currentStep].maxLength = 0;
-                orderSteps[currentStep].steps = []
-            }
-            if(instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
-            && instructions[inst].pump >= 0)
-                orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay;
-        }
-        for(var step in orderSteps) {
-            totalTime += orderSteps[step].maxLength;
-        }
-
-        return totalTime;
-    }
 });
 

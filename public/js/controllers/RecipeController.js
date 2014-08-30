@@ -1,5 +1,5 @@
 // public/js/controllers/RecipeController.js
-angular.module('barbot').controller('RecipeController', function($scope, Recipe, Recipepart, Drink) {
+angular.module('barbot').controller('RecipeController', function($scope, Recipe, Recipepart, Drink, Size) {
 
 
 	$scope.recipes = [];
@@ -8,13 +8,7 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
 	var recipeModel = {"name":"New Recipe","maxsize":3,"image":"","recipe":[]};
 	var recipepartModel = {"amount":0,"order":0,"startdelay":0};
 
-    $scope.drinkSizes = [
-        {
-            id: 1,
-            name: 'shot',
-            size: 15000
-        }
-    ]; //One size is set in case settings are not filled out
+    $scope.drinkSizes = [];
 
     $scope.$on("$destroy", function() {
         Drink.selectedDrink = null;
@@ -27,9 +21,9 @@ angular.module('barbot').controller('RecipeController', function($scope, Recipe,
             });
             $scope.recipes = response;
         });
-        if(drinkSizes != undefined){
-          $scope.drinkSizes = drinkSizes;
-        }
+        Size.query(function(response) {
+            $scope.drinkSizes = response;
+        });
 	};
 
 	$scope.AddRecipepart = function () {

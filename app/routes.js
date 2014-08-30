@@ -15,6 +15,13 @@ var path = require('path')
 			next();
 		});
 
+		var sizes = require('./controllers/size');
+		app.param('sizeId', sizes.size);
+		app.get('/api/sizes', sizes.query);
+		app.post('/api/sizes', sizes.create);
+		app.put('/api/sizes/:sizeId', sizes.update);
+		app.delete('/api/sizes/:sizeId', sizes.remove);
+		
 		var ingredients = require('./controllers/ingredient');
 		app.param('ingredientId', ingredients.ingredient);
 		app.get('/api/ingredients', ingredients.query);
@@ -42,11 +49,7 @@ var path = require('path')
 		app.post('/api/recipeparts', recipeparts.create);
 		app.put('/api/recipeparts/:recipepartId', recipeparts.update);
 		app.delete('/api/recipeparts/:recipepartId', recipeparts.remove);
-		/*
-		var drink = require('./controllers/drink');
-		app.param('drinkId', drink.drink);
-		app.get('/api/drinks', drink.query);
-		*/
+
 		// frontend routes =========================================================
 		// route to handle all angular requests
 		app.get('*', function(req, res) {

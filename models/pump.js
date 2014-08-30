@@ -1,6 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Pump = sequelize.define('Pump', {
 	id: DataTypes.INTEGER,
+	msPerCl: DataTypes.INTEGER,
     tubelength: DataTypes.DECIMAL
   }, {
 	timestamps: false,

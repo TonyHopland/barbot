@@ -166,6 +166,7 @@ exports.dispenseDrink = function (name, instructions) {
 
         var totalDelay = 0;
         var prevDelay = -5;
+		var totalTime = 0;
         for (var step in orderSteps) {
             var noPumpsStarted = true;
             for (var ing in orderSteps[step].steps) {
@@ -178,5 +179,7 @@ exports.dispenseDrink = function (name, instructions) {
             if(!noPumpsStarted){
                 totalDelay += orderSteps[step].maxLength;
             }
+			totalTime += orderSteps[step].maxLength;
         }
+	return Math.ceil(totalTime);
 }

@@ -11,16 +11,22 @@ angular.module('barbot').controller('PumpController', function($scope, Pump) {
       });
 	};
 
+    var isAddingPump = false;
     $scope.addPump = function () {
         var index = 0;
+
+        if(isAddingPump) {return;}
 
         index = $scope.pumps.length+1;
         var tmpPump = new Pump({
             newId: index,
+            msPerCl: 3150,
             tubelength: 1000,
         });
+        isAddingPump = true;
         tmpPump.$save(function(pmp, putResponseHeaders) {
              $scope.pumps.push(pmp);
+             isAddingPump = false;
         });
 
     };
