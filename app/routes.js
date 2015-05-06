@@ -15,6 +15,9 @@ var path = require('path')
 			next();
 		});
 
+		var controller = require('./controllers/drinkController');
+		app.put('/api/createDrink', controller.CreateDrink);
+
 		var sizes = require('./controllers/size');
 		app.param('sizeId', sizes.size);
 		app.get('/api/sizes', sizes.query);

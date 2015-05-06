@@ -15,6 +15,7 @@
             <td>Ingredient</td>
             <!--<td>Filltime</td>-->
             <!--<td><a class="btn" ng-click="fillAllPumps()">Fill all pipes</a></td>-->
+            <td>ms per cl</td>
             <td><div class="button {{isMajorityOff()?'':'selected'}}" ng-click="toggleAllPumps()">{{isMajorityOff()?'Start all':'Stop all'}}</div></td>
             </thead>
             <tr ng-repeat="pump in pumps">
@@ -24,7 +25,7 @@
                         <option value="">-- choose ingredient --</option>
                     </select>
                 </td>
-                <!--<td><input type="number" ng-model="pump.tubeLength" ng-change="updatePump(pump)"></td>-->
+                <td><input type="number" class="smallInput" ng-model="pump.msPerCl" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="updatePump(pump)"></td>
                 <!--<td><a class="btn" ng-click="fillPump(pump)">Fill tube</a></td>-->
                 <td><div class="button {{pumpstate[pump.id]?'selected':''}}" ng-click="togglePump(pump)">{{pumpstate[pump.id]?'Stop':'Start'}}</div></td>
             </tr>
@@ -36,10 +37,12 @@
             <thead>
                 <td>Ingredient</td>
                 <td>Color</td>
+                <td>cl</td>
             </thead>
             <tr ng-repeat="ingredient in ingredients">
                 <td><input ng-model="ingredient.name" ng-change="updateIngredient(ingredient)"/></td>
                 <td><input type="color" ng-model="ingredient.color" ng-change="updateIngredient(ingredient)"/></td>
+                <td><input type="number" class="smallInput" ng-model="ingredient.cl" ng-change="updateIngredient(ingredient)"/></td>
             </tr>
         </table>
         <form id="ingredient-form" ng-submit="addIngredient()">
@@ -61,7 +64,7 @@
             </thead>
             <tr ng-repeat="size in sizes">
                 <td><input ng-model="size.name" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="updateSize(size)"/></td>
-                <td><input ng-model="size.cl" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="updateSize(size)"/></td>
+                <td><input ng-model="size.cl" class="smallInput" ng-model-options="{debounce: {default: 1000, blur: 0}}" ng-change="updateSize(size)"/></td>
             </tr>
         </table>
     </div>

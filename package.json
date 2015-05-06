@@ -1,7 +1,7 @@
 {
   "name": "BarBot",
   "version": "0.0.0",
-  "description": "Webapplication to controll a drink mixing robot.",
+  "description": "Webapplication to control a drink mixing robot.",
   "main": "server.js",
   "private": true,
   "author": "Tony",
@@ -11,7 +11,7 @@
     "express": "~4.6.1",
 	"lodash": "^2.4.1",
     "sequelize": "^1.7.9",
-    "sqlite3": "^2.2.4",
+    "sqlite3": "^3.0.7",
     "johnny-five": "~0.8.0",
 	"raspi-io": "~0.1.14",
 	"socket.io": "~1.0.6"

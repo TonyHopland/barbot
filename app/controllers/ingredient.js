@@ -52,11 +52,27 @@ exports.update = function(req, res) {
 var ingredient = req.ingredient;
 ingredient.name = req.body.name;
 ingredient.color = req.body.color;
+ingredient.cl = req.body.cl;
 
 ingredient.save();
 res.json(ingredient);
 };
- 
+
+exports.subtractCl = function(id, cl) {
+	db.Ingredient
+		.find({ where: { id: id }/*, include: [ db.Pump ] */})
+		.complete(function(err, ingredient) {
+			if (!!err) {
+				new Error('Failed to load Ingredient ' + id+': ' + err);
+			} else if (!ingredient) {
+				new Error('Failed to load Ingredient ' + id);
+			} else {
+				ingredient.cl -= cl;
+				ingredient.save();
+			}
+		});
+}
+
 /**
  * Remove a ingredient
  */

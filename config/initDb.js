@@ -1,24 +1,24 @@
 var db = require('./db.js');
 
 var ingredients = [
-{"id":1,"name":"Baileys","color":"#E4C7A3"},
-{"id":2,"name":"Cola","color":"#000000"},
-{"id":3,"name":"Cranberry juice","color":"#9d0000"},
-{"id":4,"name":"Grenadine","color":"#f12736"},
-{"id":5,"name":"Jagermeister","color":"#140A00"},
-{"id":6,"name":"Kahlua","color":"#beaf7c"},
-{"id":7,"name":"Midori","color":"#00FF00"},
-{"id":8,"name":"Milk","color":"#ffffff"},
-{"id":9,"name":"Orange juice","color":"#FFCC00"},
-{"id":10,"name":"Peachtree","color":"#fff8f0"},
-{"id":11,"name":"Pineapple juice","color":"#f2d60d"},
-{"id":12,"name":"Sambuca","color":"#ffffec"},
-{"id":13,"name":"Sweet & Sour mix","color":"#ffff46"},
-{"id":14,"name":"Tequila","color":"#f4f4ff"},
-{"id":15,"name":"Vodka","color":"#CCFFFF"},
-{"id":16,"name":"Gin","color":"#d7ffff"},
-{"id":17,"name":"Blue Curacao","color":"#090fff"},
-{"id":18,"name":"Tonic","color":"#f5f5f5"}
+{"id":1,"name":"Baileys","color":"#E4C7A3", "cl":100},
+{"id":2,"name":"Cola","color":"#000000", "cl":100},
+{"id":3,"name":"Cranberry juice","color":"#9d0000", "cl":100},
+{"id":4,"name":"Grenadine","color":"#f12736", "cl":100},
+{"id":5,"name":"Jagermeister","color":"#140A00", "cl":100},
+{"id":6,"name":"Kahlua","color":"#beaf7c", "cl":100},
+{"id":7,"name":"Midori","color":"#00FF00", "cl":100},
+{"id":8,"name":"Milk","color":"#ffffff", "cl":100},
+{"id":9,"name":"Orange juice","color":"#FFCC00", "cl":100},
+{"id":10,"name":"Peachtree","color":"#fff8f0", "cl":100},
+{"id":11,"name":"Pineapple juice","color":"#f2d60d", "cl":100},
+{"id":12,"name":"Sambuca","color":"#ffffec", "cl":100},
+{"id":13,"name":"Sweet & Sour mix","color":"#ffff46", "cl":100},
+{"id":14,"name":"Tequila","color":"#f4f4ff", "cl":100},
+{"id":15,"name":"Vodka","color":"#CCFFFF", "cl":100},
+{"id":16,"name":"Gin","color":"#d7ffff", "cl":100},
+{"id":17,"name":"Blue Curacao","color":"#090fff", "cl":100},
+{"id":18,"name":"Tonic","color":"#f5f5f5", "cl":100}
 ]
 
 var recipes = [
@@ -44,6 +44,7 @@ var recipes = [
 {"id":20,"name":"Green Widow","maxsize":3,"image":"green_widow.jpg"},
 {"id":21,"name":"Purple VW","maxsize":1,"image":"Purple-VW.jpg"},
 {"id":22,"name":"Fuzzy Navel Sunrise","maxsize":3,"image":"fuzzy_navel_sun.jpg"},
+{"id":23,"name":"TestDrink","maxsize":3,"image":""},
 ]
 
 var recipeparts = [
@@ -106,6 +107,25 @@ var recipeparts = [
 {"amount":5,"order":0,"startdelay":0,"RecipeId":22,"IngredientId":9},
 {"amount":2,"order":0,"startdelay":0,"RecipeId":22,"IngredientId":10},
 {"amount":0.5,"order":1,"startdelay":0,"RecipeId":22,"IngredientId":4},
+
+{"amount":1,"order":1,"startdelay":700,"RecipeId":23,"IngredientId":1},
+{"amount":1,"order":2,"startdelay":700,"RecipeId":23,"IngredientId":2},
+{"amount":1,"order":3,"startdelay":700,"RecipeId":23,"IngredientId":3},
+{"amount":1,"order":4,"startdelay":700,"RecipeId":23,"IngredientId":4},
+{"amount":1,"order":5,"startdelay":700,"RecipeId":23,"IngredientId":5},
+{"amount":1,"order":6,"startdelay":700,"RecipeId":23,"IngredientId":6},
+{"amount":1,"order":7,"startdelay":700,"RecipeId":23,"IngredientId":7},
+{"amount":1,"order":8,"startdelay":700,"RecipeId":23,"IngredientId":8},
+{"amount":1,"order":9,"startdelay":700,"RecipeId":23,"IngredientId":9},
+{"amount":1,"order":10,"startdelay":700,"RecipeId":23,"IngredientId":10},
+{"amount":1,"order":11,"startdelay":700,"RecipeId":23,"IngredientId":11},
+{"amount":1,"order":12,"startdelay":700,"RecipeId":23,"IngredientId":12},
+{"amount":1,"order":13,"startdelay":700,"RecipeId":23,"IngredientId":13},
+{"amount":1,"order":14,"startdelay":700,"RecipeId":23,"IngredientId":14},
+{"amount":1,"order":15,"startdelay":700,"RecipeId":23,"IngredientId":15},
+{"amount":1,"order":16,"startdelay":700,"RecipeId":23,"IngredientId":16},
+{"amount":1,"order":17,"startdelay":700,"RecipeId":23,"IngredientId":17},
+{"amount":1,"order":18,"startdelay":700,"RecipeId":23,"IngredientId":18},
 ]
 
 for (ing in ingredients){

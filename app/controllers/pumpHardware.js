@@ -9,8 +9,9 @@ var minPumpDelay = 30;
 var five = require('johnny-five');
 board = new five.Board();
 */
-/*
+
 //Code to use raspberry io
+/*
 var raspi = require('raspi-io'),
     five = require('johnny-five'),
     board = new five.Board({
@@ -143,43 +144,56 @@ delayedPumpMilliseconds = function (pump, ms, delay) {
 	}, delay);
 }
 
-exports.dispenseDrink = function (name, instructions) {
-  console.log("[PUMP] Dispensing drink: " + name);
-  instructions = instructions.sort(function(a, b) {
-                return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
-        });
-        currentStep = -10000;
-        var orderSteps = []
-        for(var inst in instructions){
-            if(currentStep < instructions[inst].order){
-                currentStep = instructions[inst].order
-                //orderSteps.push(currentStep);
-                orderSteps[currentStep] = {};
-                orderSteps[currentStep].maxLength = 0;
-                orderSteps[currentStep].steps = []
-            }
-            if(instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
-            && instructions[inst].pump > 0)
-                orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay;
-            orderSteps[currentStep].steps.push(instructions[inst]);
-        }
+var isBuzy = false;
 
-        var totalDelay = 0;
-        var prevDelay = -5;
-		var totalTime = 0;
-        for (var step in orderSteps) {
-            var noPumpsStarted = true;
-            for (var ing in orderSteps[step].steps) {
-                var startDelay = (orderSteps[step].maxLength - orderSteps[step].steps[ing].time) + totalDelay;
-                if(orderSteps[step].steps[ing].pump > 0){
-					delayedPumpMilliseconds(orderSteps[step].steps[ing].pump, orderSteps[step].steps[ing].time, startDelay);
-                    noPumpsStarted = false;
-                }
-            }
-            if(!noPumpsStarted){
-                totalDelay += orderSteps[step].maxLength;
-            }
-			totalTime += orderSteps[step].maxLength;
+exports.dispenseDrink = function (name, instructions) {
+    if(isBuzy) {
+        return -1;
+    }
+    isBuzy = true;
+    console.log("[PUMP] Dispensing drink: " + name);
+
+    instructions = instructions.sort(function(a, b) {
+        return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
+    });
+
+    currentStep = -10000;
+    var orderSteps = []
+    for(var inst in instructions){
+        if(currentStep < instructions[inst].order){
+            currentStep = instructions[inst].order
+            //orderSteps.push(currentStep);
+            orderSteps[currentStep] = {};
+            orderSteps[currentStep].maxLength = 0;
+            orderSteps[currentStep].steps = []
         }
+        if(instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
+        && instructions[inst].pump > 0)
+            orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay;
+        orderSteps[currentStep].steps.push(instructions[inst]);
+    }
+
+    var totalDelay = 0;
+    var prevDelay = -5;
+    var totalTime = 0;
+    for (var step in orderSteps) {
+        var noPumpsStarted = true;
+        for (var ing in orderSteps[step].steps) {
+            var startDelay = (orderSteps[step].maxLength - orderSteps[step].steps[ing].time) + totalDelay;
+            if(orderSteps[step].steps[ing].pump > 0){
+                delayedPumpMilliseconds(orderSteps[step].steps[ing].pump, orderSteps[step].steps[ing].time, startDelay);
+                noPumpsStarted = false;
+            }
+        }
+        if(!noPumpsStarted){
+            totalDelay += orderSteps[step].maxLength;
+        }
+        totalTime += orderSteps[step].maxLength;
+    }
+
+    setTimeout(function () {
+        isBuzy = false;
+    }, Math.ceil(totalTime) + 500);
+
 	return Math.ceil(totalTime);
 }

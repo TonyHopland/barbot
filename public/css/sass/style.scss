@@ -19,7 +19,7 @@ header {
         text-decoration: none;
     }
     h1 {
-        color: red;
+        color: #FFFFFF;
         font-size: 8vh;
     }
     p {
@@ -71,6 +71,10 @@ form {
         vertical-align: baseline;
         width: 80%;
     }
+}
+
+.smallInput  {
+    width: 5em;
 }
 
 .horizontalFlexcontainer {

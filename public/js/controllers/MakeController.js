@@ -1,5 +1,5 @@
 // public/js/controllers/RecipeController.js
-angular.module('barbot').controller('MakeController', function($scope, $timeout, Drink, Size) {
+angular.module('barbot').controller('MakeController', function($scope, $timeout, $http, Drink, Size, notifier) {
 
     Size.query(function(response) {
         $scope.drinkSizes = response;
@@ -25,12 +25,7 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
     }
 
 
-    var makingDrink = false;
     $scope.createDrink = function() {
-        if(makingDrink){
-            alert("Please wait for current drink to finish");
-            return;
-        }
         var drink = Drink.selectedDrink;
         if(drink == undefined){
             alert("Please select a drink");
@@ -45,12 +40,33 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
             return;
         }
 
-        dispenseDrink(drink.id, $scope.selectedSize.id);
-        makingDrink = true;
+        var makeIds = {drinkId: drink.id, sizeId: $scope.selectedSize.id};
+
+        $http.put('api/createDrink/',makeIds)
+            .then(function(response) {
+                var data = response.data;
+                animateDrinkTime(data.dispensingTime);
+                if(data.lowIngredients && data.lowIngredients.length > 0){
+                    var notifyText = "<h2>Barbot is running low on the following ingredients: </h2>"
+                    for(var i in data.lowIngredients) {
+                        notifyText += "<br/><b>"+ data.lowIngredients[i] + "</b>";
+                    }
+                    notifier.notify({
+                        template: notifyText,
+                        hasDelay: true,
+                        delay: 10000,
+                        type: 'default',
+                        position: 'top center'
+                    });
+                }
+            }).catch(function(response) {
+                alert(response.data);
+            })
+
         console.log("Making: '" + drink.name);
     }
 
-    socket.on('DispensingTime', function (time) {
+    var animateDrinkTime = function (time) {
         console.log('Time to dispanse: '+ time);
         $scope.progressCss = {
             '-webkit-animation-name': 'expand',
@@ -63,12 +79,10 @@ angular.module('barbot').controller('MakeController', function($scope, $timeout,
             'animation-timing-function': 'linear',
             'animation-fill-mode': 'forwards'
         }
-        $scope.$apply();
         $timeout(function () {
                              $scope.progressCss={};
-                             makingDrink = false;
                          }, time + 500);
-    });
+    };
 
 });
 

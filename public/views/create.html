@@ -1,4 +1,4 @@
-<div id="Create" ng-controller="RecipeController" class="horizontalFlexcontainer create" >
+<div id="Create" ng-controller="RecipeController" class="horizontalFlexcontainer create fullHeight" >
     <div class="drinks">
 
         <h2 class="title">Drinks
@@ -65,8 +65,8 @@
                         <td><a class="btn" ng-click="deleteRecipepart(part)"><i class="fa fa-trash-o"></i></a></td>
                     <tr>
                 </table>
+                </div>
             </div>
-        </div>
         <div ng-include src="'views/partial/make.html'" ng-if="drinkService.selectedDrink">
         </div>
     </div>

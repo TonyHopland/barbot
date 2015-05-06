@@ -31,8 +31,8 @@ require('./app/routes')(app); // configure our routes
 
 // start DB ===============================================
 db.sequelize.sync();
-/*//Use this if you want to clean and populate database on startup
-db.sequelize.sync({force: true}).complete(function(err) {
+//Use this if you want to clean and populate database on startup
+/*db.sequelize.sync({force: true}).complete(function(err) {
     if (err) {
       throw err[0]
     } else {
@@ -64,8 +64,5 @@ io.sockets.on('connection', function (socket) {
   socket.on("Pump Ms", function (pump, ms) {
     hardware.pumpMilliseconds(pump, ms);
   });
-  
-  socket.on("Dispense drink", function (drinkId, sizeId) {
-	drinkCreator.CreateDrink(drinkId, sizeId);
-  });
+
 });

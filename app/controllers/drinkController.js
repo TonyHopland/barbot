@@ -1,15 +1,16 @@
  // app/InstructionCreator.js
 
 var db = require('../../config/db.js');
+var hardware = require('./pumpHardware.js');
+var ingredientService = require('./ingredient.js');
 
-var socket;
-
-exports.Init = function(conn) { 
+exports.Init = function(conn) {
 	socket = conn;
 }
 
-exports.CreateDrink = function(drinkId, sizeId) {
-	var drink, size;
+exports.CreateDrink = function(req, res) {
+	var drinkId = req.body.drinkId;
+	var sizeId = req.body.sizeId;
 
 	db.Size
 		.find({ where: { id: sizeId } })
@@ -17,12 +18,29 @@ exports.CreateDrink = function(drinkId, sizeId) {
 			db.Recipe
 				.find({ where: { id: drinkId }, include: [{ model: db.Recipepart, include: [{model: db.Ingredient, include: [db.Pump]}] } ] })
 				.then( function(drink) {
-
 					var instructions = createDrinkInstructions(drink, size);
-					console.log("Drink: " + drink.name + " \nSize: " +  size.name);
-					var totalTime = dispenseDrink(instructions);
-					socket.emit('DispensingTime', totalTime);
-				} );
+					var usage = getUsage(drink, size);
+					var totalTime = hardware.dispenseDrink(drink.name, instructions);
+					if(totalTime > 0){
+						var lowIngredients = [];
+						for(var i in usage) {
+							ingredientService.subtractCl(usage[i].ingredientId, usage[i].cl);
+							if(usage[i].remaining < 15){
+								lowIngredients.push(usage[i].ingredient);
+							}
+						}
+						res.json({dispensingTime: totalTime, lowIngredients: lowIngredients});
+					} else {
+						res.status(400).send('Please wait for barbot to finish before making a drink.');
+					}
+
+				})
+				.catch(function(){
+					res.status(400).send('Ingen drink valgt');
+				});;
+		})
+		.catch(function(){
+			res.status(400).send('Ingen størrelse valgt');
 		});
 };
 
@@ -34,6 +52,26 @@ getNormalFactor = function (drink) {
 	return 100/sum;
 }
 
+ getUsage = function(drink, size){
+	 var normalFactor = getNormalFactor(drink);
+	 var sizeFactor = size.cl/100;
+	 var usage = [];
+
+	 for(var i in drink.recipeparts){
+		 if(drink.recipeparts[i].ingredient.PumpId){
+			 var cl = (drink.recipeparts[i].amount*normalFactor)*sizeFactor;
+			 usage.push(
+				 {
+					 'cl': cl,
+					 'remaining': drink.recipeparts[i].ingredient.cl - cl,
+					 'ingredient': drink.recipeparts[i].ingredient.name,
+					 'ingredientId': drink.recipeparts[i].ingredient.id
+				 });
+			}
+	 }
+	 return usage;
+ }
+
 createDrinkInstructions = function(drink, size){
 	var normalFactor = getNormalFactor(drink);
 	var sizeFactor = size.cl/100;
@@ -43,53 +81,14 @@ createDrinkInstructions = function(drink, size){
 		var cl = (drink.recipeparts[i].amount*normalFactor)*sizeFactor;
 		drinkInstructions.push(
 		{
-		'cl': (drink.recipeparts[i].amount*normalFactor)*sizeFactor,
+		'cl': cl,
 		'time': drink.recipeparts[i].ingredient.pump == null?"0":cl*drink.recipeparts[i].ingredient.pump.msPerCl,
 		'order': drink.recipeparts[i].order,
 		'startdelay': drink.recipeparts[i].startdelay,
 		'pump': drink.recipeparts[i].ingredient.PumpId == null?"-1":drink.recipeparts[i].ingredient.PumpId,
-		'ingredient': drink.recipeparts[i].ingredient.name
+		'ingredient': drink.recipeparts[i].ingredient.name,
+		'ingredientId': drink.recipeparts[i].ingredient.id
 		});
 	}
 	return drinkInstructions;
-}
-
-dispenseDrink = function (instructions) {
-	instructions = instructions.sort(function(a, b) {
-        return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
-    });
-	currentStep = -10000;
-	var orderSteps = []
-	for(var inst in instructions){
-		if(currentStep < instructions[inst].order){
-			currentStep = instructions[inst].order
-			orderSteps[currentStep] = {};
-			orderSteps[currentStep].maxLength = 0;
-			orderSteps[currentStep].steps = []
-		}
-		if(instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
-		&& instructions[inst].pump > 0)
-			orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay;
-		orderSteps[currentStep].steps.push(instructions[inst]);
-	}
-
-	var totalDelay = 0;
-	var prevDelay = -5;
-	var totalTime = 0;
-	for (var step in orderSteps) {
-		var noPumpsStarted = true;
-		for (var ing in orderSteps[step].steps) {
-			var startDelay = (orderSteps[step].maxLength - orderSteps[step].steps[ing].time) + totalDelay;
-			if(orderSteps[step].steps[ing].pump > 0){
-				console.log("Dispensing: "+orderSteps[step].steps[ing].cl+"cl of " + orderSteps[step].steps[ing].ingredient);
-				delayedPumpMilliseconds(orderSteps[step].steps[ing].pump, orderSteps[step].steps[ing].time, startDelay);
-				noPumpsStarted = false;
-			}
-		}
-		if(!noPumpsStarted){
-			totalDelay += orderSteps[step].maxLength;
-		}
-		totalTime += orderSteps[step].maxLength;
-	}
-	return Math.ceil(totalTime);
 }
