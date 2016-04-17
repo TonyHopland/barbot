@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Pump = sequelize.define('Pump', {
-	id: DataTypes.INTEGER,
+	id: { type: DataTypes.INTEGER, primaryKey: true },
 	msPerCl: DataTypes.INTEGER,
     tubelength: DataTypes.DECIMAL
   }, {
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         Pump.hasOne(models.Ingredient);
       }
     }
-  })
+  });
  
   return Pump
 };

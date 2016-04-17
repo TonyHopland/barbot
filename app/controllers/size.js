@@ -10,7 +10,7 @@ var db = require('../../config/db.js');
 exports.size = function(req, res, next, id) {
 	db.Size
 		.find({ where: { id: id } })
-		.complete(function(err, size) {
+		.then(function(err, size) {
 			if (!!err) {
 				new Error('Failed to load size ' + id+': ' + err);
 			} else if (!size) {
@@ -26,7 +26,7 @@ exports.size = function(req, res, next, id) {
  * List of sizes
  */
 exports.query = function(req, res) {
-	  db.Size.findAll().success(function(size) {
+	  db.Size.findAll().then(function(size) {
 			res.json(size);
 	  })
 };
@@ -40,7 +40,7 @@ exports.create = function(req, res) {
 	delete req.body.newId;
 	db.Size
 		.create(req.body)
-			.complete(function(err, size) {
+			.then(function(err, size) {
 				res.json(size);
 			})
  

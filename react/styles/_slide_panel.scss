@@ -1,0 +1,41 @@
+.slide_panel {
+
+  $open-height: 90%;
+  background-color: darkcyan;
+
+  position: absolute;
+  height: $open-height;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 95%;
+
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+
+  -webkit-transition: top .6s ease-in;
+  transition: top .6s ease-in;
+  &+div {
+    -webkit-transition: height .6s ease-in;
+    transition: height .6s ease-in;
+  }
+
+  .toggle_button {
+    background-color: transparent;
+    position: absolute;
+    top: -2%;
+    height: 8%;
+    width: 100%;
+  }
+
+  &--open {
+    top: calc(100% - #{$open-height});
+    &+div {
+      height: calc(100% - #{$open-height});
+    }
+    .toggle_button {
+      top: -11%;
+      height: 15%;
+    }
+  }
+}

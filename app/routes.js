@@ -40,7 +40,8 @@ var path = require('path')
 		app.delete('/api/pumps/:pumpId', pumps.remove);
 		
 		var recipes = require('./controllers/recipe');
-		app.param('recipeId', recipes.recipe);
+		app.param('recipeId', recipes.recipeId);
+		app.get('/api/recipe/:recipeId', recipes.recipe);
 		app.get('/api/recipes', recipes.query);
 		app.post('/api/recipes', recipes.create);
 		app.put('/api/recipes/:recipeId', recipes.update);
@@ -52,13 +53,6 @@ var path = require('path')
 		app.post('/api/recipeparts', recipeparts.create);
 		app.put('/api/recipeparts/:recipepartId', recipeparts.update);
 		app.delete('/api/recipeparts/:recipepartId', recipeparts.remove);
-
-		// frontend routes =========================================================
-		// route to handle all angular requests
-		app.get('*', function(req, res) {
-			
-			res.sendfile(path.resolve(__dirname,'../public/index.html')); // load our public/index.html file
-		});
 
 	};
 

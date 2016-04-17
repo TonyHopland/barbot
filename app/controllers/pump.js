@@ -10,7 +10,7 @@ var db = require('../../config/db.js');
 exports.pump = function(req, res, next, id) {
 	db.Pump
 		.find({ where: { id: id },include    : { model: db.Ingredient, attributes: ['id']}})
-		.complete(function(err, pump) {
+		.then(function(err, pump) {
 			if (!!err) {
 				new Error('Failed to load pump ' + id+': ' + err);
 			} else if (!pump) {
@@ -28,7 +28,7 @@ exports.pump = function(req, res, next, id) {
 exports.query = function(req, res) {
 	  db.Pump.findAll({
 			include    : { model: db.Ingredient, attributes: ['id']}
-	  }).success(function(pump) {
+	  }).then(function(pump) {
 			res.json(pump);
 	  })
 };
@@ -42,7 +42,7 @@ exports.create = function(req, res) {
 	delete req.body.newId;
 	db.Pump
 		.create(req.body)
-			.complete(function(err, pump) {
+			.then(function(err, pump) {
 				res.json(pump);
 			})
  
@@ -59,7 +59,7 @@ pump.msPerCl = req.body.msPerCl;
 if(req.body.ingredient){
 	db.Ingredient
 			.find({ where: { id: req.body.ingredient.id }})
-			.complete(function(err, ingredient) {
+			.then(function(err, ingredient) {
 				if (!!err) {
 					new Error('Failed to load ingredient ' + id+': ' + err);
 				} else if (!ingredient) {

@@ -9,7 +9,7 @@ var db = require('../../config/db.js');
 exports.recipepart = function(req, res, next, id) {
 	db.Recipepart
 		.find({ where: { id: id }, include: [ db.Ingredient ] })
-		.complete(function(err, recipepart) {
+		.then(function(err, recipepart) {
 			if (!!err) {
 				new Error('Failed to load recipepart ' + id+': ' + err);
 			} else if (!recipepart) {
@@ -39,10 +39,10 @@ exports.query = function(req, res) {
 exports.create = function(req, res) {
 	db.Recipepart
 		.create(req.body)
-			.complete(function(err, recipepart) {
+			.then(function(err, recipepart) {
 				db.Recipe
 				.find({ where: { id: req.body.recipe }})
-				.complete(function(err, recipe) {
+				.then(function(err, recipe) {
 					if (!!err) {
 						new Error('Failed to load ingredient ' + id+': ' + err);
 					} else if (!recipe) {
@@ -67,10 +67,10 @@ exports.update = function(req, res) {
 	recipepart.startdelay = req.body.startdelay;
 	recipepart.IngredientId = req.body.IngredientId;
 
-	recipepart.save().complete(function(err, rp) {
+	recipepart.save().then(function(err, rp) {
 		db.Recipepart
 			.find({ where: { id: rp.id }, include: [ db.Ingredient ] })
-			.complete(function(err, recipepart) {
+			.then(function(err, recipepart) {
 				if (!!err) {
 					new Error('Failed to load recipepart ' + id+': ' + err);
 				} else if (!recipepart) {
