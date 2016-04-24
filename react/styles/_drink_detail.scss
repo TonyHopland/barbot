@@ -5,7 +5,7 @@
     margin: 0;
     padding-left: 3%;
   }
-  .ingredients{
+  &__ingredients{
     display: flex;
     flex-wrap: wrap;
     h3 {
@@ -29,6 +29,28 @@
       width: 75%;
       height: 370px;
       overflow-y: auto;
+    }
+  }
+  &__messages {
+    .notes {
+      background-color: lightblue;
+      margin: 21px 40px;
+      padding: 6px 20px;
+      border-radius: 20px;
+      border: 2px solid black;
+    }
+    .warning {
+      background-color: rgba(255, 0, 0, 1);
+      margin: 21px 40px;
+      padding: 6px 20px;
+      border-radius: 20px;
+      border: 2px solid black;
+      ul {
+        margin: 0;
+        li {
+          margin: 0;
+        }
+      }
     }
   }
 }

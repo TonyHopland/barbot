@@ -25,14 +25,17 @@ class barbot extends Component {
       console.log(selectedDrink);
       return(
         <div>
+          <div><h1>Barbot</h1><span className="settings">settings</span></div>
+        <div className="absolute-fill">
+          <SlidePanel>
+            <DrinkDetail drink={selectedDrink}></DrinkDetail>
+          </SlidePanel>
           <div className="flex_container">
             {drinks.map((drink, i) =>
               <DrinkThumb key={drink.id} image={drink.image} name={drink.name} isAvailable={drink.missingIngredients == 0} onClick={this.clickDrink.bind(this, drink.id)} selected={drink.selected} />
             )}
           </div>
-          <SlidePanel>
-            <DrinkDetail drink={selectedDrink}></DrinkDetail>
-          </SlidePanel>
+        </div>
         </div>
       );
     };

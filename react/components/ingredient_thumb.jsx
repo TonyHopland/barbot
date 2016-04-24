@@ -8,7 +8,7 @@ const IngredientThumb = ({name, isAvailable, image, color}) => (
         'ingredient_thumb--unavailable': !isAvailable
       }
     )} style={{'backgroundColor': color}} >
-    <img style={image ? {backgroundImage: " url(resources/ingredient/" + image + "), url(resources/noimage.png)"}: {backgroundImage: "url(resources/noimage.png)"}}/>
+    <img style={image ? {backgroundImage: " url(resources/ingredient/" + image + "), url(resources/bottle.svg)"}: {backgroundImage: "url(resources/bottle.svg)"}}/>
     <span className="title" style={{backgroundColor: color}}>{name}</span>
     <div className="overlay"></div>
   </div>

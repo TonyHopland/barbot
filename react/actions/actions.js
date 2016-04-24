@@ -1,7 +1,7 @@
 export const REQUEST_DRINKS = 'REQUEST_DRINKS';
 export const RECEIVE_DRINKS = 'RECEIVE_DRINKS';
 export const SELECT_DRINK = 'SELECT_DRINK';
-
+export const TOGGLE_SLIDEPANEL = 'TOGGLE_SLIDEPANEL';
 
 function requestDrinks() {
   return {
@@ -26,6 +26,13 @@ export function fetchDrinks() {
       .then(drinkArray => dispatch(receiveDrinks(drinkArray)))
   }
 };
+
+export function toggleSlidepanel(newState) {
+  return {
+    type: TOGGLE_SLIDEPANEL,
+    action: newState
+  }
+}
 
 export function selectDrink(id) {
   return {
