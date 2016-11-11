@@ -1,0 +1,6 @@
+Todo list:
+
+- Size component.
+- Make component.
+- Settings page.
+- Create page.

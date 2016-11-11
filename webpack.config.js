@@ -1,45 +1,63 @@
 var debug = process.env.NODE_ENV !== "production";
 var webpack = require('webpack');
 var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+var copyWebpackPlugin = require('copy-webpack-plugin');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     context: __dirname,
     output: {
-        path: __dirname + '/react/bin/',
-        publicPath: '/bin/',
-        filename: "app.min.js"
+        path: __dirname + '/dist/',
+        publicPath: '/',
+        filename: "js/app.min.js"
     },
-    devtool: debug ? "inline-sourcemap" : null,
+    devtool: debug ? "cheap-module-source-map" : null,
     entry:[
-        'webpack-hot-middleware/client',
-        './react/app.jsx'
+        './src/web/app.jsx',
+        'webpack-hot-middleware/client'
     ],
     module: {
         loaders: [
             {
-                test: /\.jsx?$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader'
+              test: /\.jsx?$/,
+              exclude: /(node_modules)/,
+              loader: 'babel-loader'
             },
             {
-                test   : /\.scss$/,
-                loaders: ['style', 'css', 'sass']
+              test   : /\.scss$/,
+              exclude: /(node_modules)/,
+              loaders: ['style', 'css', 'sass', 'postcss']
             },
-            { test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/, loader: 'url?limit=10000' },
-            { test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/, loader: 'file' }
+            {
+              test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
+              exclude: /(node_modules)/,
+              loader: 'url?limit=10000'
+            },
+            {
+              test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
+              exclude: /(node_modules)/,
+              loader: 'file'
+            }
         ]
     },
+    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
-            $: "jquery",
-            jquery: "jQuery",
-            "windows.jQuery": "jquery",
             React: "react",
             ReactDOM: "react-dom"
         }),
+        new webpack.DefinePlugin({
+          'process.env': {
+            'NODE_ENV': JSON.stringify('production')
+          }
+        }),
+        new copyWebpackPlugin([
+            { from: 'src/web/resources', to: 'resources' }
+        ]),
+        new copyWebpackPlugin([
+            { from: 'src/web/index.html'}
+        ])
     ],
 };
