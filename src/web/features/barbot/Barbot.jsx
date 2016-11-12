@@ -1,57 +1,55 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import SlidePanel from './components/slide_panel';
+import Modal from 'components/modal/Modal';
+import { fetchSizes } from 'components/size/size.actions';
 import DrinkThumb from './components/drink_thumb';
 import DrinkDetail from './components/drink_detail';
 import { fetchDrinks, selectDrink } from './barbot.actions';
 
+
 class BarbotComponent extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchDrinks());
-  }
-
-  componentWillUnmount() {
-  }
-
-  clickDrink(id) {
-    const { dispatch } = this.props;
-    dispatch(selectDrink(id));
+    const { dispatchFetchDrinks, dispatchFetchSizes } = this.props;
+    dispatchFetchDrinks();
+    dispatchFetchSizes();
   }
 
   render() {
     const {
       drinks,
       selectedDrink,
+      dispatchSelectDrink,
     } = this.props;
+
+    const drinkView = selectedDrink
+      ? <DrinkDetail drink={selectedDrink} />
+      : null;
+
     return (
-      <div>
-        <div><h1>Barbot</h1><span className="settings">settings</span></div>
-        <div className="absolute-fill">
-          <SlidePanel>
-            <DrinkDetail drink={selectedDrink} />
-            <div className="btn center bottom"> Make drink </div>
-          </SlidePanel>
-          <div className="flex_container">
-            {drinks.map(drink =>
-              <DrinkThumb
-                key={drink.id}
-                image={drink.image}
-                name={drink.name}
-                isAvailable={drink.missingIngredients === 0}
-                onClick={this.clickDrink.bind(this, drink.id)}
-                selected={drink.selected}
-              />,
-            )}
-          </div>
+      <div className="absolute-fill">
+        <div className="flex_container">
+          {drinks.map(drink =>
+            <DrinkThumb
+              {...drink}
+              key={drink.id}
+              onSelect={dispatchSelectDrink}
+              selected={selectedDrink && selectedDrink.id === drink.id}
+              isAvailable={drink.missingIngredients === 0}
+            />,
+          )}
         </div>
+        <Modal onClose={() => dispatchSelectDrink(null)}>
+          {drinkView}
+        </Modal>
       </div>
     );
   }
 }
 
 BarbotComponent.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatchSelectDrink: PropTypes.func.isRequired,
+  dispatchFetchDrinks: PropTypes.func.isRequired,
+  dispatchFetchSizes: PropTypes.func.isRequired,
   drinks: PropTypes.shape([]),
   selectedDrink: PropTypes.shape({}),
 };
@@ -62,4 +60,10 @@ const mapStateToProps = ({ barbot }) => ({
   selectedDrink: barbot.selectedDrink,
 });
 
-export default connect(mapStateToProps)(BarbotComponent);
+const mapDispatchToProps = dispatch => ({
+  dispatchSelectDrink: (id, maxSize) => dispatch(selectDrink(id, maxSize)),
+  dispatchFetchDrinks: () => dispatch(fetchDrinks()),
+  dispatchFetchSizes: () => dispatch(fetchSizes()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(BarbotComponent);

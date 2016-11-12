@@ -1,9 +1,19 @@
   {
     "import/parser": "babel-eslint",
     "extends": "airbnb",
+    "settings": {
+      "import/resolver": {
+        "webpack": {
+          config: './webpack.config.js'
+        }
+      }
+    },
     "rules": {
       "linebreak-style": ["error", "windows"],
       "jsx-a11y/no-static-element-interactions": 0
     },
-    "globals": { "fetch": false }
+    "env": {
+      "browser": true,
+      "node": true,
+    }
   }

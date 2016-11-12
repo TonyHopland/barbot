@@ -33,9 +33,10 @@ export function toggleSlidepanel(newState) {
   };
 }
 
-export function selectDrink(id) {
+export function selectDrink(id, maxSize) {
   return {
     type: SELECT_DRINK,
     drinkId: id,
+    maxSize,
   };
 }

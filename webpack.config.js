@@ -17,7 +17,10 @@ module.exports = {
         'webpack-hot-middleware/client?overlay=false'
     ],
     resolve: {
-      modulesDirectories: ['web', 'node_modules'],
+      root: [
+        path.resolve('./src/web'),
+        path.resolve('./node_modules')
+      ],
       extensions: ['', '.js', '.jsx', '.scss']
     },
     module: {
@@ -66,7 +69,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
           'process.env': {
-            'NODE_ENV': JSON.stringify('production')
+            'NODE_ENV': JSON.stringify('develop')
           }
         }),
         new copyWebpackPlugin([

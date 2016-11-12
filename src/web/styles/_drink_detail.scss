@@ -1,10 +1,14 @@
 .drink_detail {
-  h2 {
-    text-align: center;
-    font-size: 3em;
-    margin: 0;
-    padding-left: 3%;
+
+  &__thumbnail img {
+    margin: 20px;
+    width: 300px;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
+
   &__ingredients{
     display: flex;
     flex-wrap: wrap;
@@ -15,7 +19,7 @@
     .ingredientglass {
       display: inline-block;
       height: 370px;
-      width: 22%;
+      width: 200px;
       margin-left: 3%;
       -webkit-clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
       clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);

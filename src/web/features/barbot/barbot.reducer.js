@@ -20,6 +20,13 @@ const barbotReducer = (state = { isFetching: false, drinks: [] }, action) => {
       return { ...state, isFetching: false, drinks: drinkSorter(action.drinks) };
     }
     case SELECT_DRINK: {
+      if (!action.drinkId) {
+        return {
+          ...state,
+          selectedDrink: null,
+          slidepanelOpen: false,
+        };
+      }
       const selectedDrink = state.drinks.find(drink => drink.id === action.drinkId);
       const allParts = selectedDrink && totalAmountInDrink(selectedDrink);
       return {
@@ -34,12 +41,6 @@ const barbotReducer = (state = { isFetching: false, drinks: [] }, action) => {
             }),
           ),
         },
-        drinks: state.drinks.map(drink => (
-          {
-            ...drink,
-            selected: drink.id === action.drinkId,
-          }),
-        ),
       };
     }
     case TOGGLE_SLIDEPANEL: {

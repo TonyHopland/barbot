@@ -48,7 +48,7 @@ var lastStart = new Date();
 
 canStartNewPump = function(resetTimer){
 	var timeDiff = new Date() - lastStart;
-	
+
 	if(timeDiff >= 30) {
 		if(resetTimer){
 			lastStart = new Date();
@@ -151,7 +151,7 @@ exports.dispenseDrink = function (name, instructions) {
         return -1;
     }
     isBuzy = true;
-    console.log("[PUMP] Dispensing drink: " + name);
+    console.log(`[PUMP] Dispensing drink: ${name}`);
 
     instructions = instructions.sort(function(a, b) {
         return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
@@ -193,6 +193,7 @@ exports.dispenseDrink = function (name, instructions) {
 
     setTimeout(function () {
         isBuzy = false;
+				console.log(`[PUMP] Finished dispensing drink: ${name}`);
     }, Math.ceil(totalTime) + 500);
 
 	return Math.ceil(totalTime);

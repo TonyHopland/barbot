@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import Size from 'components/size/Size';
+import Make from 'components/make/Make';
 import IngredientThumb from './ingredient_thumb';
 
 const DrinkDetail = ({ drink }) => {
@@ -22,7 +24,20 @@ const DrinkDetail = ({ drink }) => {
   }
   return (
     <div className="drink_detail">
-      <h2 className="drink_detail__title">{drink.name}</h2>
+      <div className="drink_detail__thumbnail">
+        <img
+          role="presentation"
+          style={drink.image
+            ? { backgroundImage: `url(resources/drinks/${drink.image}), url(resources/noimage.png)` }
+            : { backgroundImage: 'url(resources/noimage.png)' }}
+        />
+      </div>
+      <div>
+        <Size />
+      </div>
+      <div>
+        <Make />
+      </div>
       <div className="drink_detail__ingredients">
         <h3>Ingredients</h3>
         <div className="ingredientglass" >

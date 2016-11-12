@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
-const DrinkThumb = ({ name, isAvailable, image, onClick, selected }) => (
+const DrinkThumb = ({ id, maxsize, name, isAvailable, image, onSelect, selected }) => (
   <div
     className={classNames(
       'drink_thumb',
@@ -10,7 +10,7 @@ const DrinkThumb = ({ name, isAvailable, image, onClick, selected }) => (
         'drink_thumb--unavailable': !isAvailable,
       },
     )}
-    onClick={onClick}
+    onClick={() => onSelect(id, maxsize)}
   >
     <img
       role="presentation"
@@ -24,10 +24,12 @@ const DrinkThumb = ({ name, isAvailable, image, onClick, selected }) => (
 );
 
 DrinkThumb.propTypes = {
+  id: PropTypes.number.isRequired,
+  maxsize: PropTypes.number.isRequired,
   isAvailable: PropTypes.bool.isRequired,
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
+  onSelect: PropTypes.func,
   selected: PropTypes.bool,
 };
 
