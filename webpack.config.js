@@ -13,9 +13,13 @@ module.exports = {
     },
     devtool: debug ? "cheap-module-source-map" : null,
     entry:[
-        './src/web/app.jsx',
+        './src/web/app/app.jsx',
         'webpack-hot-middleware/client'
     ],
+    resolve: {
+      modulesDirectories: ['web', 'node_modules'],
+      extensions: ['', '.js', '.jsx', '.scss']
+    },
     module: {
         loaders: [
             {

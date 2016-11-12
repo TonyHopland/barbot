@@ -1,7 +1,7 @@
-import SlidePanel from '../components/slide_panel.jsx';
-import DrinkThumb from '../components/drink_thumb.jsx';
-import DrinkDetail from '../components/drink_detail.jsx';
-import { fetchDrinks, selectDrink } from '../actions/actions.js';
+import SlidePanel from './components/slide_panel';
+import DrinkThumb from './components/drink_thumb';
+import DrinkDetail from './components/drink_detail';
+import { fetchDrinks, selectDrink } from './barbot.actions';
 import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -22,6 +22,7 @@ class barbot extends Component {
 
     render() {
       const {drinks, selectedDrink} = this.props;
+      console.log(this.props);
       return(
         <div>
           <div><h1>Barbot</h1><span className="settings">settings</span></div>
@@ -46,7 +47,7 @@ barbot.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  const {drinks, isFetching, selectedDrink} = state;
+  const {drinks, isFetching, selectedDrink} = state.barbot;
   return {
     drinks, isFetching, selectedDrink
   }

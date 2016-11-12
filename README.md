@@ -1,8 +1,9 @@
-BarBot
+#BarBot
 
-Description: Website for controlling a drink mixing robot.
+##Description:
+Website for controlling a drink mixing robot.
 
-Project Setup
+##Project Setup
 
 The project is based on a Raspberry Pi using it's IO pins to controll the pumps of the machine
 
@@ -10,7 +11,7 @@ The project is based on a Raspberry Pi using it's IO pins to controll the pumps 
     Just run 'npm install' from the project folder and npm will take care of it.
 
 
-Common tasks
+##Common tasks
 
   If you want to test the project locally without running it on a raspberry pi you have to comment out the pin IO logic,
   to do this you comment out from line 14 to line 44 in the \app\controllers\pumpHardware.js

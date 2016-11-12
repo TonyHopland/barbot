@@ -39,17 +39,10 @@ require('./src/api/app/routes')(app); // configure our routes
 
 // start DB ===============================================
 db.sequelize.sync();
-//Use this if you want to clean and populate database on startup
-/*db.sequelize.sync({force: true}).then(function(success) {
-    require('./config/initDb.js');
-  },function(err){
-    throw err;
-  }
-);*/
 
 // start app ===============================================
 var server = app.listen(port);							// startup our app at http://localhost:8080
-console.log('Magic happens on port ' + port); 			// shoutout to the user
+console.log('Barbot is now serving at port: ' + port); 			// shoutout to the user
 exports = module.exports = app; 						// expose app
 
 

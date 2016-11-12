@@ -1,6 +1,4 @@
-const { combineReducers } = require('redux');
-
-const { RECEIVE_DRINKS, REQUEST_DRINKS, SELECT_DRINK, TOGGLE_SLIDEPANEL } = require('../actions/actions');
+const { RECEIVE_DRINKS, REQUEST_DRINKS, SELECT_DRINK, TOGGLE_SLIDEPANEL } = require('./barbot.actions');
 
 const drinkSorter = (drinks) => drinks.slice().sort((a,b) => {
   if(a.missingIngredients === b.missingIngredients) {
@@ -10,7 +8,7 @@ const drinkSorter = (drinks) => drinks.slice().sort((a,b) => {
 });
 
 
-const drinks = (state = { isFetching: false, drinks: [] }, action) => {
+const barbotReducer = (state = { isFetching: false, drinks: [] }, action) => {
   switch (action.type) {
     case REQUEST_DRINKS:
       return Object.assign({}, state, { isFetching: true });
@@ -40,6 +38,4 @@ const drinks = (state = { isFetching: false, drinks: [] }, action) => {
   }
 }
 
-const rootReducer = drinks;
-
-module.exports = rootReducer;
+export default barbotReducer;

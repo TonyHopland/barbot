@@ -1,5 +1,5 @@
 import { PropTypes } from 'react';
-import { toggleSlidepanel } from '../actions/actions.js';
+import { toggleSlidepanel } from '../barbot.actions.js';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
