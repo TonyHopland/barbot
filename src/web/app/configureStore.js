@@ -1,6 +1,6 @@
-import thunkMiddleware from 'redux-thunk'
-import createLogger from 'redux-logger'
-import { createStore, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './rootReducer';
 
 const logger = createLogger();
@@ -10,8 +10,8 @@ export default function configureStore() {
     rootReducer,
     applyMiddleware(
       thunkMiddleware, // lets us dispatch() functions
-      logger // neat middleware that logs actions
-    )
+      logger, // neat middleware that logs actions
+    ),
   );
 
   return store;

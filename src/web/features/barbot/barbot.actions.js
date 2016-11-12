@@ -5,38 +5,37 @@ export const TOGGLE_SLIDEPANEL = 'TOGGLE_SLIDEPANEL';
 
 function requestDrinks() {
   return {
-    type: REQUEST_DRINKS
-  }
-};
+    type: REQUEST_DRINKS,
+  };
+}
 
 function receiveDrinks(drinkArray) {
-  console.log(drinkArray);
   return {
     type: RECEIVE_DRINKS,
     drinks: drinkArray,
-    receivedAt: Date.now()
-  }
-};
+    receivedAt: Date.now(),
+  };
+}
 
 export function fetchDrinks() {
-  return (dispatch, getState) => {
-    dispatch(requestDrinks())
+  return (dispatch) => {
+    dispatch(requestDrinks());
     return fetch('api/recipes/')
       .then(response => response.json())
-      .then(drinkArray => dispatch(receiveDrinks(drinkArray)))
-  }
-};
+      .then(drinkArray => dispatch(receiveDrinks(drinkArray)));
+  };
+}
 
 export function toggleSlidepanel(newState) {
   return {
     type: TOGGLE_SLIDEPANEL,
-    action: newState
-  }
+    action: newState,
+  };
 }
 
 export function selectDrink(id) {
   return {
     type: SELECT_DRINK,
-    drinkId: id
-  }
-};
+    drinkId: id,
+  };
+}

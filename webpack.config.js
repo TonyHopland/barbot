@@ -14,13 +14,20 @@ module.exports = {
     devtool: debug ? "cheap-module-source-map" : null,
     entry:[
         './src/web/app/app.jsx',
-        'webpack-hot-middleware/client'
+        'webpack-hot-middleware/client?overlay=false'
     ],
     resolve: {
       modulesDirectories: ['web', 'node_modules'],
       extensions: ['', '.js', '.jsx', '.scss']
     },
     module: {
+        preLoaders: [
+          {
+            test: /\.jsx?$/,
+            include: path.join(__dirname, 'src'),
+            loaders: ['eslint-loader']
+          },
+        ],
         loaders: [
             {
               test: /\.jsx?$/,
@@ -42,12 +49,17 @@ module.exports = {
               exclude: /(node_modules)/,
               loader: 'file'
             }
-        ]
+        ],
+        eslint: {
+         configFile: './.eslintrc',
+         emitWarning: true,
+         failOnError: false,
+         failOnWarning: false,
+       }
     },
     postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
         new webpack.ProvidePlugin({
             React: "react",
             ReactDOM: "react-dom"

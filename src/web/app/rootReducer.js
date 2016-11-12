@@ -3,5 +3,5 @@ import barbotReducer from 'features/barbot/barbot.reducer';
 
 
 export default combineReducers({
-  barbot: barbotReducer
+  barbot: barbotReducer,
 });

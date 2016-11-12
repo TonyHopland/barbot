@@ -1,28 +1,35 @@
-import { PropTypes } from 'react';
-import { toggleSlidepanel } from '../barbot.actions.js';
+import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
+import { toggleSlidepanel } from '../barbot.actions';
 
-const SlidePanel = ({children, slidepanelOpen, toggleSlidepanel}) => (
-  <div id="slide_panel" className={classNames("slide_panel",{'slide_panel--open': slidepanelOpen})}>
-    <div className="toggle_button" onClick={toggleSlidepanel}>
-      <div className="toggle_button__tab"></div>
+const SlidePanel = ({ children, slidepanelOpen, dispatchToggleSlidepanel }) => (
+  <div
+    id="slide_panel"
+    className={classNames({
+      slide_panel: true,
+      'slide_panel--open': slidepanelOpen,
+    })}
+  >
+    <div className="toggle_button" onClick={dispatchToggleSlidepanel}>
+      <div className="toggle_button__tab" />
     </div>
     <div className="slide_panel__content">{children}</div>
   </div>
-)
+);
 
-const mapStateToProps = (state) => {
-  const {slidepanelOpen} = state;
-  return {
-    slidepanelOpen
-  }
-}
+SlidePanel.propTypes = {
+  slidepanelOpen: PropTypes.boolean,
+  dispatchToggleSlidepanel: PropTypes.function,
+  children: PropTypes.node,
+};
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleSlidepanel: (action) => dispatch(toggleSlidepanel(action))
-  }
-}
+const mapStateToProps = ({ barbot }) => ({
+  slidepanelOpen: barbot.slidepanelOpen,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatchToggleSlidepanel: action => dispatch(toggleSlidepanel(action)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SlidePanel);
