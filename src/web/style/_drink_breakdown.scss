@@ -1,0 +1,26 @@
+.drink-breakdown {
+  position: relative;
+  height: 100%;
+  &__glass {
+    display: inline-block;
+    height: 100%;
+    width: 90%;
+    width: 1.5rem;
+    &-ingredient {
+      display: block;
+      width: 100%;
+    }
+  }
+  &__ingredients {
+    position: relative;
+    overflow: auto;
+    display: inline-block;
+    padding: 1rem 2rem;
+    margin: 0;
+    height: 100%;
+    width: 80%;
+    &-ingredient {
+      display: block;
+    }
+  }
+}

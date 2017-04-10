@@ -1,0 +1,2 @@
+export const RECEIVE_SIZES = 'RECEIVE_SIZES';
+export const REQUEST_SIZES = 'REQUEST_SIZES';

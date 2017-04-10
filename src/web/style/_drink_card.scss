@@ -1,0 +1,33 @@
+.drink-card {
+  &__image {
+    object-fit: cover;
+    height: 30rem;
+  }
+  &__content {
+    min-height: 12rem;
+    &__title {
+      position: relative;
+      padding-right: 2.4rem;
+      i {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+  &__detail {
+    &__title {
+      position: relative;
+      padding-right: 2.4rem;
+      margin-bottom: 3rem;
+      i {
+        position: absolute;
+        top: .7rem;
+        right: 0;
+      }
+    }
+    &__content {
+      height: 15rem;
+    }
+  }
+}

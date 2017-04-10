@@ -29,6 +29,10 @@ app.use(express.static(__dirname + '/dist')); // set the static files location
 
 require('./src/api/app/routes')(app); // configure our routes
 
+app.get('*', function (request, response){
+  response.sendFile(__dirname + '/dist/index.html')
+})
+
 // start DB ===============================================
 db.sequelize.sync();
 

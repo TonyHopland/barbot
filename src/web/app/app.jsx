@@ -1,19 +1,24 @@
-import 'styles/main.scss';
+import 'style/main.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import Barbot from 'features/barbot/Barbot';
-import Menu from 'components/menu/Menu';
+import Barbot from 'features/Barbot/BarbotContainer';
 import configureStore from './configureStore';
 
 const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
-    <div>
-      <Menu />
-      <Barbot />
-    </div>
+    <Router>
+      <div className="barbot">
+        <div>Heading</div>
+        <Route exact path="/" component={Barbot} />
+      </div>
+    </Router>
   </Provider>,
   document.getElementById('app'),
 );

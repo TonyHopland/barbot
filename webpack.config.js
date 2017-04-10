@@ -6,66 +6,90 @@ var autoprefixer = require('autoprefixer');
 
 module.exports = {
     context: __dirname,
+    entry:{
+      app: ['webpack-dev-server/client?http://localhost:8080','webpack/hot/dev-server','./src/web/app/App.jsx'],
+      vendor: ['jquery', './src/web/lib/materialize/materialize.js']
+    },
     output: {
         path: __dirname + '/dist/',
         publicPath: '/',
-        filename: "js/app.min.js"
+        filename: "js/[name].min.js"
     },
-    devtool: debug ? "cheap-module-source-map" : null,
-    entry:[
-        './src/web/app/app.jsx',
-        'webpack-hot-middleware/client?overlay=false'
-    ],
+    externals: {
+      $: "jquery"
+    },
+    devtool: debug ? "source-map" : null,
     resolve: {
-      root: [
+      modules: [
         path.resolve('./src/web'),
         path.resolve('./node_modules')
       ],
-      extensions: ['', '.js', '.jsx', '.scss']
+      extensions: ['.js', '.jsx', '.scss'],
+      alias: {
+        jquery: "jquery/src/jquery"
+      },
     },
     module: {
-        preLoaders: [
+        rules: [
           {
             test: /\.jsx?$/,
             include: path.join(__dirname, 'src'),
-            loaders: ['eslint-loader']
+            exclude: /(lib)/,
+            enforce: "pre",
+            use: {
+              loader: 'eslint-loader',
+              options: {
+                configFile: './.eslintrc',
+                emitWarning: true,
+                failOnError: false,
+                failOnWarning: false,
+              }
+            }
+          },
+          {
+            test: /\.jsx?$/,
+            exclude: /(node_modules)/,
+            use: 'babel-loader'
+          },
+          {
+            test   : /\.scss$/,
+            exclude: /(node_modules)/,
+            use: [
+              {loader: 'style-loader'},
+              {loader: 'css-loader'},
+              {loader: 'sass-loader'},
+              {
+                loader: 'postcss-loader',
+                options:{
+                  plugins: function () {
+                                  return [
+                                    require('autoprefixer')
+                                  ];
+                                }
+                }
+              }
+            ]
+          },
+          {
+            test: /\.(woff|woff2|eot|ttf)$/,
+            exclude: /(node_modules)/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                limit:10000,
+                name:'resources/fonts/[name].[ext]'
+              }
+            }
           },
         ],
-        loaders: [
-            {
-              test: /\.jsx?$/,
-              exclude: /(node_modules)/,
-              loader: 'babel-loader'
-            },
-            {
-              test   : /\.scss$/,
-              exclude: /(node_modules)/,
-              loaders: ['style', 'css', 'sass', 'postcss']
-            },
-            {
-              test: /\.((woff2?|svg)(\?v=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
-              exclude: /(node_modules)/,
-              loader: 'url?limit=10000'
-            },
-            {
-              test: /\.((ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9]))|(ttf|eot)$/,
-              exclude: /(node_modules)/,
-              loader: 'file'
-            }
-        ],
-        eslint: {
-         configFile: './.eslintrc',
-         emitWarning: true,
-         failOnError: false,
-         failOnWarning: false,
-       }
     },
-    postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
             React: "react",
-            ReactDOM: "react-dom"
+            ReactDOM: "react-dom",
+            $: "jquery",
+            jQuery: "jquery"
         }),
         new webpack.DefinePlugin({
           'process.env': {

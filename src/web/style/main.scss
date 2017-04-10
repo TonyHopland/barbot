@@ -1,0 +1,26 @@
+@import '../lib/materialize/materialize';
+@import './icons';
+@import './drink_card';
+@import './drink_breakdown';
+
+
+html {
+  height: 100%;
+  font-size: 62.5%
+}
+
+body {
+  font-size: 1.6rem;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+}
+
+.btn__make {
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+  i {
+    font-size: 2.8rem;
+  }
+}
