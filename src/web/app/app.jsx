@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import Header from 'components/Header/Header';
 import Barbot from 'features/Barbot/BarbotContainer';
 import configureStore from './configureStore';
 
@@ -15,7 +16,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <div className="barbot">
-        <div>Heading</div>
+        <Header />
         <Route exact path="/" component={Barbot} />
       </div>
     </Router>

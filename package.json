@@ -15,7 +15,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-    "classnames": "^2.2.3",
+    "classnames": "^2.2.5",
     "express": "^4.15.2",
     "hammerjs": "^2.0.8",
     "johnny-five": "^0.10.5",

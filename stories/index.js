@@ -5,86 +5,14 @@ global.jQuery = jquery;
 import '../src/web/style/main.scss';
 require('../src/web/lib/materialize/materialize.js');
 import { storiesOf, action, linkTo } from '@kadira/storybook';
-import DrinkCard from '../src/web/components/DrinkCard/DrinkCard';
-import DrinkBreakdown from '../src/web/components/DrinkBreakdown/DrinkBreakdown';
+import DrinkCard from 'components/DrinkCard/DrinkCard';
+import DrinkBreakdown from 'components/DrinkBreakdown/DrinkBreakdown';
+import MakeController from 'components/MakeController/MakeController';
 
-const ingredients=[[
-  {
-    id: 1,
-    name: 'Appelsinjuice',
-    color: '#f90',
-    amount: 4,
-    available: true,
-  },
-  {
-    id: 2,
-    name: 'Vodka',
-    color: '#eef',
-    amount: 1,
-    available: true,
-  }
-],
-[
-  {
-    id: 1,
-    name: 'Appelsinjuice',
-    color: '#f90',
-    amount: 4,
-    available: true,
-  },
-  {
-    id: 2,
-    name: 'Vodka',
-    color: '#eef',
-    amount: 1,
-    available: true,
-  },
-  {
-    id: 2,
-    name: 'Grenadine',
-    color: '#f00',
-    amount: 0.1,
-    available: true,
-  }
-]];
+import {defaultState as drinks} from 'store/drinks/drinks.constants';
+import {defaultState as ingredients} from 'store/ingredients/ingredients.constants';
+import {defaultState as sizes} from 'store/sizes/sizes.constants';
 
-const drinks = [
-  {
-    id:1,
-    image:"test",
-    name:"Testdrink on the rocks with a twist of lime and pepper",
-    ingredients:ingredients[0],
-    description: "This is a nice drink",
-  },
-  {
-    id:2,
-    image:"brain.jpg",
-    name:"Monkey brain",
-    ingredients:ingredients[0],
-    description: "This is a nice drink",
-  },
-  {
-    id:3,
-    image:"vodka_sun.jpg",
-    name:"Vodka sunrise",
-    ingredients:ingredients[1],
-    description: "This is a nice drink",
-  },
-  {
-    id:4,
-    image:"atomicwatermelon.jpg",
-    name:"Atomic watermelon",
-    ingredients:ingredients[0],
-    description: "This is a nice drink",
-  },
-  {
-    id:5,
-    image:"sexonthebeach.jpg",
-    name:"Sex on the beach",
-    ingredients:ingredients[0],
-    description: "This is a nice drink",
-  },
-];
 
 storiesOf('DrinkCard', module)
   .add('default', () => {
@@ -99,7 +27,12 @@ storiesOf('DrinkCard', module)
             name={drink.name}
             ingredients={drink.ingredients}
             description={drink.description}
-          />
+          >
+            <DrinkBreakdown
+              recipeParts={drink.recipeParts}
+              ingredientList={ingredients}
+            />
+          </DrinkCard>
         ))}
       </div>
   )});
@@ -107,9 +40,27 @@ storiesOf('DrinkCard', module)
 storiesOf('DrinkBreakdown', module)
   .add('default', () => {
     return (
-      <div className="row" style={{height: '50rem'}}>
+      <div className="row" style={{height: '25rem'}}>
         <DrinkBreakdown
-          ingredients={ingredients[0]}
+          recipeParts={drinks[0].recipeParts}
+          ingredientList={ingredients}
         />
+      </div>
+  )});
+
+storiesOf('MakeController', module)
+  .add('Size selector', () => {
+    return (
+      <div className="row" style={{ margin: '2rem', height: '25rem'}}>
+        <div className="card col s5">
+            <div className="card-content">
+              <MakeController
+                sizes={sizes}
+                prevSize={2}
+                name="Tony's testdrink"
+                makeDrink={() => Promise.resolve(5000)}
+              />
+            </div>
+          </div>
       </div>
   )});

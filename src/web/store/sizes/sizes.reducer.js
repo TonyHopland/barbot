@@ -1,6 +1,6 @@
-const { RECEIVE_SIZES, REQUEST_SIZES } = require('./sizes.constants');
+const { RECEIVE_SIZES, REQUEST_SIZES, defaultState } = require('./sizes.constants');
 
-const sizesReducer = (state = null, action) => {
+const sizesReducer = (state = defaultState, action) => {
   switch (action.type) {
     case REQUEST_SIZES: {
       return null;

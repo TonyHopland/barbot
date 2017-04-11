@@ -1,0 +1,15 @@
+.select-wrapper {
+  & input.select-dropdown {
+    font-size: 1.8rem;
+  }
+  & span.caret {
+    font-size: 1.8rem;
+  }
+  & + label {
+    font-size: 1.4rem;
+    top: -2rem;
+  }
+}
+.input-field {
+  margin-top: 1.6rem;
+}
