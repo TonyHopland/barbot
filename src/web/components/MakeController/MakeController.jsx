@@ -11,7 +11,7 @@ class MakeController extends Component{
     super(props);
     this.state = {
       dispensing: false,
-      dispenseTime: 0,
+      dispenseTime: -1,
     }
 
     this.startDispensing = this.startDispensing.bind(this);
@@ -19,6 +19,7 @@ class MakeController extends Component{
   }
 
   startDispensing(time) {
+    console.log('returned time', time);
     this.setState({
       dispensing: true,
       dispenseTime: time,
@@ -47,7 +48,8 @@ class MakeController extends Component{
         }
         { this.state.dispensing
           ?<Loader
-            time={this.state.dispenseTime}
+            dispenseTime={this.state.dispenseTime}
+            onComplete={this.props.onComplete}
           />
           :<SizeSelector
             sizes={sizes}
@@ -65,6 +67,7 @@ MakeController.propTypes = {
   recipeParts: PropTypes.arrayOf(PropTypes.instanceOf(RecipePart)).isRequired,
   sizes: PropTypes.arrayOf(PropTypes.shape({}).isRequired).isRequired,
   makeDrink: PropTypes.func.isRequired,
+  onComplete: PropTypes.func,
   prevSize: PropTypes.number,
   maxSize: PropTypes.number,
   name: PropTypes.string,
@@ -74,6 +77,7 @@ MakeController.defaultProps = {
   prevSize: -1,
   maxSize: -1,
   name: null,
+  onComplete: ()=>{},
 };
 
 export default MakeController;

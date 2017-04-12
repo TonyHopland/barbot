@@ -59,6 +59,8 @@ storiesOf('MakeController', module)
                 prevSize={2}
                 name="Tony's testdrink"
                 makeDrink={() => Promise.resolve(5000)}
+                onComplete={action('onComplete')}
+                recipeParts={drinks[0].recipeParts}
               />
             </div>
           </div>
