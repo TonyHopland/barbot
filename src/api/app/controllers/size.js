@@ -1,14 +1,14 @@
 // app/controllers/size.js
- 
+
 var db = require('../../config/db.js');
- 
- 
+
+
 /**
  * Find size by id and store it in the request
  */
- 
+
 exports.size = function(req, res, next, id) {
-	db.Size
+	db.size
 		.find({ where: { id: id } })
 		.then(function(err, size) {
 			if (!!err) {
@@ -26,26 +26,26 @@ exports.size = function(req, res, next, id) {
  * List of sizes
  */
 exports.query = function(req, res) {
-	  db.Size.findAll().then(function(size) {
+	  db.size.findAll().then(function(size) {
 			res.json(size);
 	  })
 };
- 
- 
+
+
 /**
  * Create a size
  */
 exports.create = function(req, res) {
 	req.body.id = req.body.newId;
 	delete req.body.newId;
-	db.Size
+	db.size
 		.create(req.body)
 			.then(function(err, size) {
 				res.json(size);
 			})
- 
+
 };
- 
+
 /**
  * Update a size
  */
@@ -58,12 +58,12 @@ size.cl = req.body.cl;
 size.save();
 res.json(size);
 };
- 
+
 /**
  * Remove a size
  */
 exports.remove = function(req, res) {
-   db.Size.destroy(
+   db.size.destroy(
     {id: req.size.id} /* where criteria */,
     {} /* options */
   );

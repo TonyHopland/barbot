@@ -7,10 +7,10 @@ var db = require('../../config/db.js');
  * Find recipe by id and store it in the request
  */
 exports.recipeId = function(req, res, next, id) {
-	db.Recipe.find({
+	db.recipe.find({
 		where: { id: id },
-		include: [{ model: db.Recipepart, include: [db.Ingredient] }],
-		order: [ [ db.Recipepart, 'order' ] ] })
+		include: [{ model: db.recipepart, include: [db.ingredient] }],
+		order: [ [ db.recipepart, 'order' ] ] })
 		.then(function(recipe) {
 			if (!recipe) {
 				new Error('Failed to load recipe ' + id);
@@ -31,8 +31,8 @@ exports.recipe = function(req, res) {
  * List of recipes
  */
 exports.query = function(req, res) {
-	db.Recipe.findAll({
-			include: [{ model: db.Recipepart, include: [db.Ingredient] }]
+	db.recipe.findAll({
+			include: [{ model: db.recipepart, include: [db.ingredient] }]
 	})
 		.then(function(recipe) {
 		res.json(recipe);
@@ -44,7 +44,7 @@ exports.query = function(req, res) {
  * Create a recipe
  */
 exports.create = function(req, res) {
-	db.Recipe
+	db.recipe
 		.create(req.body)
 			.then(function(err, recipe) {
 				res.json(recipe);
@@ -64,7 +64,7 @@ recipe.notes = req.body.notes;
 
 if(req.body.recipepart){
 	for(part in req.body.recipepart){
-		db.Recipepart
+		db.recipepart
 			.find({ where: { id: req.body.recipepart[part].id }})
 			.then(function(err, recipepart) {
 				if (!!err) {
@@ -87,11 +87,11 @@ res.json(recipe);
  * Remove a recipe
  */
 exports.remove = function(req, res) {
-    db.Recipe.destroy(
+    db.recipe.destroy(
 		{id: req.recipe.id} /* where criteria */,
 		{} /* options */
 	);
-	db.Recipepart.destroy(
+	db.recipepart.destroy(
 		{RecipeId: req.recipe.id} /* where criteria */,
 		{} /* options */
 	);

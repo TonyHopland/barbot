@@ -1,4 +1,4 @@
-import { getIngredients } from 'services/ingredients.service';
+import { getIngredients } from 'services/ingredient.service';
 import { REQUEST_INGREDIENTS, RECEIVE_INGREDIENTS, ERROR_INGREDIENTS } from './ingredients.constants';
 
 export const initIngredients = () => (dispatch) => {

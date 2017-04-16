@@ -8,15 +8,24 @@ exports.Init = function(conn) {
 	socket = conn;
 }
 
+exports.FindDrinks = function(req, res) {
+	db.recipe.findAll({
+			include: [{ model: db.recipepart }]
+	})
+		.then(function(recipe) {
+		res.json(recipe);
+	});
+};
+
 exports.CreateDrink = function(req, res) {
 	var drinkId = req.body.drinkId;
 	var sizeId = req.body.sizeId;
 
-	db.Size
+	db.size
 		.find({ where: { id: sizeId } })
 		.then(function(size) {
-			db.Recipe
-				.find({ where: { id: drinkId }, include: [{ model: db.Recipepart, include: [{model: db.Ingredient, include: [db.Pump]}] } ] })
+			db.recipe
+				.find({ where: { id: drinkId }, include: [{ model: db.recipepart, include: [{model: db.ingredient, include: [db.pump]}] } ] })
 				.then( function(drink) {
 					var instructions = createDrinkInstructions(drink, size);
 					var usage = getUsage(drink, size);

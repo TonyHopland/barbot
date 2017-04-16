@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Ingredient = sequelize.define('Ingredient', {
+    var Ingredient = sequelize.define('ingredient', {
     name: DataTypes.STRING,
     color: DataTypes.STRING,
     cl: DataTypes.DECIMAL
@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     classMethods: {
       associate: function(models) {
-        Ingredient.belongsTo(models.Pump);
+        Ingredient.belongsTo(models.pump);
       }
     }
   });

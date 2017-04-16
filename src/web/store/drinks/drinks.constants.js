@@ -3,6 +3,7 @@ import Drink from 'models/drink';
 
 export const RECEIVE_DRINKS = 'RECEIVE_DRINKS';
 export const REQUEST_DRINKS = 'REQUEST_DRINKS';
+export const ERROR_DRINKS = 'ERROR_DRINKS';
 
 export const defaultState = [
   new Drink(

@@ -9,11 +9,13 @@ import DrinkCard from 'components/DrinkCard/DrinkCard';
 import DrinkBreakdown from 'components/DrinkBreakdown/DrinkBreakdown';
 
 import { initIngredients } from 'store/ingredients/ingredients.actions';
+import { initDrinks } from 'store/drinks/drinks.actions';
 
 class Barbot extends Component {
 
   componentDidMount() {
     this.props.dispatchGetIngredients();
+    this.props.dispatchGetDrinks();
     // TODO: Fetch data for the different stores here!
   }
 
@@ -51,6 +53,7 @@ Barbot.propTypes = {
   drinks: PropTypes.arrayOf(PropTypes.instanceOf(Drink)).isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.instanceOf(Ingredient).isRequired).isRequired,
   dispatchGetIngredients: PropTypes.func.isRequired,
+  dispatchGetDrinks: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => (
@@ -63,6 +66,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     dispatchGetIngredients: () => dispatch(initIngredients()),
+    dispatchGetDrinks: () => dispatch(initDrinks()),
   }
 );
 

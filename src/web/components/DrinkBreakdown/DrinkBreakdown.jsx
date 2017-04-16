@@ -9,7 +9,7 @@ const DrinkBreakdown = ({ recipeParts, ingredientList }) => {
   const normalFactor = (100 / sumIngredients);
 
   const getIngredient = (recipePart, ingredients) =>         // TODO: Move to util
-    ingredients.find(el => el.id === recipePart.ingredient)
+    ingredients.find(el => el.id === recipePart.ingredientId)
     || new Ingredient(-1, 'Unknown', '#000');
 
   return (

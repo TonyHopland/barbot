@@ -16,6 +16,7 @@ var path = require('path')
 		});
 
 		var controller = require('./controllers/drinkController');
+		app.get('/api/drink',controller.FindDrinks);
 		app.put('/api/createDrink', controller.CreateDrink);
 
 		var sizes = require('./controllers/size');
@@ -24,21 +25,21 @@ var path = require('path')
 		app.post('/api/sizes', sizes.create);
 		app.put('/api/sizes/:sizeId', sizes.update);
 		app.delete('/api/sizes/:sizeId', sizes.remove);
-		
+
 		var ingredients = require('./controllers/ingredient');
 		app.param('ingredientId', ingredients.ingredient);
 		app.get('/api/ingredients', ingredients.query);
 		app.post('/api/ingredients', ingredients.create);
 		app.put('/api/ingredients/:ingredientId', ingredients.update);
 		app.delete('/api/ingredients/:ingredientId', ingredients.remove);
-	
+
 		var pumps = require('./controllers/pump');
 		app.param('pumpId', pumps.pump);
 		app.get('/api/pumps', pumps.query);
 		app.post('/api/pumps', pumps.create);
 		app.put('/api/pumps/:pumpId', pumps.update);
 		app.delete('/api/pumps/:pumpId', pumps.remove);
-		
+
 		var recipes = require('./controllers/recipe');
 		app.param('recipeId', recipes.recipeId);
 		app.get('/api/recipe/:recipeId', recipes.recipe);
@@ -46,7 +47,7 @@ var path = require('path')
 		app.post('/api/recipes', recipes.create);
 		app.put('/api/recipes/:recipeId', recipes.update);
 		app.delete('/api/recipes/:recipeId', recipes.remove);
-		
+
 		var recipeparts = require('./controllers/recipepart');
 		app.param('recipepartId', recipeparts.recipepart);
 		app.get('/api/recipeparts', recipeparts.query);
@@ -55,5 +56,3 @@ var path = require('path')
 		app.delete('/api/recipeparts/:recipepartId', recipeparts.remove);
 
 	};
-
-

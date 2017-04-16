@@ -7,7 +7,7 @@ var db = require('../../config/db.js');
  * Find ingredient by id and store it in the request
  */
 exports.ingredient = function(req, res, next, id) {
-	db.Ingredient
+	db.ingredient
 		.find({ where: { id: id }/*, include: [ db.Pump ] */})
 		.then(function(err, ingredient) {
 			if (!!err) {
@@ -25,7 +25,7 @@ exports.ingredient = function(req, res, next, id) {
  * List of ingredients
  */
 exports.query = function(req, res) {
-	db.Ingredient.findAll({
+	db.ingredient.findAll({
 		attributes: ['id', 'name', 'color']
 	}).then(function(ingredient) {
 		res.json(ingredient);
@@ -37,7 +37,7 @@ exports.query = function(req, res) {
  * Create a ingredient
  */
 exports.create = function(req, res) {
-	db.Ingredient
+	db.ingredient
 		.create(req.body)
 			.then(function(err, ingredient) {
 				res.json(ingredient);
@@ -59,7 +59,7 @@ res.json(ingredient);
 };
 
 exports.subtractCl = function(id, cl) {
-	db.Ingredient
+	db.ingredient
 		.find({ where: { id: id }/*, include: [ db.Pump ] */})
 		.then(function(err, ingredient) {
 			if (!!err) {
@@ -77,7 +77,7 @@ exports.subtractCl = function(id, cl) {
  * Remove a ingredient
  */
 exports.remove = function(req, res) {
-    db.Ingredient.destroy(
+    db.ingredient.destroy(
     {id: req.ingredient.id} /* where criteria */,
     {} /* options */
   );

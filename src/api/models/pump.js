@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Pump = sequelize.define('Pump', {
+  var Pump = sequelize.define('pump', {
     id: { type: DataTypes.INTEGER, primaryKey: true },
     msPerCl: DataTypes.INTEGER,
     tubelength: DataTypes.DECIMAL
@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     classMethods: {
       associate: function(models) {
-        Pump.hasOne(models.Ingredient);
+        Pump.hasOne(models.ingredient);
       }
     }
   });

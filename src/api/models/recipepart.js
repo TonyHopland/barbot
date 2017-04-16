@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Recipepart = sequelize.define('Recipepart', {
+  var Recipepart = sequelize.define('recipepart', {
     amount:		DataTypes.DECIMAL,
     order:	 	DataTypes.INTEGER,
     startdelay: DataTypes.INTEGER,
@@ -7,8 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     classMethods: {
       associate: function(models) {
-        Recipepart.belongsTo(models.Recipe);
-        Recipepart.belongsTo(models.Ingredient);
+        Recipepart.belongsTo(models.recipe);
+        Recipepart.belongsTo(models.ingredient);
       }
     }
   });

@@ -129,14 +129,14 @@ var recipeparts = [
 ]
 
 for (ing in ingredients){
-	db.Ingredient
+	db.ingredient
 		.create(ingredients[ing]);
 }
 for (res in recipes){
-	db.Recipe
+	db.recipe
 		.create(recipes[res]);
 }
 for (rp in recipeparts){
-	db.Recipepart
+	db.recipepart
 		.create(recipeparts[rp]);
 }
