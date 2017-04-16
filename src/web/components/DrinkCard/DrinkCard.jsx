@@ -42,9 +42,9 @@ DrinkCard.propTypes = {
   // isAvailable: PropTypes.bool.isRequired,
   image: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  children: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.node),
-    React.PropTypes.node,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
   ]),
 };
 

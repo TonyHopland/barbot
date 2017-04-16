@@ -1,8 +1,8 @@
 // app/controllers/ingredients.js
- 
+
 var db = require('../../config/db.js');
- 
- 
+
+
 /**
  * Find ingredient by id and store it in the request
  */
@@ -19,20 +19,20 @@ exports.ingredient = function(req, res, next, id) {
 				next();
 			}
 		});
-}; 
+};
 
 /**
  * List of ingredients
  */
 exports.query = function(req, res) {
 	db.Ingredient.findAll({
-		/*include: [ db.Pump ]*/
+		attributes: ['id', 'name', 'color']
 	}).then(function(ingredient) {
 		res.json(ingredient);
 	});
 };
- 
- 
+
+
 /**
  * Create a ingredient
  */
@@ -43,7 +43,7 @@ exports.create = function(req, res) {
 				res.json(ingredient);
 			});
 };
- 
+
 /**
  * Update a ingredient
  */
@@ -76,7 +76,7 @@ exports.subtractCl = function(id, cl) {
 /**
  * Remove a ingredient
  */
-exports.remove = function(req, res) {  
+exports.remove = function(req, res) {
     db.Ingredient.destroy(
     {id: req.ingredient.id} /* where criteria */,
     {} /* options */

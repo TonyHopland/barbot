@@ -7,7 +7,7 @@ const {
 const ingredientsReducer = (state = defaultState, action) => {
   switch (action.type) {
     case REQUEST_INGREDIENTS: {
-      return null;
+      return [];
     }
     case RECEIVE_INGREDIENTS: {
       return action.ingredients;
