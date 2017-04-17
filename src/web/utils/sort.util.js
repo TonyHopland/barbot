@@ -1,12 +1,11 @@
 import { isRecipePartAvailable } from 'utils/drink.util';
 
-const getMissingIngredientsReducer = (pumps) => (value, recipePart) =>
-  !isRecipePartAvailable(recipePart, pumps) ? value + 1 : value;
+const getMissingIngredientsReducer = pumps => (value, recipePart) =>
+  (!isRecipePartAvailable(recipePart, pumps) ? value + 1 : value);
 
 
 export const sortByMissingIngredients = (drinks, pumps) =>
   drinks.sort((drinkA, drinkB) => {
-    console.log('sorting', drinkA, drinkB);
     const missingA = drinkA.recipeParts.reduce(getMissingIngredientsReducer(pumps), 0);
     const missingB = drinkB.recipeParts.reduce(getMissingIngredientsReducer(pumps), 0);
     const availableA = drinkA.recipeParts.length - missingA;
@@ -24,10 +23,10 @@ export const sortByMissingIngredients = (drinks, pumps) =>
     if (missingA < missingB) {
       return -1;
     }
-    if ( drinkA.name > drinkB.name) {
+    if (drinkA.name > drinkB.name) {
       return 1;
     }
-    if ( drinkA.name < drinkB.name) {
+    if (drinkA.name < drinkB.name) {
       return -1;
     }
     return 0;

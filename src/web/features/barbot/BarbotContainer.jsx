@@ -27,8 +27,6 @@ class Barbot extends Component {
   render() {
     const { drinks, ingredients, pumps } = this.props;
     const sortedDrinks = sortByMissingIngredients(drinks, pumps);
-    console.log('Unsorted: ', drinks);
-    console.log('Sorted: ', sortedDrinks);
     return (
       <div className="row">
         {sortedDrinks.map(drink => (
