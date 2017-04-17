@@ -1,7 +1,7 @@
 import { getIngredients } from 'services/ingredient.service';
 import { REQUEST_INGREDIENTS, RECEIVE_INGREDIENTS, ERROR_INGREDIENTS } from './ingredients.constants';
 
-export const initIngredients = () => (dispatch) => {
+export const requestIngredients = () => (dispatch) => {
   dispatch({ type: REQUEST_INGREDIENTS });
   getIngredients()
     .then(ingredients =>
@@ -18,5 +18,5 @@ export const initIngredients = () => (dispatch) => {
 };
 
 export default {
-  initIngredients,
+  requestIngredients,
 };

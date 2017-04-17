@@ -4,7 +4,6 @@
   &__glass {
     display: inline-block;
     height: 100%;
-    width: 90%;
     width: 1.5rem;
     &-ingredient {
       display: block;
@@ -18,9 +17,13 @@
     padding: 1rem 2rem;
     margin: 0;
     height: 100%;
-    width: 80%;
+    width: 90%;
     &-ingredient {
       display: block;
+      &--missing {
+        text-decoration: line-through;
+        color: red;
+      }
     }
   }
 }

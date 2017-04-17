@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     timestamps: false,
     classMethods: {
       associate: function(models) {
-        Pump.hasOne(models.ingredient);
+        Pump.belongsTo(models.ingredient);
       }
     }
   });

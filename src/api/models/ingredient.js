@@ -5,11 +5,6 @@ module.exports = function(sequelize, DataTypes) {
     cl: DataTypes.DECIMAL
   }, {
     timestamps: false,
-    classMethods: {
-      associate: function(models) {
-        Ingredient.belongsTo(models.pump);
-      }
-    }
   });
 
   return Ingredient;

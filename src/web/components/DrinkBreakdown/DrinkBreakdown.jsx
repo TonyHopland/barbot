@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import RecipePart from 'models/recipePart';
 import Ingredient from 'models/ingredient';
+import Pump from 'models/pump';
 
-const DrinkBreakdown = ({ recipeParts, ingredientList }) => {
+import { getIngredientFromRecipePart, isRecipePartAvailable } from 'utils/drink.util';
+
+const DrinkBreakdown = ({ recipeParts, ingredientList, pumpList }) => {
   const sumIngredients = recipeParts.reduce((sum, recipePart) => sum + recipePart.amount, 0);
   const normalFactor = (100 / sumIngredients);
-
-  const getIngredient = (recipePart, ingredients) =>         // TODO: Move to util
-    ingredients.find(el => el.id === recipePart.ingredientId)
-    || new Ingredient(-1, 'Unknown', '#000');
 
   return (
     <div className="drink-breakdown">
       <div className="drink-breakdown__glass" >
         {recipeParts.map((recipePart) => {
-          const ingredient = getIngredient(recipePart, ingredientList);
+          const ingredient = getIngredientFromRecipePart(recipePart, ingredientList);
           return (
             <span
               key={recipePart.id}
@@ -31,10 +31,17 @@ const DrinkBreakdown = ({ recipeParts, ingredientList }) => {
       </div>
       <div className="drink-breakdown__ingredients">
         {recipeParts.map((recipePart) => {
-          const ingredient = getIngredient(recipePart, ingredientList);
+          const ingredient = getIngredientFromRecipePart(recipePart, ingredientList);
           return (
             <span
-              className="drink-breakdown__ingredients-ingredient"
+              className={
+                classnames('drink-breakdown__ingredients-ingredient',
+                  {
+                    'drink-breakdown__ingredients-ingredient--missing':
+                      !isRecipePartAvailable(recipePart, pumpList),
+                  },
+                )
+              }
               key={recipePart.id}
             >
               {`${recipePart.amount} x ${ingredient.name}`}
@@ -50,6 +57,7 @@ const DrinkBreakdown = ({ recipeParts, ingredientList }) => {
 DrinkBreakdown.propTypes = {
   recipeParts: PropTypes.arrayOf(PropTypes.instanceOf(RecipePart)).isRequired,
   ingredientList: PropTypes.arrayOf(PropTypes.instanceOf(Ingredient)).isRequired,
+  pumpList: PropTypes.arrayOf(PropTypes.instanceOf(Pump)).isRequired,
 };
 
 export default DrinkBreakdown;

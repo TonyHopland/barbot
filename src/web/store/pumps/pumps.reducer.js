@@ -1,9 +1,9 @@
 const { RECEIVE_PUMPS, REQUEST_PUMPS } = require('./pumps.constants');
 
-const pumpsReducer = (state = null, action) => {
+const pumpsReducer = (state = [], action) => {
   switch (action.type) {
     case REQUEST_PUMPS: {
-      return null;
+      return [];
     }
     case RECEIVE_PUMPS: {
       return action.pumps;

@@ -18,6 +18,15 @@ body {
   user-select: none;
 }
 
+.barbot {
+  width: 90%;
+  @media (min-width: 756px) {
+    width: 70%;
+  }
+
+  margin: 0 auto;
+}
+
 .btn__make {
   position: absolute;
   bottom: 1rem;

@@ -26,9 +26,8 @@ exports.pump = function(req, res, next, id) {
  * List of pumps
  */
 exports.query = function(req, res) {
-	  db.pump.findAll({
-			include    : { model: db.ingredient, attributes: ['id']}
-	  }).then(function(pump) {
+	  db.pump.findAll({})
+		.then(function(pump) {
 			res.json(pump);
 	  })
 };

@@ -4,26 +4,34 @@ import { connect } from 'react-redux';
 
 import Drink from 'models/drink';
 import Ingredient from 'models/ingredient';
+import Pump from 'models/pump';
 
 import DrinkCard from 'components/DrinkCard/DrinkCard';
 import DrinkBreakdown from 'components/DrinkBreakdown/DrinkBreakdown';
 
-import { initIngredients } from 'store/ingredients/ingredients.actions';
-import { initDrinks } from 'store/drinks/drinks.actions';
+import { sortByMissingIngredients } from 'utils/sort.util';
+
+import { requestIngredients } from 'store/ingredients/ingredients.actions';
+import { requestDrinks } from 'store/drinks/drinks.actions';
+import { requestPumps } from 'store/pumps/pumps.actions';
 
 class Barbot extends Component {
 
   componentDidMount() {
-    this.props.dispatchGetIngredients();
-    this.props.dispatchGetDrinks();
+    this.props.dispatchRequestIngredients();
+    this.props.dispatchRequestDrinks();
+    this.props.dispatchRequestPumps();
     // TODO: Fetch data for the different stores here!
   }
 
   render() {
-    const { drinks, ingredients } = this.props;
+    const { drinks, ingredients, pumps } = this.props;
+    const sortedDrinks = sortByMissingIngredients(drinks, pumps);
+    console.log('Unsorted: ', drinks);
+    console.log('Sorted: ', sortedDrinks);
     return (
       <div className="row">
-        {drinks.map(drink => (
+        {sortedDrinks.map(drink => (
           <DrinkCard
             key={drink.id}
             image={drink.image}
@@ -32,6 +40,7 @@ class Barbot extends Component {
             <DrinkBreakdown
               recipeParts={drink.recipeParts}
               ingredientList={ingredients}
+              pumpList={pumps}
             />
             <p>{drink.description}</p>
             <button
@@ -52,21 +61,25 @@ class Barbot extends Component {
 Barbot.propTypes = {
   drinks: PropTypes.arrayOf(PropTypes.instanceOf(Drink)).isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.instanceOf(Ingredient).isRequired).isRequired,
-  dispatchGetIngredients: PropTypes.func.isRequired,
-  dispatchGetDrinks: PropTypes.func.isRequired,
+  pumps: PropTypes.arrayOf(PropTypes.instanceOf(Pump).isRequired).isRequired,
+  dispatchRequestIngredients: PropTypes.func.isRequired,
+  dispatchRequestDrinks: PropTypes.func.isRequired,
+  dispatchRequestPumps: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => (
   {
     drinks: state.drinks,
     ingredients: state.ingredients,
+    pumps: state.pumps,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    dispatchGetIngredients: () => dispatch(initIngredients()),
-    dispatchGetDrinks: () => dispatch(initDrinks()),
+    dispatchRequestIngredients: () => dispatch(requestIngredients()),
+    dispatchRequestDrinks: () => dispatch(requestDrinks()),
+    dispatchRequestPumps: () => dispatch(requestPumps()),
   }
 );
 

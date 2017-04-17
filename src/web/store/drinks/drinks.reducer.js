@@ -1,6 +1,6 @@
-const { RECEIVE_DRINKS, REQUEST_DRINKS, defaultState } = require('./drinks.constants');
+const { RECEIVE_DRINKS, REQUEST_DRINKS } = require('./drinks.constants');
 
-const drinkReducer = (state = defaultState, action) => {
+const drinkReducer = (state = [], action) => {
   switch (action.type) {
     case REQUEST_DRINKS: {
       return [];
