@@ -10,6 +10,7 @@ import DrinkCard from 'components/DrinkCard/DrinkCard';
 import DrinkBreakdown from 'components/DrinkBreakdown/DrinkBreakdown';
 
 import { sortByMissingIngredients } from 'utils/sort.util';
+import { isDrinkAvailable } from 'utils/drink.util';
 
 import { requestIngredients } from 'store/ingredients/ingredients.actions';
 import { requestDrinks } from 'store/drinks/drinks.actions';
@@ -34,6 +35,7 @@ class Barbot extends Component {
             key={drink.id}
             image={drink.image}
             name={drink.name}
+            isAvailable={isDrinkAvailable(drink.recipeParts, pumps)}
           >
             <DrinkBreakdown
               recipeParts={drink.recipeParts}
@@ -41,13 +43,6 @@ class Barbot extends Component {
               pumpList={pumps}
             />
             <p>{drink.description}</p>
-            <button
-              title="Make drink"
-              data-target="make-modal"
-              className="btn__make btn-floating btn-large waves-effect waves-light red"
-            >
-              <i className="large material-icons">invert_colors</i>
-            </button>
           </DrinkCard>
         ))}
 

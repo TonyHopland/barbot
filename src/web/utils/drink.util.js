@@ -6,3 +6,12 @@ export const getIngredientFromRecipePart = (recipePart, ingredients) =>
 
 export const isRecipePartAvailable = (recipePart, pumps) =>
   !!pumps.find(el => el.id === recipePart.ingredientId);
+
+export const isDrinkAvailable = (recipeParts, pumps) => {
+  for (let i = 0; i < recipeParts.length; i += 1) {
+    if (!isRecipePartAvailable(recipeParts[i], pumps)) {
+      return false;
+    }
+  }
+  return true;
+};

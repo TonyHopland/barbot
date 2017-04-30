@@ -4,10 +4,11 @@
     height: 30rem;
   }
   &__content {
-    min-height: 12rem;
+    min-height: 9rem;
     &__title {
       position: relative;
       padding-right: 2.4rem;
+      margin-bottom: -2.2rem !important;
       i {
         position: absolute;
         top: 0;
@@ -28,6 +29,36 @@
     }
     &__content {
       height: 15rem;
+    }
+  }
+  .make-warning {
+    display: none;
+    color: #d32f2f;
+    i {
+      font-size: 3.6rem;
+      margin-right: 1rem;
+    }
+    &__text, i {
+      vertical-align: bottom;
+    }
+    &__text {
+      font-size: 2rem;
+    }
+  }
+  &.missing-ingredients {
+    .make-warning {
+      display: block;
+    }
+    .make-button {
+      display: none;
+    }
+    &.open {
+      .make-warning {
+        display: none;
+      }
+      .make-button {
+        display: block;
+      }
     }
   }
 }
