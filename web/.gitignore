@@ -1,6 +1,0 @@
-/node_modules
-/api/dist
-.vscode
-.idea
-*.sass-cache
-/dist

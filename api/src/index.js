@@ -1,8 +1,8 @@
 import initRoutes from './app/routes';
-import db from './config/db.js'
+import { database } from './database/db.js'
 
 
 export const initApi = (express) => {
-    db.sync();
+    database.init().sync();
     initRoutes(express);
 }

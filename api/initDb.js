@@ -1,10 +1,9 @@
-// modules =================================================
-import db from './src/config/db.js';
+import { database } from './src/database/db.js';
+import populateTestdata from './src/database/initDb.js';
 
-// configuration ===========================================
-db.sync({force: true}).then(function(success) {
-    require('./src/config/initDb.js');
-  },function(err){
+database.init().sync({force: true}).then((database) => { 
+    populateTestdata(database.models);
+  },(err) => {
     throw err;
   }
 );
