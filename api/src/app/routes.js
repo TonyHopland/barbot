@@ -1,10 +1,10 @@
  // app/routes.js
  import bodyParser from 'body-parser';
-import {getIngredientById, getAllIngredients, createIngredient} from '../controllers/ingredient';
+import {getIngredientById, getAllIngredients, createIngredient, deleteIngredient} from '../controllers/ingredient';
 import {getRecipeById, getAllRecipes, createRecipe, deleteRecipe} from '../controllers/recipe';
 import {getRecipepartById, getAllRecipeparts} from '../controllers/recipepart';
-import {getPumpById, getAllPumps, createPump} from '../controllers/pump';
-import {getSizeById, getAllSizes, createSize} from '../controllers/size';
+import {getPumpById, getAllPumps, createPump, deletePump} from '../controllers/pump';
+import {getSizeById, getAllSizes, createSize, deleteSize} from '../controllers/size';
 
 export default app => {
 
@@ -19,8 +19,10 @@ export default app => {
 	
 	app.get('/api/ingredient/:id', getIngredientById);
 	app.get('/api/ingredient', getAllIngredients);
-	// app.post('/api/ingredient', createIngredient);
+	app.post('/api/ingredient', createIngredient);
+	app.delete('/api/ingredient/:id', deleteIngredient);
 
+	//Available for debugging, you would probably never use these as they are included when you get the recipes
 	app.get('/api/recipepart/:id', getRecipepartById);
 	app.get('/api/recipepart', getAllRecipeparts);
 
@@ -31,10 +33,12 @@ export default app => {
 
 	app.get('/api/size/:id', getSizeById);
 	app.get('/api/size', getAllSizes);
-	// app.post('/api/size', createSize);
+	app.post('/api/size', createSize);
+	app.delete('/api/size/:id', deleteSize);
 
 	app.get('/api/pump/:id', getPumpById);
 	app.get('/api/pump', getAllPumps);
 	app.post('/api/pump', createPump);
+	app.delete('/api/pump', deletePump);
 
 };

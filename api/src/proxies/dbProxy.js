@@ -31,6 +31,10 @@ export const getAllRecipeparts = () =>
 export const createRecipepart = (newRecipepart) =>
     database.recipepart
         .create(newRecipepart);
+
+export const deleteRecipepart = (id) =>
+    getRecipepartById(id)
+        .then(recipepart => recipepart.destroy());
     
 // Ingredient
 export const getIngredientById = (id) =>
@@ -45,6 +49,10 @@ export const createIngredient = (newIngredient) =>
     database.ingredient
         .create(newIngredient);
 
+export const deleteIngredient = (id) =>
+    getIngredientById(id)
+        .then(ingredient => ingredient.destroy());
+
 // Size
 export const getSizeById = (id) =>
     database.size
@@ -58,6 +66,10 @@ export const createSize = (newSize) =>
     database.size
         .create(newSize);
 
+export const deleteSize = (id) =>
+    getSizeById(id)
+        .then(size => size.destroy());
+
 //Pump
 export const getPumpById = (id) =>
     database.pump
@@ -70,6 +82,10 @@ export const getAllPumps = () =>
 export const createPump = (newPump) =>
     database.pump
         .create(newPump);
+
+export const deletePump = (id) =>
+    getPumpById(id)
+        .then(pump => pump.destroy());
         
 
 export default {
@@ -81,16 +97,20 @@ export default {
     getRecipepartById,
     getAllRecipeparts,
     createRecipepart,
+    deleteRecipepart,
 
     getIngredientById,
     getAllIngredients,
     getIngredientById,
+    deleteIngredient,
 
     getSizeById,
     getAllSizes,
     createSize,
+    deleteSize,
 
     getPumpById,
     getAllPumps,
     createPump,
+    deletePump,
 };

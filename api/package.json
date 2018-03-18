@@ -1,5 +1,5 @@
 {
-  "name": "BarBot-API",
+  "name": "barbot-api",
   "version": "0.0.1",
   "description": "Api to controll a drink mixing robot",
   "main": "index.js",
@@ -9,7 +9,8 @@
     "start": "babel-node devserver.js --presets es2015",
     "init": "babel-node initDb.js --presets es2015",
     "build": "npm i && babel src -d ./dist --presets es2015",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "eslint": "^4.19.0",
     "jest": "^22.4.2"
   },
   "repository": "git@github.com:TonyHopland/barbot.git",
