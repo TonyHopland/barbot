@@ -32,6 +32,10 @@ const createRecipepart = newRecipepart =>
   database.recipepart
     .create(newRecipepart);
 
+const updateRecipe = (id, updatedRecipe) =>
+  getRecipeById(id)
+    .then(recipe => recipe.update(updatedRecipe));
+
 const deleteRecipepart = id =>
   getRecipepartById(id)
     .then(recipepart => recipepart.destroy());
@@ -48,6 +52,10 @@ const getAllIngredients = () =>
 const createIngredient = newIngredient =>
   database.ingredient
     .create(newIngredient);
+
+const updateIngredient = (id, updatedIngredient) =>
+  getIngredientById(id)
+    .then(ingredient => ingredient.update(updatedIngredient));
 
 const deleteIngredient = id =>
   getIngredientById(id)
@@ -100,6 +108,7 @@ export default {
   getRecipeById,
   getAllRecipes,
   createRecipe,
+  updateRecipe,
   deleteRecipe,
 
   getRecipepartById,
@@ -110,6 +119,7 @@ export default {
   getIngredientById,
   getAllIngredients,
   createIngredient,
+  updateIngredient,
   deleteIngredient,
 
   getSizeById,

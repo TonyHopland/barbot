@@ -1,4 +1,5 @@
 import { database } from '../../database/db';
+import { createIngredient } from '../ingredient';
 import { createPump, getAllPumps, getPumpById, updatePump, deletePump } from '../pump';
 
 describe('controllers - pump', () => {
@@ -47,7 +48,33 @@ describe('controllers - pump', () => {
         expect(pumps[1].msPerCl).toEqual(testpumps[1].msPerCl);
         expect(pumps[2].id).toEqual(3);
         expect(pumps[2].msPerCl).toEqual(testpumps[2].msPerCl);
+        expect(pumps[2].ingredientId).toEqual(null);
       }));
+  });
+
+  it('should set the ingredient ID correctly', () => {
+    const createIngredientRequest = {
+      body: { name: 'Vodka', color: '#CCFFFF', cl: 100 },
+    };
+    const response = {
+      json: jest.fn(),
+    };
+
+    return createIngredient(createIngredientRequest, response).then(() => {
+      const ingredient = response.json.mock.calls[0][0];
+
+      const createPumpRequest = {
+        body: { msPerCl: 5000, ingredientId: ingredient.id },
+      };
+      expect(response.json.mock.calls.length).toBe(1);
+      return createPump(createPumpRequest, response).then(() => {
+        expect(response.json.mock.calls.length).toBe(2);
+        const pump = response.json.mock.calls[1][0];
+        expect(pump.id).toEqual(1);
+        expect(pump.msPerCl).toEqual(5000);
+        expect(pump.ingredientId).toEqual(1);
+      });
+    });
   });
 
   it('reads single created size entry with id from database', () => {

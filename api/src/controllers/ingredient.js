@@ -12,11 +12,18 @@ export const createIngredient = (req, res) => {
   const newIngredient = req.body;
   // Todo: Validate newIngredient
 
-  dbProxy.createIngredient(newIngredient)
+  return dbProxy.createIngredient(newIngredient)
     .then(ingredient => res.json(ingredient));
 };
 
-export const deleteIngredient = (req, res) => {
-  dbProxy.deleteIngredient(req.params.id)
+export const updateIngredient = (req, res) => {
+  const newIngredient = req.body;
+  // Todo: Validate ingredient
+
+  return dbProxy.updateIngredient(req.params.id, newIngredient)
     .then(ingredient => res.json(ingredient));
 };
+
+export const deleteIngredient = (req, res) =>
+  dbProxy.deleteIngredient(req.params.id)
+    .then(ingredient => res.json(ingredient));
