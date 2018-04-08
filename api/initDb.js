@@ -1,9 +1,8 @@
-import { database } from './src/database/db.js';
-import populateTestdata from './src/database/initDb.js';
+import { database } from './src/database/db';
+import populateTestdata from './src/database/initDb';
 
-database.init().sync({force: true}).then((database) => { 
-    populateTestdata(database.models);
-  },(err) => {
-    throw err;
-  }
-);
+database.init().sync({ force: true }).then((db) => {
+  populateTestdata(db.models);
+}, (err) => {
+  throw err;
+});

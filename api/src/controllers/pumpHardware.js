@@ -1,16 +1,25 @@
-// app/controllers/pumpHardware.js
+/* eslint-disable */ 
+// Disabeling as this file is not refactored yet (lots of improvements needed)
 
-var board, pump0, pump1, pump2, pump3, pump4, pump5, pump6, pump7;
+let board,
+  pump0,
+  pump1,
+  pump2,
+  pump3,
+  pump4,
+  pump5,
+  pump6,
+  pump7;
 
-var barReady = false;
+const barReady = false;
 
-var minPumpDelay = 30;
+const minPumpDelay = 30;
 /* //Code to use arduino
 var five = require('johnny-five');
 board = new five.Board();
 */
 
-//Code to use raspberry io
+// Code to use raspberry io
 /*
 var raspi = require('raspi-io'),
     five = require('johnny-five'),
@@ -44,68 +53,67 @@ board.on('ready', function () {
 });
 */
 
-var lastStart = new Date();
+let lastStart = new Date();
 
-var canStartNewPump = function(resetTimer){
-	var timeDiff = new Date() - lastStart;
+const canStartNewPump = function (resetTimer) {
+  const timeDiff = new Date() - lastStart;
 
-	if(timeDiff >= 30) {
-		if(resetTimer){
-			lastStart = new Date();
-		}
-		return true;
-	} else {
-		return false;
-	}
-}
+  if (timeDiff >= 30) {
+    if (resetTimer) {
+      lastStart = new Date();
+    }
+    return true;
+  }
+  return false;
+};
 
 
 exports.pumpMilliseconds = function (pump, ms) {
-	if(ms <= 0){
-		return;
-	}
-	if(canStartNewPump(false)){
-		console.log("[PUMP] Scheduling pump " + pump + " duration: " + ms + "ms");
-		exports.startPump(pump);
-		setTimeout(function () {
-			exports.stopPump(pump);
-		}, ms);
-	}else {
-		setTimeout(function () {
-			exports.pumpMilliseconds(pump, ms);
-		}, 10);
-	}
-}
+  if (ms <= 0) {
+    return;
+  }
+  if (canStartNewPump(false)) {
+    console.log(`[PUMP] Scheduling pump ${pump} duration: ${ms}ms`);
+    exports.startPump(pump);
+    setTimeout(() => {
+      exports.stopPump(pump);
+    }, ms);
+  } else {
+    setTimeout(() => {
+      exports.pumpMilliseconds(pump, ms);
+    }, 10);
+  }
+};
 
 exports.startPump = function (pump) {
-	var p = exports.usePump(pump);
-	if (p != undefined && barReady) {
-		if(canStartNewPump(true)){
-			p.on();
-			console.log("[PUMP] Starting pump " + pump);
-		}else {
-			setTimeout(function () {
-				exports.startPump(pump);
-			}, 10);
-		}
-	} else {
-		console.log("[PUMP] Unable to start pump " + pump);
-	}
-}
+  const p = exports.usePump(pump);
+  if (p != undefined && barReady) {
+    if (canStartNewPump(true)) {
+      p.on();
+      console.log(`[PUMP] Starting pump ${pump}`);
+    } else {
+      setTimeout(() => {
+        exports.startPump(pump);
+      }, 10);
+    }
+  } else {
+    console.log(`[PUMP] Unable to start pump ${pump}`);
+  }
+};
 
 exports.stopPump = function (pump) {
-  var p = exports.usePump(pump);
+  const p = exports.usePump(pump);
   if (p != undefined && barReady) {
-	p.off();
-	console.log("[PUMP] Stopping pump " + pump);
+    p.off();
+    console.log(`[PUMP] Stopping pump ${pump}`);
   } else {
-	console.log("[PUMP] Unable to stop pump " + pump);
+    console.log(`[PUMP] Unable to stop pump ${pump}`);
   }
-}
+};
 
 exports.usePump = function (pump) {
-  var using;
-  switch(pump - 1) {
+  let using;
+  switch (pump - 1) {
     case 0:
       using = pump0;
       break;
@@ -124,10 +132,10 @@ exports.usePump = function (pump) {
     case 5:
       using = pump5;
       break;
-	case 6:
+    case 6:
       using = pump6;
       break;
-	case 7:
+    case 7:
       using = pump7;
       break;
     default:
@@ -135,65 +143,62 @@ exports.usePump = function (pump) {
       break;
   }
   return using;
-}
+};
 
-var delayedPumpMilliseconds = function (pump, ms, delay) {
-	setTimeout(function () {
-		exports.pumpMilliseconds(pump, ms);
-	}, delay);
-}
+const delayedPumpMilliseconds = function (pump, ms, delay) {
+  setTimeout(() => {
+    exports.pumpMilliseconds(pump, ms);
+  }, delay);
+};
 
-var isBuzy = false;
+let isBuzy = false;
 
 exports.dispenseDrink = function (name, instructions) {
-    if(isBuzy) {
-        return -1;
+  if (isBuzy) {
+    return -1;
+  }
+  isBuzy = true;
+  console.log(`[PUMP] Dispensing drink: ${name}`);
+
+  instructions = instructions.sort((a, b) => ((b.order < a.order) ? 1 : ((b.order > a.order) ? -1 : 0)));
+
+  currentStep = -10000;
+  const orderSteps = [];
+  for (const inst in instructions) {
+    if (currentStep < instructions[inst].order) {
+      currentStep = instructions[inst].order;
+      // orderSteps.push(currentStep);
+      orderSteps[currentStep] = {};
+      orderSteps[currentStep].maxLength = 0;
+      orderSteps[currentStep].steps = [];
     }
-    isBuzy = true;
-    console.log(`[PUMP] Dispensing drink: ${name}`);
+    if (instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
+        && instructions[inst].pump > 0) { orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay; }
+    orderSteps[currentStep].steps.push(instructions[inst]);
+  }
 
-    instructions = instructions.sort(function(a, b) {
-        return (b['order'] < a['order']) ? 1 : ((b['order'] > a['order']) ? -1 : 0);
-    });
-
-    currentStep = -10000;
-    var orderSteps = []
-    for(var inst in instructions){
-        if(currentStep < instructions[inst].order){
-            currentStep = instructions[inst].order
-            //orderSteps.push(currentStep);
-            orderSteps[currentStep] = {};
-            orderSteps[currentStep].maxLength = 0;
-            orderSteps[currentStep].steps = []
-        }
-        if(instructions[inst].time + instructions[inst].startdelay > orderSteps[currentStep].maxLength
-        && instructions[inst].pump > 0)
-            orderSteps[currentStep].maxLength = instructions[inst].time + instructions[inst].startdelay;
-        orderSteps[currentStep].steps.push(instructions[inst]);
+  let totalDelay = 0;
+  const prevDelay = -5;
+  let totalTime = 0;
+  for (const step in orderSteps) {
+    let noPumpsStarted = true;
+    for (const ing in orderSteps[step].steps) {
+      const startDelay = (orderSteps[step].maxLength - orderSteps[step].steps[ing].time) + totalDelay;
+      if (orderSteps[step].steps[ing].pump > 0) {
+        delayedPumpMilliseconds(orderSteps[step].steps[ing].pump, orderSteps[step].steps[ing].time, startDelay);
+        noPumpsStarted = false;
+      }
     }
-
-    var totalDelay = 0;
-    var prevDelay = -5;
-    var totalTime = 0;
-    for (var step in orderSteps) {
-        var noPumpsStarted = true;
-        for (var ing in orderSteps[step].steps) {
-            var startDelay = (orderSteps[step].maxLength - orderSteps[step].steps[ing].time) + totalDelay;
-            if(orderSteps[step].steps[ing].pump > 0){
-                delayedPumpMilliseconds(orderSteps[step].steps[ing].pump, orderSteps[step].steps[ing].time, startDelay);
-                noPumpsStarted = false;
-            }
-        }
-        if(!noPumpsStarted){
-            totalDelay += orderSteps[step].maxLength;
-        }
-        totalTime += orderSteps[step].maxLength;
+    if (!noPumpsStarted) {
+      totalDelay += orderSteps[step].maxLength;
     }
+    totalTime += orderSteps[step].maxLength;
+  }
 
-    setTimeout(function () {
-        isBuzy = false;
-				console.log(`[PUMP] Finished dispensing drink: ${name}`);
-    }, Math.ceil(totalTime) + 500);
+  setTimeout(() => {
+    isBuzy = false;
+    console.log(`[PUMP] Finished dispensing drink: ${name}`);
+  }, Math.ceil(totalTime) + 500);
 
-	return Math.ceil(totalTime);
-}
+  return Math.ceil(totalTime);
+};

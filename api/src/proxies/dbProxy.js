@@ -1,126 +1,126 @@
-import { database } from '../database/db.js';
+import { database } from '../database/db';
 
 const include = [{ all: true, nested: true }];
 
 // Recipe
-export const getRecipeById = (id) =>
-    database.recipe
-		.findById(id, { include });
+const getRecipeById = id =>
+  database.recipe
+    .findById(id, { include });
 
-export const getAllRecipes = () =>
-    database.recipe
-        .findAll({ include });
+const getAllRecipes = () =>
+  database.recipe
+    .findAll({ include });
 
-export const createRecipe = (newRecipe) =>
-    database.recipe
-        .create(newRecipe, { include: [recipepart] });
+const createRecipe = newRecipe =>
+  database.recipe
+    .create(newRecipe, { include: [database.recipepart] });
 
-export const deleteRecipe = (id) =>
-    getRecipeById(id)
-        .then(recipe => recipe.destroy());
+const deleteRecipe = id =>
+  getRecipeById(id)
+    .then(recipe => recipe.destroy());
 
 // Recipepart
-export const getRecipepartById = (id) =>
-    database.recipepart
-        .findById(id, { include });
-    
-export const getAllRecipeparts = () =>
-    database.recipepart
-        .findAll({ include });
+const getRecipepartById = id =>
+  database.recipepart
+    .findById(id, { include });
 
-export const createRecipepart = (newRecipepart) =>
-    database.recipepart
-        .create(newRecipepart);
+const getAllRecipeparts = () =>
+  database.recipepart
+    .findAll({ include });
 
-export const deleteRecipepart = (id) =>
-    getRecipepartById(id)
-        .then(recipepart => recipepart.destroy());
-    
+const createRecipepart = newRecipepart =>
+  database.recipepart
+    .create(newRecipepart);
+
+const deleteRecipepart = id =>
+  getRecipepartById(id)
+    .then(recipepart => recipepart.destroy());
+
 // Ingredient
-export const getIngredientById = (id) =>
-    database.ingredient
-        .findById(id, { include });
-    
-export const getAllIngredients = () =>
-    database.ingredient
-        .findAll({ include });
+const getIngredientById = id =>
+  database.ingredient
+    .findById(id, { include });
 
-export const createIngredient = (newIngredient) =>
-    database.ingredient
-        .create(newIngredient);
+const getAllIngredients = () =>
+  database.ingredient
+    .findAll({ include });
 
-export const deleteIngredient = (id) =>
-    getIngredientById(id)
-        .then(ingredient => ingredient.destroy());
+const createIngredient = newIngredient =>
+  database.ingredient
+    .create(newIngredient);
+
+const deleteIngredient = id =>
+  getIngredientById(id)
+    .then(ingredient => ingredient.destroy());
 
 // Size
-export const getSizeById = (id) =>
-    database.size
-        .findById(id, { include });
+const getSizeById = id =>
+  database.size
+    .findById(id, { include });
 
-export const getAllSizes = () =>
-    database.size
-        .findAll({ include });
+const getAllSizes = () =>
+  database.size
+    .findAll({ include });
 
-export const createSize = (newSize) =>
-    database.size
-        .create(newSize);
+const createSize = newSize =>
+  database.size
+    .create(newSize);
 
-export const updateSize = (id, updatedSize) =>
-    getSizeById(id)
-        .then(size => size.update(updatedSize));
+const updateSize = (id, updatedSize) =>
+  getSizeById(id)
+    .then(size => size.update(updatedSize));
 
-export const deleteSize = (id) =>
-    getSizeById(id)
-        .then(size => size.destroy());
+const deleteSize = id =>
+  getSizeById(id)
+    .then(size => size.destroy());
 
-//Pump
-export const getPumpById = (id) =>
-    database.pump
-        .findById(id, { include });
+// Pump
+const getPumpById = id =>
+  database.pump
+    .findById(id, { include });
 
-export const getAllPumps = () =>
-    database.pump
-        .findAll({ include });
+const getAllPumps = () =>
+  database.pump
+    .findAll({ include });
 
-export const createPump = (newPump) =>
-    database.pump
-        .create(newPump);
+const createPump = newPump =>
+  database.pump
+    .create(newPump);
 
-export const updatePump = (id, updatedPump) =>
-    getPumpById(id)
-        .then(pump => pump.update(updatedPump));
+const updatePump = (id, updatedPump) =>
+  getPumpById(id)
+    .then(pump => pump.update(updatedPump));
 
-export const deletePump = (id) =>
-    getPumpById(id)
-        .then(pump => pump.destroy());
-        
+const deletePump = id =>
+  getPumpById(id)
+    .then(pump => pump.destroy());
+
 
 export default {
-    getRecipeById,
-    getAllRecipes,
-    createRecipe,
-    deleteRecipe,
+  getRecipeById,
+  getAllRecipes,
+  createRecipe,
+  deleteRecipe,
 
-    getRecipepartById,
-    getAllRecipeparts,
-    createRecipepart,
-    deleteRecipepart,
+  getRecipepartById,
+  getAllRecipeparts,
+  createRecipepart,
+  deleteRecipepart,
 
-    getIngredientById,
-    getAllIngredients,
-    getIngredientById,
-    deleteIngredient,
+  getIngredientById,
+  getAllIngredients,
+  createIngredient,
+  deleteIngredient,
 
-    getSizeById,
-    getAllSizes,
-    createSize,
-    updateSize,
-    deleteSize,
+  getSizeById,
+  getAllSizes,
+  createSize,
+  updateSize,
+  deleteSize,
 
-    getPumpById,
-    getAllPumps,
-    createPump,
-    updatePump,
-    deletePump,
+  getPumpById,
+  getAllPumps,
+  createPump,
+  updatePump,
+  deletePump,
 };

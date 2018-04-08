@@ -1,5 +1,4 @@
-import Sequelize from'sequelize';
-import lodash from 'lodash';
+import Sequelize from 'sequelize';
 
 import ingredientModel from './models/ingredient';
 import pumpModel from './models/pump';
@@ -16,30 +15,27 @@ const modelsCreators = [
 ];
 
 export class Database {
-  constructor() {
-  }
-
   init(dbPath = 'sqlite:barbot.sqlite') {
     const database = new Sequelize(dbPath, { operatorsAliases: false, logging: false });
 
     const dbModels = {};
-    modelsCreators.forEach(model => {
+    modelsCreators.forEach((model) => {
       const dbModel = model(database);
       dbModels[dbModel.name] = dbModel;
     });
 
-    dbModels.recipe.hasMany(dbModels.recipepart, {onDelete: 'CASCADE'});
+    dbModels.recipe.hasMany(dbModels.recipepart, { onDelete: 'CASCADE' });
     dbModels.ingredient.hasOne(dbModels.pump);
     dbModels.recipepart.belongsTo(dbModels.ingredient);
 
     this.recipe = database.models.recipe;
-    this.recipepart =  database.models.recipepart;
-    this.ingredient =  database.models.ingredient;
-    this.pump =  database.models.pump;
-    this.size =  database.models.size;
+    this.recipepart = database.models.recipepart;
+    this.ingredient = database.models.ingredient;
+    this.pump = database.models.pump;
+    this.size = database.models.size;
 
     return database;
   }
 }
 
-export let database = new Database();
+export const database = new Database();
