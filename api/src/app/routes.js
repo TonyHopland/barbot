@@ -3,7 +3,7 @@
 import {getIngredientById, getAllIngredients, createIngredient, deleteIngredient} from '../controllers/ingredient';
 import {getRecipeById, getAllRecipes, createRecipe, deleteRecipe} from '../controllers/recipe';
 import {getRecipepartById, getAllRecipeparts} from '../controllers/recipepart';
-import {getPumpById, getAllPumps, createPump, deletePump} from '../controllers/pump';
+import {getPumpById, getAllPumps, createPump, updatePump, deletePump} from '../controllers/pump';
 import {getSizeById, getAllSizes, createSize, deleteSize} from '../controllers/size';
 
 export default app => {
@@ -39,6 +39,7 @@ export default app => {
 	app.get('/api/pump/:id', getPumpById);
 	app.get('/api/pump', getAllPumps);
 	app.post('/api/pump', createPump);
-	app.delete('/api/pump', deletePump);
+	app.put('/api/pump/:id', updatePump);
+	app.delete('/api/pump/:id', deletePump);
 
 };

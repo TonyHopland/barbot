@@ -16,6 +16,13 @@ export const createSize = (req, res) => {
 		.then(size => res.json(size));
 }
 
+export const updateSize = (req, res) =>  {
+	var newSize = req.body;
+	// Todo: Validate size
+
+	return dbProxy.updateSize(req.params.id, newSize)
+		.then(size => res.json(size));
+}
 export const deleteSize = (req, res) =>
 	dbProxy.deleteSize(req.params.id)
 		.then(size => res.json(size));

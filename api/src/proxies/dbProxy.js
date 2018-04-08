@@ -66,6 +66,10 @@ export const createSize = (newSize) =>
     database.size
         .create(newSize);
 
+export const updateSize = (id, updatedSize) =>
+    getSizeById(id)
+        .then(size => size.update(updatedSize));
+
 export const deleteSize = (id) =>
     getSizeById(id)
         .then(size => size.destroy());
@@ -82,6 +86,10 @@ export const getAllPumps = () =>
 export const createPump = (newPump) =>
     database.pump
         .create(newPump);
+
+export const updatePump = (id, updatedPump) =>
+    getPumpById(id)
+        .then(pump => pump.update(updatedPump));
 
 export const deletePump = (id) =>
     getPumpById(id)
@@ -107,10 +115,12 @@ export default {
     getSizeById,
     getAllSizes,
     createSize,
+    updateSize,
     deleteSize,
 
     getPumpById,
     getAllPumps,
     createPump,
+    updatePump,
     deletePump,
 };

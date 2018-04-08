@@ -1,18 +1,24 @@
 import { database } from '../../database/db.js'
-import { createSize, getAllSizes, getSizeById } from '../size';
-
-database.init().sync();
-
-beforeEach(() => database.init('sqlite://:memory:').sync({force: true}));
-
-const testsizes = [
-    { name: 'shot', cl: 4 },
-    { name: 'small', cl: 15 },
-    { name: 'large', cl: 30 }
-]
+import { createSize, getAllSizes, getSizeById, updateSize, deleteSize } from '../size';
 
 describe('controllers - size', () => {
-    test('is creates a size entry in the database', () => {
+
+    const testsizes = [
+        { name: 'shot', cl: 4 },
+        { name: 'small', cl: 15 },
+        { name: 'large', cl: 30 }
+    ]
+
+    const dummyResponse = {json: () => {}};
+
+    const createTestSizes = () =>
+        createSize({ body: testsizes[0] }, dummyResponse).then(() => 
+        createSize({ body: testsizes[1] }, dummyResponse).then(() => 
+        createSize({ body: testsizes[2] }, dummyResponse)));
+
+    beforeEach(() => database.init('sqlite://:memory:').sync({force: true}));
+
+    it('creates a size entry in the database', () => {
         const request = {
             body: testsizes[0]
         };
@@ -29,12 +35,7 @@ describe('controllers - size', () => {
         });
     });
 
-    const createTestSizes = () =>
-        createSize({ body: testsizes[0] }, {json: () => {}}).then(() => 
-        createSize({ body: testsizes[1] }, {json: () => {}}).then(() => 
-        createSize({ body: testsizes[2] }, {json: () => {}})));
-
-    test('reads created size entries from database', () => {
+    it('reads all created size entries from database', () => {
         const getResponse = { json: jest.fn() };
 
         return createTestSizes().then(() =>
@@ -55,7 +56,7 @@ describe('controllers - size', () => {
         );
     });
 
-    test('reads created size entry with id from database', () => {
+    it('reads single created size entry with id from database', () => {
         const id = 2;
         const findByIdRequest = { params: { id } };
         const getResponse = { json: jest.fn() };
@@ -68,6 +69,53 @@ describe('controllers - size', () => {
                 expect(size.cl).toEqual(testsizes[1].cl);
                 expect(size.name).toEqual(testsizes[1].name);
             })
+        ); 
+    });
+
+    it('updates single entry with id from database', () => {
+        const id = 2;
+        const updateRequest = { params: { id }, body: { name: 'newName', cl: 25 }};
+        const getResponse = { json: jest.fn() };
+
+        return createTestSizes().then(() =>
+            updateSize(updateRequest, dummyResponse).then(() => 
+                getAllSizes(null, getResponse).then(() => {
+                    expect(getResponse.json.mock.calls.length).toBe(1);
+                    const sizes = getResponse.json.mock.calls[0][0];
+                    expect(sizes.length).toEqual(3);
+                    expect(sizes[0].id).toEqual(1);
+                    expect(sizes[0].cl).toEqual(testsizes[0].cl);
+                    expect(sizes[0].name).toEqual(testsizes[0].name);
+                    expect(sizes[1].id).toEqual(2);
+                    expect(sizes[1].cl).toEqual(25);
+                    expect(sizes[1].name).toEqual('newName');
+                    expect(sizes[2].id).toEqual(3);
+                    expect(sizes[2].cl).toEqual(testsizes[2].cl);
+                    expect(sizes[2].name).toEqual(testsizes[2].name);
+                })
+            )
+        ); 
+    });
+
+    it('deletes single entry with id from database', () => {
+        const id = 2;
+        const deleteRequest = { params: { id } };
+        const getResponse = { json: jest.fn() };
+
+        return createTestSizes().then(() =>
+            deleteSize(deleteRequest, dummyResponse).then(() => 
+                getAllSizes(null, getResponse).then(() => {
+                    expect(getResponse.json.mock.calls.length).toBe(1);
+                    const sizes = getResponse.json.mock.calls[0][0];
+                    expect(sizes.length).toEqual(2);
+                    expect(sizes[0].id).toEqual(1);
+                    expect(sizes[0].cl).toEqual(testsizes[0].cl);
+                    expect(sizes[0].name).toEqual(testsizes[0].name);
+                    expect(sizes[1].id).toEqual(3);
+                    expect(sizes[1].cl).toEqual(testsizes[2].cl);
+                    expect(sizes[1].name).toEqual(testsizes[2].name);
+                })
+            )
         ); 
     });
 });

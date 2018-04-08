@@ -12,11 +12,18 @@ export const createPump = (req, res) => {
 	var newPump = req.body;
 	// Todo: Validate newPump
 
-	dbProxy.createPump(newPump)
+	return dbProxy.createPump(newPump)
 		.then(pump => res.json(pump));
 }
 
-export const deletePump = (req, res) => {
-	dbProxy.deletePump(req.params.id)
+export const updatePump = (req, res) =>  {
+	var newPump = req.body;
+	// Todo: Validate pump
+
+	return dbProxy.updatePump(req.params.id, newPump)
 		.then(pump => res.json(pump));
 }
+
+export const deletePump = (req, res) =>
+	dbProxy.deletePump(req.params.id)
+		.then(pump => res.json(pump));
