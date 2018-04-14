@@ -5,6 +5,7 @@ import { getRecipeById, getAllRecipes, createRecipe, updateRecipe, deleteRecipe 
 import { getRecipepartById, getAllRecipeparts } from '../controllers/recipepart';
 import { getPumpById, getAllPumps, createPump, updatePump, deletePump } from '../controllers/pump';
 import { getSizeById, getAllSizes, createSize, updateSize, deleteSize } from '../controllers/size';
+import { createDrink } from '../controllers/drink';
 
 export default (app) => {
   app.use(bodyParser.json());
@@ -44,4 +45,6 @@ export default (app) => {
   app.post('/api/pump', createPump);
   app.put('/api/pump/:id', updatePump);
   app.delete('/api/pump/:id', deletePump);
+
+  app.put('/api/create', createDrink);
 };

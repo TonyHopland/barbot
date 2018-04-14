@@ -373,6 +373,12 @@ const pumps = [
   { msPerCl: 5000 },
 ];
 
+const sizes = [
+  { name: 'shot', cl: 50 },
+  { name: 'medium', cl: 100 },
+  { name: 'large', cl: 330 },
+];
+
 export default (database) => {
   ingredients.forEach(ing =>
     database.ingredient
@@ -389,4 +395,8 @@ export default (database) => {
   pumps.forEach(pu =>
     database.pump
       .create(pu));
+
+  sizes.forEach(size =>
+    database.size
+      .create(size));
 };
