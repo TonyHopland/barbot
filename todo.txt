@@ -1,6 +1,11 @@
 Todo list:
 
-- Size component.
-- Make component.
-- Settings page.
-- Create page.
+- Web
+    - Make overview page
+    - Make drink page? (part of overview maby?)
+    - Make settings page
+    - Make create page
+
+- Api
+    - Complete the create part of Api
+    - Save images to database (allowing for uploading of images from web)

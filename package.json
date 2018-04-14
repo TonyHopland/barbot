@@ -1,5 +1,5 @@
 {
-  "name": "BarBot",
+  "name": "barbot",
   "version": "0.0.0",
   "description": "Webapplication to control a drink mixing robot.",
   "main": "server.js",
