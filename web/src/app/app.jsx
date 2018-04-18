@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import Router from './router';
+
 const App = () => (
-  <div>
-    <p>React barbot kommer her!</p>
-  </div>
+  <Router />
 );
 
 export const renderApp = () => {
   ReactDOM.render(<App />, document.getElementById('app'));
 };
 
-export default App;
-
+export default renderApp;
