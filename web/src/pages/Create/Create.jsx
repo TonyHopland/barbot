@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BasePage from 'components/BasePage';
 import { getDrinks } from 'services/drink.service';
 
 class Create extends Component {
@@ -18,17 +17,13 @@ class Create extends Component {
 
   render() {
     return (
-      <BasePage
-        title="Barbot - Create drink"
-      >
-        <div>
-          {this.state.drinks.map(drink => (
-            <div key={drink.id}>
-              {drink.name}
-            </div>
-          ))}
-        </div>
-      </BasePage>
+      <div>
+        {this.state.drinks.map(drink => (
+          <div key={drink.id}>
+            {drink.name}
+          </div>
+        ))}
+      </div>
     );
   }
 }

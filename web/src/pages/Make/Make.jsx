@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import BasePage from 'components/BasePage';
+import Grid from 'material-ui/Grid';
+import DrinkCard from 'components/DrinkCard';
 import { getDrinks } from 'services/drink.service';
+import { getSortedList } from 'utils/drink.util';
 
 
 class Make extends Component {
@@ -13,23 +15,31 @@ class Make extends Component {
 
   componentDidMount() {
     getDrinks().then((result) => {
-      this.setState({ drinks: result });
+      this.setState({ drinks: getSortedList(result) });
     });
   }
 
   render() {
     return (
-      <BasePage
-        title="Barbot - Make drink"
+      <Grid
+        container
+        alignContent="space-around"
+        spacing={24}
       >
-        <div>
-          {this.state.drinks.map(drink => (
-            <div key={drink.id}>
-              {drink.name}
-            </div>
-          ))}
-        </div>
-      </BasePage>
+        {this.state.drinks.map(drink => (
+          <Grid
+            key={drink.id}
+            item
+            xl={2}
+            lg={3}
+            md={4}
+            sm={6}
+            xs={12}
+          >
+            <DrinkCard drink={drink} />
+          </Grid>
+        ))}
+      </Grid>
     );
   }
 }

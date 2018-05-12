@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
@@ -30,20 +30,20 @@ const Menu = ({
       </IconButton>
     </div>
     <Divider />
-    <ListItem button component={Link} to="/make">
+    <ListItem button component={NavLink} to="/make">
       <ListItemIcon>
         <LocalBarIcon />
       </ListItemIcon>
       <ListItemText primary="Make" />
     </ListItem>
-    <ListItem button component={Link} to="/create">
+    <ListItem button component={NavLink} to="/create">
       <ListItemIcon>
         <NewIcon />
       </ListItemIcon>
       <ListItemText primary="Create" />
     </ListItem>
     <Divider />
-    <ListItem button component={Link} to="/settings">
+    <ListItem button component={NavLink} to="/settings">
       <ListItemIcon>
         <SettingsIcon />
       </ListItemIcon>

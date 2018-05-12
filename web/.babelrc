@@ -10,6 +10,21 @@
                 "debug": true
             }
         }]
-    ]
+    ],
+    "env": {
+        "test": {
+            "presets": [
+                "react",
+                "stage-3",
+                ["env", {
+                    "targets": {
+                        "browsers": "last 2 versions",
+                        "node": "current",
+                        "debug": true
+                    }
+                }]
+            ]
+        }
+    }
 }
   
