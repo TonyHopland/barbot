@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
-import IconButton from 'material-ui/IconButton';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 import NewIcon from '@material-ui/icons/FiberNew';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import menuStyle from './menu.style';
 
 const Menu = ({

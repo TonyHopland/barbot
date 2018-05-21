@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import TitleBar from 'components/Titlebar';
 import Menu from 'components/Menu';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import basePageStyle from './basePage.style';
 
 class BasePage extends Component {
@@ -59,4 +59,4 @@ BasePage.defaultProps = {
   title: undefined,
 };
 
-export default withStyles(basePageStyle, { withTheme: true })(BasePage);
+export default withStyles(basePageStyle)(BasePage);
