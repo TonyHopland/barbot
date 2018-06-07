@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 import NewIcon from '@material-ui/icons/FiberNew';
@@ -21,6 +21,7 @@ const Menu = ({
 }) => (
   <Drawer
     variant="persistent"
+    anchor="right"
     open={open}
     classes={{
       paper: classes.drawerPaper,
@@ -28,7 +29,7 @@ const Menu = ({
   >
     <div className={classes.drawerHeader}>
       <IconButton onClick={handleMenuClose}>
-        <ChevronLeftIcon />
+        <ChevronRightIcon />
       </IconButton>
     </div>
     <Divider />

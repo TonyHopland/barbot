@@ -122,7 +122,7 @@ class DrinkCard extends React.Component {
                 <TableRow>
                   <TableCell>Ingredients</TableCell>
                   <TableCell numeric>Amount</TableCell>
-                  <TableCell>Missing</TableCell>
+                  <TableCell numeric>Missing</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

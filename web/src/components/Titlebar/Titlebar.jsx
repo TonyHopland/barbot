@@ -20,18 +20,18 @@ const Titlebar = ({
       [classes.appBarShift]: menuOpen,
     })}
   >
-    <Toolbar disableGutters={!menuOpen}>
+    <Toolbar className={classes.menuToolbar} disableGutters={!menuOpen}>
+      <Typography className={classes.menuTitle} variant="title" color="inherit" noWrap>
+        {title}
+      </Typography>
       <IconButton
         color="inherit"
         aria-label="open drawer"
         onClick={handleMenuOpen}
-        className={classNames(classes.menuButton, menuOpen && classes.hide)}
+        className={classNames(menuOpen && classes.hide)}
       >
         <MenuIcon />
       </IconButton>
-      <Typography variant="title" color="inherit" noWrap>
-        {title}
-      </Typography>
     </Toolbar>
   </AppBar>
 );

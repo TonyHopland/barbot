@@ -29,10 +29,6 @@ class BasePage extends Component {
           menuOpen={this.state.open}
           handleMenuOpen={() => this.handleMenuOpen()}
         />
-        <Menu
-          open={this.state.open}
-          handleMenuClose={() => this.handleMenuClose()}
-        />
         <main
           className={classNames(
             classes.content,
@@ -44,6 +40,10 @@ class BasePage extends Component {
           <div className={classes.drawerHeader} />
           { children }
         </main>
+        <Menu
+          open={this.state.open}
+          handleMenuClose={() => this.handleMenuClose()}
+        />
       </div>
     );
   }

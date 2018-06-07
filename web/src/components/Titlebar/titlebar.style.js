@@ -10,15 +10,20 @@ const style = theme => ({
   },
   appBarShift: {
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
-    marginLeft: DRAWER_WIDTH,
+    marginRight: DRAWER_WIDTH,
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 20,
+  menuToolbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  menuTitle: {
+    flexGrow: 1,
   },
   hide: {
     display: 'none',
