@@ -12,12 +12,18 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LocalBarIcon from '@material-ui/icons/LocalBar';
 import NewIcon from '@material-ui/icons/FiberNew';
 import { withStyles } from '@material-ui/core/styles';
+import {
+  getDrinkListLink,
+  getCreateLink,
+  getSettingsLink,
+} from 'common/links';
 import menuStyle from './menu.style';
 
 const Menu = ({
   open,
   handleMenuClose,
   classes,
+  location,
 }) => (
   <Drawer
     variant="persistent"
@@ -33,20 +39,20 @@ const Menu = ({
       </IconButton>
     </div>
     <Divider />
-    <ListItem button component={NavLink} to="/make">
+    <ListItem button component={NavLink} to={getDrinkListLink(location)}>
       <ListItemIcon>
         <LocalBarIcon />
       </ListItemIcon>
       <ListItemText primary="Make" />
     </ListItem>
-    <ListItem button component={NavLink} to="/create">
+    <ListItem button component={NavLink} to={getCreateLink(location)}>
       <ListItemIcon>
         <NewIcon />
       </ListItemIcon>
       <ListItemText primary="Create" />
     </ListItem>
     <Divider />
-    <ListItem button component={NavLink} to="/settings">
+    <ListItem button component={NavLink} to={getSettingsLink(location)}>
       <ListItemIcon>
         <SettingsIcon />
       </ListItemIcon>
@@ -59,6 +65,7 @@ Menu.propTypes = {
   open: PropTypes.bool.isRequired,
   handleMenuClose: PropTypes.func.isRequired,
   classes: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
 };
 
 export default withStyles(menuStyle, { withTheme: true })(Menu);

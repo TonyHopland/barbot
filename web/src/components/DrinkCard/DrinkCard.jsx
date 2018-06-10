@@ -76,7 +76,7 @@ class DrinkCard extends React.Component {
       <Card className={classes.card}>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
+            <Avatar aria-label={drink.name} className={classes.avatar}>
               {drink.name[0].toUpperCase()}
             </Avatar>
           }

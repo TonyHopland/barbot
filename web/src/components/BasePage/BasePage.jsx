@@ -21,7 +21,12 @@ class BasePage extends Component {
   }
 
   render() {
-    const { classes, title, children } = this.props;
+    const {
+      classes,
+      title,
+      location,
+      children,
+    } = this.props;
     return (
       <div className={classes.appFrame}>
         <TitleBar
@@ -42,6 +47,7 @@ class BasePage extends Component {
         </main>
         <Menu
           open={this.state.open}
+          location={location}
           handleMenuClose={() => this.handleMenuClose()}
         />
       </div>
@@ -52,6 +58,7 @@ class BasePage extends Component {
 BasePage.propTypes = {
   children: PropTypes.node.isRequired,
   classes: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
   title: PropTypes.string,
 };
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SubPage from 'components/SubPage';
 import { getDrinks } from 'services/drink.service';
 
 class Create extends Component {
@@ -17,13 +18,14 @@ class Create extends Component {
 
   render() {
     return (
-      <div>
+      <SubPage>
+        <h1>Create</h1>
         {this.state.drinks.map(drink => (
           <div key={drink.id}>
             {drink.name}
           </div>
         ))}
-      </div>
+      </SubPage>
     );
   }
 }
