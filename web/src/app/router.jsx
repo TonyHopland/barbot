@@ -14,42 +14,11 @@ import { links } from 'common/links';
 import BasePage from 'components/BasePage';
 
 import DrinkList from 'pages/DrinkList';
+import Drink from 'pages/Drink';
 import Create from 'pages/Create';
 import Settings from 'pages/Settings';
 
-const animationStyle = {
-  position: 'absolute',
-  transform: 'translateX(0%)',
-  transition: 'all 300ms ease-out',
-};
-
-const style = () => ({
-  container: {
-    position: 'relative',
-  },
-  anFwdEnter: {
-    ...animationStyle,
-    transform: 'translateX(100%)',
-  },
-  anFwdEnterActive: {
-    ...animationStyle,
-  },
-  anBckEnter: {
-    ...animationStyle,
-    transform: 'translateX(-100%)',
-  },
-  anBckEnterActive: {
-    ...animationStyle,
-  },
-  exit: {
-    ...animationStyle,
-    zIndex: -1,
-  },
-  exitActive: {
-    ...animationStyle,
-    zIndex: -1,
-  },
-});
+import style from './router.style';
 
 const getAnimationClasses = (state, classes) => {
   let prefix = 'anBck';
@@ -81,6 +50,7 @@ const Router = ({ classes }) => (
               <Switch location={location}>
                 <Route exact path="/" render={() => (<Redirect to={links.drinkList} />)} />
                 <Route exact path={links.drinkList} component={DrinkList} />
+                <Route path={links.drink} component={Drink} />
                 <Route exact path={links.create} component={Create} />
                 <Route exact path={links.settings} component={Settings} />
               </Switch>

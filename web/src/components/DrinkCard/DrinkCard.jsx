@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+// import CardActions from '@material-ui/core/CardActions';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,9 +19,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import indigo from '@material-ui/core/colors/indigo';
 import red from '@material-ui/core/colors/red';
-import Button from '@material-ui/core/Button';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import Button from '@material-ui/core/Button';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { getDrinkLink } from 'common/links';
 import {
   isAvailable,
   getIngredients,
@@ -70,6 +72,7 @@ class DrinkCard extends React.Component {
     const {
       classes,
       drink,
+      location,
     } = this.props;
 
     return (
@@ -94,15 +97,18 @@ class DrinkCard extends React.Component {
           image={`/resources/${drink.image}`} // This gets overridden by the line beneath so we can show backup image
           style={{ backgroundImage: `url(/resources/${drink.image}), url(/resources/noimage.png)` }}
           title={drink.name}
+          component={NavLink}
+          to={getDrinkLink(location, drink.id)}
         />
         <CardContent>
           <Typography component="p">
             {drink.notes}
           </Typography>
         </CardContent>
+        {/*
         <CardActions className={classes.actions} disableActionSpacing>
           <Button color="primary">
-            Make
+            Open
           </Button>
           <IconButton
             className={classnames(classes.expand, {
@@ -110,11 +116,12 @@ class DrinkCard extends React.Component {
             })}
             onClick={() => this.handleExpandClick()}
             aria-expanded={this.state.expanded}
-            aria-label="Show more"
+            aria-label={this.state.expanded ? 'Show less' : 'Show more'}
           >
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
+        */}
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Table>
@@ -137,12 +144,6 @@ class DrinkCard extends React.Component {
                 ))}
               </TableBody>
             </Table>
-            <Typography paragraph variant="body2">
-              Notes:
-            </Typography>
-            <Typography paragraph>
-              {drink.notes}
-            </Typography>
           </CardContent>
         </Collapse>
       </Card>
@@ -153,6 +154,7 @@ class DrinkCard extends React.Component {
 DrinkCard.propTypes = {
   drink: PropTypes.shape({}).isRequired,
   classes: PropTypes.shape({}).isRequired,
+  location: PropTypes.shape({}).isRequired,
 };
 
 export default withStyles(styles)(DrinkCard);

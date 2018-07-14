@@ -5,6 +5,7 @@ const createLinkState = (index, location) => ({
 
 export const links = {
   drinkList: '/drinks',
+  drink: '/drinks/:id',
   create: '/create',
   settings: '/settings',
 };
@@ -13,6 +14,11 @@ export const links = {
 export const getDrinkListLink = location => ({
   pathname: links.drinkList,
   state: createLinkState(0, location),
+});
+
+export const getDrinkLink = (location, drinkId) => ({
+  pathname: links.drink.replace(':id', drinkId),
+  state: createLinkState(1, location),
 });
 
 export const getCreateLink = location => ({

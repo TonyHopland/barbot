@@ -66,6 +66,7 @@ class LoadingCard extends React.Component {
         />
         <CardMedia
           className={classes.media}
+          image="/resources/noimage.png"
         />
         <CardContent>
           <CircularProgress />

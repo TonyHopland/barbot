@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import SubPage from 'components/SubPage';
 import Grid from '@material-ui/core/Grid';
 import DrinkCard from 'components/DrinkCard';
@@ -55,7 +56,7 @@ class DrinkList extends Component {
               sm={6}
               xs={12}
             >
-              <DrinkCard drink={drink} />
+              <DrinkCard drink={drink} location={this.props.location} />
             </Grid>
           ))}
         </Grid>
@@ -63,5 +64,9 @@ class DrinkList extends Component {
     );
   }
 }
+
+DrinkList.propTypes = {
+  location: PropTypes.shape({}).isRequired,
+};
 
 export default DrinkList;
